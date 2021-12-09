@@ -25,6 +25,13 @@ typedef enum {
     REG_ERR 		= 0x01
 } Reg_Error_Code;
 
+typedef enum {
+    NO_PARITY_1_STOP	= 0x00,
+    NO_PARITY_2_STOP	= 0x01,
+    EVEN_PARITY_1_STOP	= 0x02,
+    ODD_PARITY_1_STOP	= 0x03,
+
+} Parity_Stop_Bits_t;
 #define LIM_BIT_MASK	(0x0C)	//check limit mask (2&3 bits)
 
 //  MAIN_BUF_Start_Table_Mask
@@ -89,9 +96,11 @@ typedef enum {
 	X_BUF(47,	Reg_Cur_Level_Warning_W2,	0,		0,		0xFFFF,	 WRITE | EESAVE)\
 	X_BUF(48,	Reg_Cur_Level_Alarm_W1,		45,		0,		0xFFFF,	 WRITE | EESAVE)\
 	X_BUF(49,	Reg_Cur_Level_Alarm_W2,		0,		0,		0xFFFF,	 WRITE | EESAVE)\
-	X_BUF(50,	Reg_RS485_Baud_Rate,		1,		0,		0x3,	 WRITE | EESAVE | LIM_MASK)\
-	X_BUF(51,	Reg_RS485_Silence,			100,	50,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
+	X_BUF(50,	Reg_RS485_Baud_Rate,		1,		0,		0x03,	 WRITE | EESAVE | LIM_MASK)\
+	X_BUF(51,	Reg_Parity_Stop_Bits,	    0,	    0,		0x03,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(52,	Reg_RS485_Modbus_Address,	1,		1,		0xFA,	 WRITE | EESAVE | LIM_UNSIGN)\
+	X_BUF(53,	Reg_RS485_Ans_Delay,	    5,		MIN_TIME_TO_START_TRANSMIT_MS,\
+                                                            100,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(55,	Reg_NTC_R2_Value_1,         5000,	0,		0,       WRITE | EESAVE)\
 	X_BUF(56,	Reg_NTC_R2_Value_2,         0,		0,		0,		 WRITE | EESAVE)\
 	X_BUF(57,	Reg_NTC_R_Divider_1,        5100,	0,		0,       WRITE | EESAVE)\

@@ -1,7 +1,7 @@
 /*
  * main.h
  *
- *  Created on: 21 мая 2019 г.
+ *  Created on: 21 РјР°СЏ 2019 Рі.
  *
  */
 
@@ -44,7 +44,7 @@
 #define WATCH_DOG_TIME_MS		500
 #define Version_MSD_2			212
 #define MAX_DI  				4
-#define MAX_DI_TRIP_COUNTER 	2	//количество DI со счетчиком включения, max 32 (notification use number bit, see eeprom write task)
+#define MAX_DI_TRIP_COUNTER 	2	//РєРѕР»РёС‡РµСЃС‚РІРѕ DI СЃРѕ СЃС‡РµС‚С‡РёРєРѕРј РІРєР»СЋС‡РµРЅРёСЏ, max 32 (notification use number bit, see eeprom write task)
 #define COUNTER_EE_UPD_MS		600000
 #define MAX_DO  				2
 #define	TIMER_ID_DO_1	        111
@@ -70,6 +70,8 @@
 #define TIME_ON_NO_USB				500
 #define TIME_OFF_NO_USB 			500
 
+#define M_MODBUS_TASK_PRIORITY         (tskIDLE_PRIORITY + 3)
+#define M_MODBUS_TASK_STACK_SIZE       (configMINIMAL_STACK_SIZE)
 
 void vMeasure_Temperature (void *pvParameters);
 void vMeasure_Current (void *pvParameters);
@@ -89,7 +91,7 @@ void sensor_param_init(void);
 
 //=========================================================================
 
-// Отдадочная затычка. Сюда можно вписать код обработки ошибок.
+// РћС‚РґР°РґРѕС‡РЅР°СЏ Р·Р°С‚С‹С‡РєР°. РЎСЋРґР° РјРѕР¶РЅРѕ РІРїРёСЃР°С‚СЊ РєРѕРґ РѕР±СЂР°Р±РѕС‚РєРё РѕС€РёР±РѕРє.
 #define	ERROR_ACTION(CODE,POS)		do{}while(1)
 
 #endif /* MAIN_H_ */

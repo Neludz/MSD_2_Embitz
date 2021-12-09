@@ -5,8 +5,10 @@
 
 extern uint16_t MBbuf_main [];
 extern uint32_t Error;
-extern TaskHandle_t RS485_Task;
-extern TaskHandle_t USB_CDC_Task;
+
+xQueueHandle xModbusQueue;
+TimerHandle_t rs485_timer_handle;
+TaskHandle_t m_modbus_task_handle;
 
 volatile mb_struct MB_RS485;
 volatile mb_struct MB_USB;
@@ -14,10 +16,8 @@ volatile mb_struct MB_USB;
 uint8_t RS485_MB_Buf[MB_FRAME_MAX];
 uint8_t USB_MB_Buf[MB_FRAME_MAX];
 
-const uint16_t Baud_rate[4]={BAUD_9600, BAUD_19200, BAUD_57600, BAUD_115200};
-const uint32_t Timer_modbus[4]={TIMER_9600,TIMER_19200,TIMER_57600,TIMER_115200};		//Bod value for timer divider calculation (Fcpu*simvol_count)/baudrate/count_timer
+const uint16_t Baud_rate[BAUD_NUMBER]={BAUD_9600, BAUD_19200, BAUD_57600, BAUD_115200};
 
-uint16_t Timer_15;
 
 extern const t_default_state default_state[];
 //#define	limit_min(a)	default_state[a].Min_Level
@@ -26,7 +26,7 @@ extern const t_default_state default_state[];
 //=========================================================================================
 //--------------------------------------------------------------------------------------
 
-void Write_Eeprom (void *mbb)
+void mh_Write_Eeprom (void *mbb)
 {
 mb_struct *st_mb;
 st_mb = (void*) mbb;
@@ -43,17 +43,40 @@ vTaskDelay((1500/portTICK_RATE_MS));
 st_mb->eep_state = EEP_FREE;
 
 }
-
 //--------------------------------------------------------------------------------------
 
-void Start_Trans_RS485 (void *mbb)
+void mh_MB_Init(void)
 {
-TO_TRANSMT;
-}
+    BaseType_t rtos_result;
 
+    //create queue
+    xModbusQueue=xQueueCreate(4,sizeof(mb_struct *));
+
+    //create modbus task
+    if(pdTRUE != xTaskCreate(mh_task_Modbus,	"RS485", 	MODBUS_TASK_STACK_SIZE, NULL, MODBUS_TASK_PRIORITY, &m_modbus_task_handle)) ERROR_ACTION(TASK_NOT_CREATE, 0);
+
+    mh_USB_Init();
+    mh_RS485_Init();
+}
 //--------------------------------------------------------------------------------------
 
-void Start_Trans_USB (void *mbb)
+void mh_USB_Init(void)
+{
+    MB_USB.p_write = MBbuf_main;
+    MB_USB.p_read = MBbuf_main;
+    MB_USB.reg_read_last=NUM_BUF-1;
+    MB_USB.reg_write_last=NUM_BUF-1;
+    MB_USB.eep_state=EEP_FREE;
+    MB_USB.er_frame_bad=EV_NOEVENT;
+    MB_USB.slave_address=MB_ANY_ADDRESS;	//0==any address
+    MB_USB.mb_state=STATE_IDLE;
+    MB_USB.p_mb_buff=&USB_MB_Buf[0];
+    MB_USB.f_save = mh_Write_Eeprom;
+    MB_USB.f_start_trans = mh_USB_Transmit_Start;
+}
+//--------------------------------------------------------------------------------------
+
+void mh_USB_Transmit_Start (void *mbb)
 {
 mb_struct *st_mb;
 st_mb = (void*) mbb;
@@ -64,105 +87,10 @@ while (st_mb->mb_index < st_mb->response_size)
     }
 MB_USB.mb_state=STATE_IDLE;
 }
-
 //--------------------------------------------------------------------------------------
 
-void vRS485 (void *pvParameters)
+void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
 {
-vTaskDelay(3000);
-MB_RS_Init();
-while(1)
-    {
-	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-    MBparsing((mb_struct*) &MB_RS485);
-    }
-}
-
-//--------------------------------------------------------------------------------------
-
-void MB_RS_Init(void)
-{
-
-    MB_RS485.p_write = MBbuf_main;
-    MB_RS485.p_read = MBbuf_main;
-    MB_RS485.reg_read_last=NUM_BUF;
-    MB_RS485.reg_write_last=NUM_BUF;
-    MB_RS485.eep_state=EEP_FREE;
-    MB_RS485.er_frame_bad=EV_NOEVENT;
-    MB_RS485.slave_address=MBbuf_main[Reg_RS485_Modbus_Address];
-    MB_RS485.mb_state=STATE_IDLE;
-    MB_RS485.p_mb_buff=&RS485_MB_Buf[0];
-    MB_RS485.f_save = Write_Eeprom;
-    MB_RS485.f_start_trans=Start_Trans_RS485;
-    IO_Uart1_Init();
-    IO_Timer2_Init();
-    START_RECEIVE;
-}
-
-//--------------------------------------------------------------------------------------
-
-void vUSB_MB (void *pvParameters)
-{
-MB_USB_Init();
-
-while(1)
-    {
-	ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
-    MBparsing((mb_struct*) &MB_USB);
-    }
-}
-
-//--------------------------------------------------------------------------------------
-
-void MB_USB_Init(void)
-{
-    MB_USB.p_write = MBbuf_main;
-    MB_USB.p_read = MBbuf_main;
-    MB_USB.reg_read_last=NUM_BUF;
-    MB_USB.reg_write_last=NUM_BUF;
-    MB_USB.eep_state=EEP_FREE;
-    MB_USB.er_frame_bad=EV_NOEVENT;
-    MB_USB.slave_address=MB_ANY_ADDRESS;	//0==any address
-    MB_USB.mb_state=STATE_IDLE;
-    MB_USB.p_mb_buff=&USB_MB_Buf[0];
-    MB_USB.f_save = Write_Eeprom;
-    MB_USB.f_start_trans = Start_Trans_USB;
-}
-
-//--------------------------------------------------------------------------------------
-
-void IO_Uart1_Init(void)
-{
-RCC->APB2ENR	|= RCC_APB2ENR_USART1EN;						//USART1 Clock ON
-USART1->BRR = Baud_rate[MBbuf_main[Reg_RS485_Baud_Rate]&0x3];	// Bodrate
-USART1->CR1  |= USART_CR1_UE | USART_CR1_TE
-				|USART_CR1_RE;									//  |USART_CR1_RXNEIE; // USART1 ON, TX ON, RX ON
-NVIC_SetPriority(USART1_IRQn,14);
-NVIC_EnableIRQ (USART1_IRQn);
-}
-
-//--------------------------------------------------------------------------------------
-
-void IO_Timer2_Init(void)
-{
-RCC->APB1ENR    |= RCC_APB1ENR_TIM2EN;
-TIM2->PSC = (MBbuf_main[Reg_RS485_Silence]*UART_FRIQ)/(Timer_modbus[(MBbuf_main[Reg_RS485_Baud_Rate]&0x3)]*TIMER_FULL); // -1 //(Fcpu*simvol_count)/baudrate/count_timer
-TIM2->ARR = TIMER_FULL-1;				         				 // Потолком счета таймера укажем 200-1. Получим деление на 200 в частоте вызова прерываний.
-TIM2->CR1   |=  TIM_CR1_URS;                                   	 // | TIM_CR1_CEN;  		//  ARPE=1 - буфферизируем регистр предзагрузки таймера опциональная вещь.
-                                                                // URS=1	- разрешаем из событий таймера только события от переполнения
-                                                                // CEN=1 - запускаем таймер
-TIM2->DIER  |= TIM_DIER_UIE;					                // UIE=1 - Разрешаем прерывание от переполнения
-NVIC_SetPriority(TIM2_IRQn,14);			                        // Очень важный момент!!! Надо правильно выставить приоритеты. Они должны быть в диапазоне между                                                                  // configKERNEL_INTERRUPT_PRIORITY  и configMAX_SYSCALL_INTERRUPT_PRIORITY
-NVIC_EnableIRQ(TIM2_IRQn);					                    // Разрешаем прерывания от таймера 2 через NVIC
-
-Timer_15 = ((TIMER_FULL*TIMER_15_SYMBOL)/ (MBbuf_main[Reg_RS485_Silence]));
-}
-
-//=========================================================================================
-
-void USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
-{
-portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
     if(STATE_IDLE == MB_USB.mb_state)
     {
     	if(len>MB_FRAME_MAX)
@@ -172,33 +100,107 @@ portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
     MB_USB.mb_state=STATE_PARS;
     MB_USB.mb_index=(len);
     memcpy (MB_USB.p_mb_buff,USB_buf,len);
-    vTaskNotifyGiveFromISR(USB_CDC_Task, &xHigherPriorityTaskWoken);
+    mb_struct *st_mb=(mb_struct*)&MB_USB;
+    xQueueSend(xModbusQueue, &st_mb, 0);
     }
-    else; // MB_USB.mb_state = STATE_IDLE;
+}
+//--------------------------------------------------------------------------------------
+
+void mh_RS485_Init(void)
+{
+    uint32_t Rs485_Time_ms;
+
+    MB_RS485.p_write = MBbuf_main;
+    MB_RS485.p_read = MBbuf_main;
+    MB_RS485.reg_read_last=NUM_BUF-1;
+    MB_RS485.reg_write_last=NUM_BUF-1;
+    MB_RS485.eep_state=EEP_FREE;
+    MB_RS485.er_frame_bad=EV_NOEVENT;
+    MB_RS485.slave_address=MBbuf_main[Reg_RS485_Modbus_Address];
+    MB_RS485.mb_state=STATE_IDLE;
+    MB_RS485.p_mb_buff=&RS485_MB_Buf[0];
+    MB_RS485.f_save = mh_Write_Eeprom;
+    MB_RS485.f_start_trans=mh_Rs485_Transmit_Start;
+
+    Rs485_Time_ms = (MBbuf_main[Reg_RS485_Ans_Delay]);
+        if(Rs485_Time_ms < MIN_TIME_TO_START_TRANSMIT_MS)
+        {
+        Rs485_Time_ms=MIN_TIME_TO_START_TRANSMIT_MS;
+        }
+    rs485_timer_handle = xTimerCreate( "T_RS485", Rs485_Time_ms/portTICK_RATE_MS, pdFALSE, NULL, rs485_timer_callback);
+    IO_Uart1_Init();
+}
+//--------------------------------------------------------------------------------------
+
+void mh_Rs485_Transmit_Start (void *mbb)
+{
+TO_TRANSMT;
+}
+//--------------------------------------------------------------------------------------
+
+static void rs485_timer_callback (xTimerHandle xTimer)
+{
+        if( STATE_RCVE == MB_RS485.mb_state)
+        {                                               // If we are receiving, it's the end event: t3.5
+        MB_RS485.mb_state=STATE_PARS;					// Begin parsing of a frame.
+        mb_struct *st_mb=(mb_struct*)&MB_RS485;
+        xQueueSend(xModbusQueue, &st_mb, 0);
+        }
+    return;
+}
+//--------------------------------------------------------------------------------------
+
+void IO_Uart1_Init(void)
+{
+RCC->APB2ENR	|= RCC_APB2ENR_USART1EN;						//USART1 Clock ON
+USART1->BRR = Baud_rate[MBbuf_main[Reg_RS485_Baud_Rate]&0x3];	// Bodrate
+USART1->CR1  |= USART_CR1_UE | USART_CR1_TE
+				|USART_CR1_RE;									//  |USART_CR1_RXNEIE; // USART1 ON, TX ON, RX ON
+      switch (MBbuf_main[Reg_Parity_Stop_Bits])
+      {
+            case NO_PARITY_1_STOP:
+                 break; //default setting
+
+            case NO_PARITY_2_STOP:
+                 USART1->CR2  |=  USART_CR2_STOP_1;
+                 break;
+
+            case EVEN_PARITY_1_STOP:
+                 USART1->CR1  |= USART_CR1_PCE | USART_CR1_M;
+                 break;
+
+            case ODD_PARITY_1_STOP:
+                 USART1->CR1  |= USART_CR1_PCE | USART_CR1_M | USART_CR1_PS;
+                 break;
+
+            default:
+            break;
+      }
+
+NVIC_SetPriority(USART1_IRQn,14);
+NVIC_EnableIRQ (USART1_IRQn);
 }
 
 //--------------------------------------------------------------------------------------
 
 void USART1_IRQHandler (void)
 {
+ BaseType_t xHigherPriorityTaskWoken = pdFALSE;
  uint16_t cnt;
  if (USART1->SR & USART_SR_RXNE)
 	{
     if ((USART1->SR & (USART_SR_NE|USART_SR_FE|USART_SR_PE|USART_SR_ORE)) == 0)
         {
-        cnt = TIMER_COUNT;
-       // MBbuf_main[15]=cnt;
-       // MBbuf_main[16]=Timer_15;
-        RESET_TIMER;							// Timer reset anyway: received symbol means NO SILENCE
+        xTimerResetFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);	// Timer reset anyway: received symbol means NO SILENCE
         if( STATE_RCVE == MB_RS485.mb_state)
             {
-            if( (cnt > Timer_15) || (MB_RS485.mb_index > MB_FRAME_MAX-1))
-                {				                         // t1.5
-                 MB_RS485.er_frame_bad = EV_HAPPEND;		// This error will be processed later
-				 USART1->SR = ~USART_SR_RXNE;            // Nothing more to do in RECEIVE state
-                 return;                                       // Last acceptable position is  MB_FRAME_MAX-1
-                }                                       // Ignore big frames
-            MB_RS485.p_mb_buff[MB_RS485.mb_index++] = BYTE_RECEIVED;	// MAIN DOING: New byte to buffer
+            if(MB_RS485.mb_index > MB_FRAME_MAX-1)
+                {
+                 MB_RS485.er_frame_bad = EV_HAPPEND;	                 // This error will be processed later
+				 USART1->SR = ~USART_SR_RXNE;                            // Nothing more to do in RECEIVE state
+                 return;                                                 // Last acceptable position is  MB_FRAME_MAX-1
+                }                                                        // Ignore big frames
+            MB_RS485.p_mb_buff[MB_RS485.mb_index++] = BYTE_RECEIVED;	 // MAIN DOING: New byte to buffer
             }
         else if( STATE_IDLE == MB_RS485.mb_state)
             {											// 1-st symbol come!
@@ -217,7 +219,7 @@ void USART1_IRQHandler (void)
     	Error|=0x4;
         cnt = BYTE_RECEIVED;
         MB_RS485.mb_state=STATE_IDLE;
-        STOP_TIMER;
+        xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
         TO_RECEIVE;
         }
 	return;
@@ -227,7 +229,7 @@ if(USART1->SR & (USART_SR_NE|USART_SR_FE|USART_SR_PE|USART_SR_ORE))
     {
     cnt = BYTE_RECEIVED;
     MB_RS485.mb_state=STATE_IDLE;
-    STOP_TIMER;
+    xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
     Error|=0x8;
     TO_RECEIVE;
     return;
@@ -250,7 +252,7 @@ if ((USART1->SR & USART_SR_TXE)&&(USART1->CR1 & USART_CR1_TXEIE))
     else
         {
     	Error|=0x10;
-    	STOP_TIMER;
+    	xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
         TO_RECEIVE;
         MB_RS485.mb_state=STATE_IDLE;
         }
@@ -266,23 +268,20 @@ if (USART1->SR & USART_SR_TC)
     }
 Error|=0x20;
 }
-
 //--------------------------------------------------------------------------------------
-void TIM2_IRQHandler (void)
+
+void mh_task_Modbus (void *pvParameters)
 {
-portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-if(TIM2->SR & TIM_SR_UIF)
+mb_struct *st_mb;
+vTaskDelay(3000);
+
+//start recieve rs485 data
+START_RECEIVE;
+    while(1)
     {
-    TIM2->SR = ~TIM_SR_UIF;
-    STOP_TIMER;
-    if( STATE_RCVE == MB_RS485.mb_state)
-        {												// If we are receiving, it's the end event: t3.5
-        MB_RS485.mb_state=STATE_PARS;					// Begin parsing of a frame.
-        vTaskNotifyGiveFromISR(RS485_Task, &xHigherPriorityTaskWoken);
-        }
-    return;
+    xQueueReceive(xModbusQueue,&st_mb,portMAX_DELAY);
+    MBparsing((mb_struct*) st_mb);
     }
-Error|=0x40;
 }
 
 //=========================================================================================

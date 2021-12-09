@@ -1,1 +1,517 @@
 # depslib dependency file v1.0
+1639033323 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\startup_stm32f103xb.s
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\event_groups.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+	"timers.h"
+	"event_groups.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\freertos.h
+	<stddef.h>
+	<stdint.h>
+	"FreeRTOSConfig.h"
+	"projdefs.h"
+	"portable.h"
+	<reent.h>
+
+1639058228 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\freertosconfig.h
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\projdefs.h
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\portable.h
+	"deprecated_definitions.h"
+	"portmacro.h"
+	"mpu_wrappers.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\deprecated_definitions.h
+	"..\..\Source\portable\owatcom\16bitdos\pc\portmacro.h"
+	"..\..\Source\portable\owatcom\16bitdos\flsh186\portmacro.h"
+	"../portable/GCC/ATMega323/portmacro.h"
+	"../portable/IAR/ATMega323/portmacro.h"
+	"../../Source/portable/MPLAB/PIC24_dsPIC/portmacro.h"
+	"../../Source/portable/MPLAB/PIC24_dsPIC/portmacro.h"
+	"../../Source/portable/MPLAB/PIC18F/portmacro.h"
+	"../../Source/portable/MPLAB/PIC32MX/portmacro.h"
+	"libFreeRTOS/Include/portmacro.h"
+	"../../Source/portable/SDCC/Cygnal/portmacro.h"
+	"../../Source/portable/GCC/ARM7_LPC2000/portmacro.h"
+	"portmacro.h"
+	"../../Source/portable/GCC/ARM7_LPC23xx/portmacro.h"
+	"..\..\Source\portable\IAR\MSP430\portmacro.h"
+	"../../Source/portable/GCC/MSP430F449/portmacro.h"
+	"../../Source/portable/Rowley/MSP430F449/portmacro.h"
+	"..\..\Source\portable\RVDS\ARM7_LPC21xx\portmacro.h"
+	"../../Source/portable/GCC/ARM7_AT91SAM7S/portmacro.h"
+	"..\..\Source\portable\IAR\AtmelSAM7S64\portmacro.h"
+	"..\..\Source\portable\IAR\AtmelSAM9XE\portmacro.h"
+	"..\..\Source\portable\IAR\LPC2000\portmacro.h"
+	"..\..\Source\portable\IAR\STR71x\portmacro.h"
+	"..\..\Source\portable\IAR\STR75x\portmacro.h"
+	"..\..\Source\portable\GCC\STR75x\portmacro.h"
+	"..\..\Source\portable\IAR\STR91x\portmacro.h"
+	"../../Source/portable/GCC/H8S2329/portmacro.h"
+	"../../Source/portable/GCC/ARM7_AT91FR40008/portmacro.h"
+	"../../Source/portable/RVDS/ARM_CM3/portmacro.h"
+	"../../Source/portable/GCC/ARM_CM3/portmacro.h"
+	"../../Source/portable/GCC/ARM_CM3/portmacro.h"
+	"../../Source/portable/IAR/ARM_CM3/portmacro.h"
+	"../../Source/portable/IAR/ARM_CM3/portmacro.h"
+	"../../Source/portable/CodeWarrior/HCS12/portmacro.h"
+	"../../Source/portable/GCC/MicroBlaze/portmacro.h"
+	"..\..\Source\portable\Paradigm\Tern_EE\small\portmacro.h"
+	"../../Source/portable/GCC/HCS12/portmacro.h"
+	"../../Source/portable/GCC/MCF5235/portmacro.h"
+	"../../../Source/portable/GCC/ColdFire_V2/portmacro.h"
+	"../../Source/portable/CodeWarrior/ColdFire_V2/portmacro.h"
+	"../../Source/portable/GCC/PPC405_Xilinx/portmacro.h"
+	"../../Source/portable/GCC/PPC440_Xilinx/portmacro.h"
+	"..\..\Source\portable\Softune\MB96340\portmacro.h"
+	"frconfig.h"
+	"..\portable\BCC\16BitDOS\PC\prtmacro.h"
+	"frconfig.h"
+	"..\portable\BCC\16BitDOS\flsh186\prtmacro.h"
+	"portmacro.h"
+	"portmacro.h"
+	"portmacro.h"
+	"portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/V850ES/portmacro.h"
+	"../../Source/portable/IAR/78K0R/portmacro.h"
+	"../../Source/portable/IAR/78K0R/portmacro.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\portmacro.h
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\mpu_wrappers.h
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\task.h
+	"list.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\list.h
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\timers.h
+	"task.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\event_groups.h
+	"timers.h"
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\heap_1.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\list.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"list.h"
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\port.c
+	"FreeRTOS.h"
+	"task.h"
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\queue.c
+	<stdlib.h>
+	<string.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"croutine.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\queue.h
+	"task.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\croutine.h
+	"list.h"
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\stream_buffer.c
+	<stdint.h>
+	<string.h>
+	"FreeRTOS.h"
+	"task.h"
+	"stream_buffer.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\stream_buffer.h
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\tasks.c
+	<stdlib.h>
+	<string.h>
+	"FreeRTOS.h"
+	"task.h"
+	"timers.h"
+	"stack_macros.h"
+	<stdio.h>
+	"tasks_test_access_functions.h"
+	"freertos_tasks_c_additions.h"
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\stack_macros.h
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\timers.c
+	<stdlib.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"timers.h"
+
+1561363542 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\ll\stm32f1xx_ll_rcc.c
+	"stm32f1xx_ll_rcc.h"
+	"stm32_assert.h"
+
+1561363542 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\ll\stm32f1xx_ll_rcc.h
+	"stm32f1xx.h"
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\inc\stm32f1xx.h
+	"stm32f100xb.h"
+	"stm32f100xe.h"
+	"stm32f101x6.h"
+	"stm32f101xb.h"
+	"stm32f101xe.h"
+	"stm32f101xg.h"
+	"stm32f102x6.h"
+	"stm32f102xb.h"
+	"stm32f103x6.h"
+	"stm32f103xb.h"
+	"stm32f103xe.h"
+	"stm32f103xg.h"
+	"stm32f105xc.h"
+	"stm32f107xc.h"
+	"stm32f1xx_hal.h"
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\inc\stm32f103xb.h
+	"core_cm3.h"
+	"system_stm32f1xx.h"
+	<stdint.h>
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\cmsis\core_cm3.h
+	<stdint.h>
+	"cmsis_version.h"
+	"cmsis_compiler.h"
+	"mpu_armv7.h"
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\cmsis\cmsis_version.h
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\cmsis\cmsis_compiler.h
+	<stdint.h>
+	"cmsis_armcc.h"
+	"cmsis_armclang_ltm.h"
+	"cmsis_armclang.h"
+	"cmsis_gcc.h"
+	<cmsis_iccarm.h>
+	<cmsis_ccs.h>
+	<cmsis_csm.h>
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\cmsis\cmsis_gcc.h
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\cmsis\mpu_armv7.h
+
+1639033323 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\inc\system_stm32f1xx.h
+
+1561363556 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\ll\stm32f1xx_ll_usart.c
+	"stm32f1xx_ll_usart.h"
+	"stm32f1xx_ll_rcc.h"
+	"stm32f1xx_ll_bus.h"
+	"stm32_assert.h"
+
+1561363556 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\ll\stm32f1xx_ll_usart.h
+	"stm32f1xx.h"
+
+1561363542 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\ll\stm32f1xx_ll_bus.h
+	"stm32f1xx.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_core.c
+	"usb_lib.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_lib.h
+	"hw_config.h"
+	"usb_type.h"
+	"usb_regs.h"
+	"usb_def.h"
+	"usb_core.h"
+	"usb_init.h"
+	"usb_sil.h"
+	"usb_mem.h"
+	"usb_int.h"
+
+1639034068 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\hw_config.h
+	"stm32f1xx.h"
+	"usb_type.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_type.h
+	"usb_conf.h"
+	<stdbool.h>
+
+1620836393 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_conf.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_regs.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_def.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_core.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_init.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_sil.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_mem.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\inc\usb_int.h
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_init.c
+	"usb_lib.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_int.c
+	"usb_lib.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_mem.c
+	"usb_lib.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_regs.c
+	"usb_lib.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_sil.c
+	"usb_lib.h"
+
+1612291777 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\clock.c
+	"stm32f1xx_ll_rcc.h"
+
+1639036609 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\dma_103.c
+	<main.h>
+	<dma_103.h>
+
+1639066566 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
+	"clock.h"
+	<eeprom_AT25.h>
+	<measure_NTC.h>
+	<modbus_hard.h>
+	<stdbool.h>
+	"inttypes.h"
+	"system_stm32f1xx.h"
+	"stm32f1xx.h"
+	<stdio.h>
+	"FreeRTOS.h"
+	"task.h"
+	"queue.h"
+	"semphr.h"
+	"timers.h"
+	"limits.h"
+	"IO.h"
+	"dma_103.h"
+	"hw_config.h"
+	"usb_lib.h"
+	"usb_desc.h"
+	"usb_pwr.h"
+	"usb_istr.h"
+	"math.h"
+	<string.h>
+	"emfat.h"
+	"mass_mal.h"
+
+1567705034 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\clock.h
+
+1639034077 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.h
+	<stm32f1xx.h>
+	<stdint.h>
+	<stdbool.h>
+	<IO.h>
+
+1638651035 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.h
+
+1638654580 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\measure_ntc.h
+	<stdint.h>
+	"math.h"
+	"main.h"
+
+1639068722 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.h
+	"modbus.h"
+	"modbus_reg.h"
+	"IO.h"
+	"main.h"
+	"system_stm32f1xx.h"
+	"stm32f1xx.h"
+	"FreeRTOS.h"
+	"semphr.h"
+	"task.h"
+	"queue.h"
+	"timers.h"
+
+1638652249 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.h
+	<stdint.h>
+	<stdbool.h>
+
+1639068722 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h
+	<stdint.h>
+	<stdbool.h>
+	"modbus.h"
+	<main.h>
+
+1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\semphr.h
+	"queue.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\dma_103.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_desc.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_pwr.h
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_istr.h
+	"usb_conf.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\emfat.h
+	<stddef.h>
+	<stdint.h>
+	<string.h>
+	<stdbool.h>
+
+1637675737 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\mass_mal.h
+
+1621414599 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.c
+	<eeprom_AT25.h>
+
+1639034086 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.c
+	<stdint.h>
+	<stdbool.h>
+	<stm32f1xx.h>
+	<IO.h>
+	<dma_103.h>
+	<main.h>
+
+1638654734 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\measure_ntc.c
+	<measure_NTC.h>
+
+1639066566 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.c
+	"modbus.h"
+	"modbus_reg.h"
+
+1639066629 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
+	"main.h"
+
+1638623814 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.c
+	"modbus_reg.h"
+
+1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\croutine.c
+	"FreeRTOS.h"
+	"task.h"
+	"croutine.h"
+
+1639033323 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\system_stm32f1xx.c
+	"stm32f1xx.h"
+
+1639060862 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\app.c
+	"main.h"
+	"usb_conf.h"
+	"emfat.h"
+	"stdlib.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\emfat.c
+	"emfat.h"
+
+1639036792 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\hw_config.c
+	"usb_lib.h"
+	"usb_prop.h"
+	"usb_desc.h"
+	"hw_config.h"
+	"usb_pwr.h"
+	<main.h>
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_prop.h
+
+1637675737 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\mass_mal.c
+	"main.h"
+	"mass_mal.h"
+	"emfat.h"
+
+1637675737 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\memory.c
+	"memory.h"
+	"usb_scsi.h"
+	"usb_bot.h"
+	"usb_regs.h"
+	"usb_mem.h"
+	"usb_conf.h"
+	"hw_config.h"
+	"mass_mal.h"
+	"usb_lib.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\memory.h
+	"hw_config.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_scsi.h
+	"hw_config.h"
+	"usb_type.h"
+
+1595841867 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_bot.h
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\scsi_data.c
+	"usb_scsi.h"
+	"memory.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_bot.c
+	"usb_scsi.h"
+	"hw_config.h"
+	"usb_regs.h"
+	"usb_mem.h"
+	"usb_conf.h"
+	"usb_bot.h"
+	"memory.h"
+	"usb_lib.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_desc.c
+	"usb_lib.h"
+	"usb_desc.h"
+
+1639066750 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_endp.c
+	"usb_istr.h"
+	<modbus_hard.h>
+	"usb_lib.h"
+	"usb_desc.h"
+	"usb_mem.h"
+	"hw_config.h"
+	"usb_istr.h"
+	"usb_pwr.h"
+	"usb_bot.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_istr.c
+	"usb_istr.h"
+	"usb_conf.h"
+	"usb_lib.h"
+	"usb_prop.h"
+	"usb_pwr.h"
+	"main.h"
+
+1637675737 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_prop.c
+	"usb_lib.h"
+	"usb_conf.h"
+	"usb_prop.h"
+	"usb_desc.h"
+	"usb_pwr.h"
+	"hw_config.h"
+	"usb_bot.h"
+	"memory.h"
+	"mass_mal.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_pwr.c
+	"usb_lib.h"
+	"usb_pwr.h"
+
+1637675737 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_scsi.c
+	"hw_config.h"
+	"usb_scsi.h"
+	"mass_mal.h"
+	"usb_bot.h"
+	"usb_regs.h"
+	"memory.h"
+	"usb_lib.h"
+	"nand_if.h"
+
+1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\virtualcomport.c
+	<string.h>
+	"usb_lib.h"
+	"usb_prop.h"
+	"usb_desc.h"
+
+1639067797 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.c
+	<modbus_hard.h>
+	<string.h>
+
