@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<EmBitz_project_file>
+	<EmBitzVersion release="2.10" revision="0" />
+	<FileVersion major="2" minor="0" />
+	<Project>
+		<Option title="MSD_2" />
+		<Option pch_mode="2" />
+		<Option compiler="armgcc_eb" />
+		<Build>
+			<Target title="Release">
+				<Option output="bin\Release\MSD_2.elf" />
+				<Option object_output="obj\Release\" />
+				<Option type="0" />
+				<Option create_hex="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Option projectCompilerOptionsRelation="0" />
+				<Option projectAssemblerOptionsRelation="1" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Device>
+					<Add option="$device=cortex-m3" />
+					<Add option="$lscript=./stm32f103c8_flash.ld" />
+					<Add option="$stack=0x0100" />
+					<Add option="$heap=0x0000" />
+				</Device>
+				<Compiler>
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+					<Add option="-Os" />
+					<Add option="-g3" />
+					<Add symbol="RELEASE_TARGET" />
+				</Compiler>
+				<Cpp>
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+					<Add option="-O2" />
+					<Add option="-g2" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--no-warn" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
+					<Add option="-flto" />
+				</Linker>
+				<ExtraCommands>
+					<Add after='arm-none-eabi-objcopy -O binary &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).elf&quot; &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).bin&quot;' />
+					<Mode before="0" />
+					<Mode after="0" />
+				</ExtraCommands>
+			</Target>
+		</Build>
+		<Device>
+			<Add option="$device=cortex-m3" />
+			<Add option="$lscript=./stm32f103c8_flash.ld" />
+			<Add option="$stack=0x0100" />
+			<Add option="$heap=0x0000" />
+		</Device>
+		<Compiler>
+			<Add option="-mfloat-abi=soft" />
+			<Add option="-Os" />
+			<Add option="-g3" />
+			<Add option="-fno-strict-aliasing" />
+			<Add symbol="ARM_MATH_CM3" />
+			<Add symbol="STM32F103" />
+			<Add symbol="STM32F103C8" />
+			<Add symbol="STM32F103xB" />
+			<Add symbol="PROJECT_C" />
+			<Add symbol="USE_HSE" />
+			<Add symbol="HSE_VALUE=8000000U" />
+			<Add symbol="SYSCLK_FREQ=72000000U" />
+			<Add symbol="USE_FULL_LL_DRIVER" />
+			<Add symbol="xPortSysTickHandler=SysTick_Handler" />
+			<Add symbol="xPortPendSVHandler=PendSV_Handler" />
+			<Add symbol="vPortSVCHandler=SVC_Handler" />
+			<Add directory=".\cmsis" />
+			<Add directory=".\inc" />
+			<Add directory=".\src" />
+		</Compiler>
+		<Cpp>
+			<Add option="-mfloat-abi=soft" />
+			<Add option="-Os" />
+			<Add option="-fno-strict-aliasing" />
+		</Cpp>
+		<Linker>
+			<Add option="-lm" />
+		</Linker>
+		<Unit filename="cmsis\cmsis_compiler.h" />
+		<Unit filename="cmsis\cmsis_gcc.h" />
+		<Unit filename="cmsis\cmsis_version.h" />
+		<Unit filename="cmsis\core_cm3.h" />
+		<Unit filename="cmsis\mpu_armv7.h" />
+		<Unit filename="cmsis\mpu_armv8.h" />
+		<Unit filename="cmsis\tz_context.h" />
+		<Unit filename="inc\stm32f103xb.h" />
+		<Unit filename="inc\stm32f1xx.h" />
+		<Unit filename="inc\system_stm32f1xx.h" />
+		<Unit filename="Libraries\FreeRTOS\croutine.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\event_groups.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\heap_1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\include\atomic.h" />
+		<Unit filename="Libraries\FreeRTOS\include\croutine.h" />
+		<Unit filename="Libraries\FreeRTOS\include\deprecated_definitions.h" />
+		<Unit filename="Libraries\FreeRTOS\include\event_groups.h" />
+		<Unit filename="Libraries\FreeRTOS\include\FreeRTOS.h" />
+		<Unit filename="Libraries\FreeRTOS\include\FreeRTOSConfig.h" />
+		<Unit filename="Libraries\FreeRTOS\include\list.h" />
+		<Unit filename="Libraries\FreeRTOS\include\message_buffer.h" />
+		<Unit filename="Libraries\FreeRTOS\include\mpu_prototypes.h" />
+		<Unit filename="Libraries\FreeRTOS\include\mpu_wrappers.h" />
+		<Unit filename="Libraries\FreeRTOS\include\portable.h" />
+		<Unit filename="Libraries\FreeRTOS\include\portmacro.h" />
+		<Unit filename="Libraries\FreeRTOS\include\projdefs.h" />
+		<Unit filename="Libraries\FreeRTOS\include\queue.h" />
+		<Unit filename="Libraries\FreeRTOS\include\semphr.h" />
+		<Unit filename="Libraries\FreeRTOS\include\stack_macros.h" />
+		<Unit filename="Libraries\FreeRTOS\include\StackMacros.h" />
+		<Unit filename="Libraries\FreeRTOS\include\stream_buffer.h" />
+		<Unit filename="Libraries\FreeRTOS\include\task.h" />
+		<Unit filename="Libraries\FreeRTOS\include\timers.h" />
+		<Unit filename="Libraries\FreeRTOS\list.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\port.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\queue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\stream_buffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\tasks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\FreeRTOS\timers.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\LL\stm32f1xx_ll_bus.h" />
+		<Unit filename="Libraries\LL\stm32f1xx_ll_rcc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\LL\stm32f1xx_ll_rcc.h" />
+		<Unit filename="Libraries\LL\stm32f1xx_ll_usart.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\LL\stm32f1xx_ll_usart.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_core.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_def.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_init.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_int.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_lib.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_mem.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_regs.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_sil.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_type.h" />
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_core.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_init.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_int.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_regs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_sil.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Clock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\Clock.h" />
+		<Unit filename="src\dma_103.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\dma_103.h" />
+		<Unit filename="src\eeprom_AT25.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\eeprom_AT25.h" />
+		<Unit filename="src\IO.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\IO.h" />
+		<Unit filename="src\main.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\main.h" />
+		<Unit filename="src\measure_NTC.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\measure_NTC.h" />
+		<Unit filename="src\modbus.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\modbus.h" />
+		<Unit filename="src\modbus_hard.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\modbus_hard.h" />
+		<Unit filename="src\modbus_reg.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\modbus_reg.h" />
+		<Unit filename="src\startup_stm32f103xb.S">
+			<Option compilerVar="CC" />
+			<Option weight="0" />
+		</Unit>
+		<Unit filename="src\system_stm32f1xx.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\app.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\emfat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\emfat.h" />
+		<Unit filename="src\USB_User\hw_config.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\hw_config.h" />
+		<Unit filename="src\USB_User\mass_mal.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\mass_mal.h" />
+		<Unit filename="src\USB_User\memory.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\memory.h" />
+		<Unit filename="src\USB_User\scsi_data.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_bot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_bot.h" />
+		<Unit filename="src\USB_User\usb_conf.h" />
+		<Unit filename="src\USB_User\usb_desc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_desc.h" />
+		<Unit filename="src\USB_User\usb_endp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_istr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_istr.h" />
+		<Unit filename="src\USB_User\usb_prop.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_prop.h" />
+		<Unit filename="src\USB_User\usb_pwr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_pwr.h" />
+		<Unit filename="src\USB_User\usb_scsi.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_User\usb_scsi.h" />
+		<Unit filename="src\USB_User\virtualComPort.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="stm32f103c8_flash.ld" />
+		<Unit filename="STM32F103xx.svd" />
+		<Extensions>
+			<code_completion />
+			<debugger>
+				<target_debugging_settings target="Release">
+					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="0" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="2" rstType="1" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
+				</target_debugging_settings>
+			</debugger>
+			<envvars />
+			<DoxyBlocks>
+				<comment_style block="0" line="0" />
+				<doxyfile_project />
+				<doxyfile_build />
+				<doxyfile_warnings />
+				<doxyfile_output />
+				<doxyfile_dot />
+				<general />
+			</DoxyBlocks>
+		</Extensions>
+	</Project>
+</EmBitz_project_file>
