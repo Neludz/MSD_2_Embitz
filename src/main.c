@@ -534,8 +534,8 @@ void sensor_param_init(void)
 {
 NTC_Calculation_Data_t NTC;
 
-NTC.NTC_r2=(MBbuf_main[Reg_NTC_R2_Value_1]&0xFFFF)|((MBbuf_main[Reg_NTC_R2_Value_2]&0xFFFF)<<16);
-NTC.NTC_r_divider=(MBbuf_main[Reg_NTC_R_Divider_1]&0xFFFF)|((MBbuf_main[Reg_NTC_R_Divider_2]&0xFFFF)<<16);
+NTC.NTC_r2=(MBbuf_main[Reg_NTC_R2_Value_W1]&0xFFFF)|((MBbuf_main[Reg_NTC_R2_Value_W2]&0xFFFF)<<16);
+NTC.NTC_r_divider=(MBbuf_main[Reg_NTC_R_Divider_W1]&0xFFFF)|((MBbuf_main[Reg_NTC_R_Divider_W2]&0xFFFF)<<16);
 NTC.NTC_adc_multipler=1;
 NTC.NTC_adc_resolution=ADC_COUNTS;
 NTC.NTC_b=(int16_t)MBbuf_main[Reg_NTC_B_Value];

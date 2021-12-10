@@ -81,8 +81,10 @@ typedef enum {
 	X_BUF(32,	Reg_Mode_DI_Trip_Counter,	0,		0,		0x1,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(33,	Reg_DO_1_Delay,				100,	1,		0xFF,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(34,	Reg_DO_2_Delay,				100,	1,		0xFF,	 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(35,	Reg_T_level_Warning,		60,		5,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(36,	Reg_T_level_Alarm,			70,		10,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
+	X_BUF(35,	Reg_T_level_Warning,		TEMPERATURE_OVER,\
+                                                    0,		0,	     WRITE | EESAVE)\
+	X_BUF(36,	Reg_T_level_Alarm,			TEMPERATURE_OVER,\
+                                                    0,		0,	     WRITE | EESAVE)\
 	X_BUF(37,	Reg_T_Number_Sensor_1,		0,		0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
 	X_BUF(38,	Reg_T_Number_Sensor_2,		0,		0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
 	X_BUF(39,	Reg_T_Dot,					0,		0,		0x1,	 WRITE | EESAVE | LIM_MASK)\
@@ -91,27 +93,27 @@ typedef enum {
 	X_BUF(42,	Reg_Cur_Time_Measure,		1200,	100,	2000,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(43,	Reg_Cur_Scale,				1,		1,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(44,	Reg_Cur_Dot,				1,		0,		3,		 WRITE | EESAVE | LIM_MASK)\
-	X_BUF(45,	Reg_Cur_Zero_Level,			1,		0,		0xFFFF,	 WRITE | EESAVE)\
-	X_BUF(46,	Reg_Cur_Level_Warning_W1,	40,		0,		0xFFFF,	 WRITE | EESAVE)\
-	X_BUF(47,	Reg_Cur_Level_Warning_W2,	0,		0,		0xFFFF,	 WRITE | EESAVE)\
-	X_BUF(48,	Reg_Cur_Level_Alarm_W1,		45,		0,		0xFFFF,	 WRITE | EESAVE)\
-	X_BUF(49,	Reg_Cur_Level_Alarm_W2,		0,		0,		0xFFFF,	 WRITE | EESAVE)\
+	X_BUF(45,	Reg_Cur_Zero_Level,			1,		0,		0,	     WRITE | EESAVE)\
+	X_BUF(46,	Reg_Cur_Level_Warning_W1,	40,		0,		0,	     WRITE | EESAVE)\
+	X_BUF(47,	Reg_Cur_Level_Warning_W2,	0,		0,		0,	     WRITE | EESAVE)\
+	X_BUF(48,	Reg_Cur_Level_Alarm_W1,		45,		0,		0,	     WRITE | EESAVE)\
+	X_BUF(49,	Reg_Cur_Level_Alarm_W2,		0,		0,		0,	     WRITE | EESAVE)\
 	X_BUF(50,	Reg_RS485_Baud_Rate,		1,		0,		0x03,	 WRITE | EESAVE | LIM_MASK)\
-	X_BUF(51,	Reg_Parity_Stop_Bits,	    0,	    0,		0x03,	 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(52,	Reg_RS485_Modbus_Address,	1,		1,		0xFA,	 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(53,	Reg_RS485_Ans_Delay,	    5,		MIN_TIME_TO_START_TRANSMIT_MS,\
+	X_BUF(51,	Reg_RS485_Ans_Delay,	    5,		MIN_TIME_TO_START_TRANSMIT_MS,\
                                                             100,	 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(55,	Reg_NTC_R2_Value_1,         5000,	0,		0,       WRITE | EESAVE)\
-	X_BUF(56,	Reg_NTC_R2_Value_2,         0,		0,		0,		 WRITE | EESAVE)\
-	X_BUF(57,	Reg_NTC_R_Divider_1,        5100,	0,		0,       WRITE | EESAVE)\
-	X_BUF(58,	Reg_NTC_R_Divider_2,        0,		0,		0,       WRITE | EESAVE)\
-	X_BUF(59,	Reg_NTC_B_Value,            3984,	0,		0,       WRITE | EESAVE)\
-	X_BUF(60,	Reg_NTC_T2_Value,           25,		0,		0,       WRITE | EESAVE)\
-	X_BUF(61,	Reg_NTC_Start_Temperature, -10,	   -40,		20,		 WRITE | EESAVE | LIM_SIGN)\
-	X_BUF(62,	Reg_NTC_Step_Temperature,   1,		1,		5,       WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(63,	Reg_NTC_Temper_Number_Step, 136,    1,      SIZE_NTC_TABLE,\
+	X_BUF(52,	Reg_RS485_Modbus_Address,	1,		1,		0xFA,	 WRITE | EESAVE | LIM_UNSIGN)\
+	X_BUF(53,	Reg_Parity_Stop_Bits,	    0,	    0,		0x03,	 WRITE | EESAVE | LIM_UNSIGN)\
+	X_BUF(56,	Reg_NTC_R2_Value_W1,        5000,	0,		0,       WRITE | EESAVE)\
+	X_BUF(57,	Reg_NTC_R2_Value_W2,        0,		0,		0,		 WRITE | EESAVE)\
+	X_BUF(58,	Reg_NTC_R_Divider_W1,       5100,	0,		0,       WRITE | EESAVE)\
+	X_BUF(59,	Reg_NTC_R_Divider_W2,       0,		0,		0,       WRITE | EESAVE)\
+	X_BUF(60,	Reg_NTC_B_Value,            3984,	0,		0,       WRITE | EESAVE)\
+	X_BUF(61,	Reg_NTC_T2_Value,           25,		0,		0,       WRITE | EESAVE)\
+	X_BUF(62,	Reg_NTC_Start_Temperature, -10,	   -40,		20,		 WRITE | EESAVE | LIM_SIGN)\
+	X_BUF(63,	Reg_NTC_Step_Temperature,   1,		1,		5,       WRITE | EESAVE | LIM_UNSIGN)\
+	X_BUF(64,	Reg_NTC_Temper_Number_Step, 136,    1,      SIZE_NTC_TABLE,\
 	                                                                 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(64,	Reg_Version,				Version_MSD_2,\
+	X_BUF(65,	Reg_Version,				Version_MSD_2,\
 													Version_MSD_2,\
 															Version_MSD_2,\
 																	 READ  | EESAVE)\
