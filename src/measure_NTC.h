@@ -19,6 +19,7 @@
 // Значение температуры, возвращаемое если сумма результатов АЦП меньше последнего значения таблицы
 #define TEMPERATURE_OVER 		0x7002
 #define TEMPERATURE_NO_MEASURE 	0x7004
+#define TEMPERATURE_ERROR_MASK 	0x7000
 
 #define TEMPERATURE_TABLE_SIZE  		SIZE_NTC_TABLE
 #define TEMPERATURE_TABLE_READ(i) 		(termo_table[i])

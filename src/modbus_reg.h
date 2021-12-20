@@ -59,7 +59,7 @@ typedef enum {
 	X_BUF(10,	Reg_Cur_RMS_W1,				0,		0, 		0,		 READ)\
 	X_BUF(11,	Reg_Cur_RMS_W2,				0,		0, 		0,		 READ)\
 	X_BUF(12,	Reg_T_MSD,					0,		0, 		0,		 READ)\
-	X_BUF(13,	Reserved_2,					0,		0, 		0,		 READ)\
+	X_BUF(13,	Reg_T_Max,					0,		0, 		0,		 READ)\
 	X_BUF(14,	Reserved_3,					789,	0, 		0xFFFF,	 READ)\
 	X_BUF(15,	Reserved_4,					123,	0, 		0xFFFF,	 READ)\
 	X_BUF(16,	Reg_DI_1_Trip_Counter,		0,		0, 		0,	 	 WRITE | EESAVE)\
@@ -85,8 +85,8 @@ typedef enum {
                                                     0,		0,	     WRITE | EESAVE)\
 	X_BUF(36,	Reg_T_level_Alarm,			TEMPERATURE_OVER,\
                                                     0,		0,	     WRITE | EESAVE)\
-	X_BUF(37,	Reg_T_Number_Sensor_1,		0,		0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
-	X_BUF(38,	Reg_T_Number_Sensor_2,		0,		0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
+	X_BUF(37,	Reg_T_Number_Sensor_1,		0x1FF,	0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
+	X_BUF(38,	Reg_T_Number_Sensor_2,		0x1FF,	0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
 	X_BUF(39,	Reg_T_Dot,					0,		0,		0x1,	 WRITE | EESAVE | LIM_MASK)\
 	X_BUF(40,	Reg_Cur_Sensor_Hall_Ratio,	132,	5,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(41,	Reg_Cur_Filter_Ratio,		30,		1,		0xFF,	 WRITE | EESAVE | LIM_UNSIGN)\

@@ -318,6 +318,7 @@ void vBlinker (void *pvParameters)
 	printf ( "1 sec \n" );
 #endif
 	MBbuf_main[Reg_Error_Count] = Error;
+	MBbuf_main[Reg_T_Max] = max_temperature();
     }
 }
 
@@ -529,6 +530,25 @@ uint32_t TimeMs;
 TimeMs = xTaskGetTickCount();
 return TimeMs + AddTimeMs;
 }*/
+//-------------------------------------------------------------------------
+int16_t max_temperature(void)
+{
+ int16_t temper_temp, temper_new;
+ temper_temp = (-100);
+   	for (int32_t i=0; i<ADC_CHANNEL_T; i++)
+	{
+    temper_new = MBbuf_main[Reg_T_0_Channel+i];
+        if ((temper_new>temper_temp)&&(MBbuf_main[Reg_T_Number_Sensor_1]&(1<<i)))
+        {
+        temper_temp = temper_new;
+        }
+	}
+	if(temper_temp == (-100))
+    {
+     temper_temp = TEMPERATURE_NO_MEASURE;
+    }
+return temper_temp;
+}
 //-------------------------------------------------------------------------
 void sensor_param_init(void)
 {

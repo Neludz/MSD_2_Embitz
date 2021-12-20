@@ -41,7 +41,7 @@ return REG_ERR;
 }
 //--------------------------------------------------------------------------------------
 /*
-#define LIM_BIT_MASK	(0x0C)	//check limit mask (2&3 bits)____
+#define LIM_BIT_MASK	(0x0C)	//check limit mask (2&3 bits)----|
 #define LIM_SIGN		(0x04)	// 2 bit for limit     		  <--|
 #define LIM_UNSIGN		(0x08)  // 3 bit for limit	    	  <--|
 #define LIM_MASK	    (0x0C)	// 2 and 3 bit for limit	  <--|

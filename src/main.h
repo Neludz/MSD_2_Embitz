@@ -86,6 +86,7 @@ void Factory (void);
 void Buf_Init (void);
 void Set_Time_For_Blink (uint32_t On_Timer, uint32_t Off_Timer);
 void sensor_param_init(void);
+int16_t max_temperature(void);
 //uint32_t Main_Timer_Set(const uint32_t AddTimeMs);
 //bool Timer_Is_Expired (const uint32_t Timer);
 
