@@ -310,7 +310,7 @@ void vBlinker (void *pvParameters)
 	    	}
 			if (MBbuf_main[Reg_Set_Default_Reset]==FACTORY_SET_VALUE)
 			{
-			Factory();
+			mh_Factory();
 			}
 		MBbuf_main[Reg_Set_Default_Reset]=0;
 		}
@@ -600,10 +600,9 @@ void vCurrent_Timers_Function (xTimerHandle xTimer)
 
 void flash_btock(void)
 {
-
 	if (!(FLASH->OBR & FLASH_OBR_RDPRT))
 	{
-	Factory();	//when first start -> set MBbuf
+	mh_Factory();	//when first start -> set MBbuf
 
 	FLASH->KEYR = FLASH_KEY1;
 	FLASH->KEYR = FLASH_KEY2;
@@ -649,46 +648,6 @@ void IWDG_res(void)
 IWDG->KR=0xAAAA; // Перезагрузка
 }
 
-//-------------------------------------------------------------------------
-
-void Factory (void)
-{
-taskENTER_CRITICAL();
-uint16_t len =  sizeof(default_state[0].Default_Value);
-	for (int32_t i=0; i< NUM_BUF; i++)
-	{
-		if (EESave_Check(i)==REG_OK)
-		{
-		MBbuf_main[i] = default_state[i].Default_Value;
-		AT25_update_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
-		}
-	}
-taskEXIT_CRITICAL();
-MBbuf_main[Reg_Set_Default_Reset]=0;
-}
-
-//-------------------------------------------------------------------------
-
-void Buf_Init (void)
-{
-taskENTER_CRITICAL();
-uint16_t len =  sizeof(default_state[0].Default_Value);
-	for (int32_t i=0; i< NUM_BUF; i++)
-	{
-		if(EESave_Check(i)==REG_OK)
-		{
-		AT25_read_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
-			if(Limit_Check(i, MBbuf_main[i])==REG_ERR)
-			{
-			MBbuf_main[i]=default_state[i].Default_Value;
-			AT25_update_byte((i)*len, (uint8_t *) &MBbuf_main[i],  len);
-			}
-		}
-	}
-MBbuf_main[Reg_Set_Default_Reset]=0;
-taskEXIT_CRITICAL();
-}
-
 /*
 **===========================================================================
 **
@@ -706,7 +665,7 @@ int main(void)
 
 	emfat_init(&emfat, "MSD_2", entries);
 
-	Buf_Init();
+	mh_Buf_Init();
 
     Set_System();
     Set_USBClock();

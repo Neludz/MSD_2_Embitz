@@ -283,5 +283,44 @@ START_RECEIVE;
     MBparsing((mb_struct*) st_mb);
     }
 }
+//-------------------------------------------------------------------------
+
+void mh_Factory (void)
+{
+taskENTER_CRITICAL();
+uint16_t len =  sizeof(default_state[0].Default_Value);
+	for (int32_t i=0; i< NUM_BUF; i++)
+	{
+		if (EESave_Check(i)==REG_OK)
+		{
+		MBbuf_main[i] = default_state[i].Default_Value;
+		AT25_update_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
+		}
+	}
+taskEXIT_CRITICAL();
+MBbuf_main[Reg_Set_Default_Reset]=0;
+}
+
+//-------------------------------------------------------------------------
+
+void mh_Buf_Init (void)
+{
+taskENTER_CRITICAL();
+uint16_t len =  sizeof(default_state[0].Default_Value);
+	for (int32_t i=0; i< NUM_BUF; i++)
+	{
+		if(EESave_Check(i)==REG_OK)
+		{
+		AT25_read_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
+			if(Limit_Check(i, MBbuf_main[i])==REG_ERR)
+			{
+			MBbuf_main[i]=default_state[i].Default_Value;
+			AT25_update_byte((i)*len, (uint8_t *) &MBbuf_main[i],  len);
+			}
+		}
+	}
+MBbuf_main[Reg_Set_Default_Reset]=0;
+taskEXIT_CRITICAL();
+}
 
 //=========================================================================================

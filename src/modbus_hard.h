@@ -57,5 +57,7 @@ void mh_Rs485_Transmit_Start (void *mbb);
 static void rs485_timer_callback (xTimerHandle xTimer);
 void IO_Uart1_Init(void);
 void mh_task_Modbus (void *pvParameters);
+void mh_Factory (void);
+void mh_Buf_Init (void);
 
 #endif /* MODBUS_HARD_H_INCLUDED */

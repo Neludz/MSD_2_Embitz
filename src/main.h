@@ -82,8 +82,6 @@ void vCurrent_Timers_Function (xTimerHandle xTimer);
 void vOne_Shot_Timers_Function (xTimerHandle xTimer);
 void Init_IWDG(uint16_t tw);
 void IWDG_res(void);
-void Factory (void);
-void Buf_Init (void);
 void Set_Time_For_Blink (uint32_t On_Timer, uint32_t Off_Timer);
 void sensor_param_init(void);
 int16_t max_temperature(void);
