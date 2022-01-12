@@ -3,7 +3,6 @@
 //======================Include========================================
 #include <stdint.h>
 #include <stdbool.h>
-#include "modbus.h"
 #include <main.h>
 
 //======================Define========================================
@@ -25,13 +24,7 @@ typedef enum {
     REG_ERR 		= 0x01
 } Reg_Error_Code;
 
-typedef enum {
-    NO_PARITY_1_STOP	= 0x00,
-    NO_PARITY_2_STOP	= 0x01,
-    EVEN_PARITY_1_STOP	= 0x02,
-    ODD_PARITY_1_STOP	= 0x03,
 
-} Parity_Stop_Bits_t;
 #define LIM_BIT_MASK	(0x0C)	//check limit mask (2&3 bits)
 
 //  MAIN_BUF_Start_Table_Mask
@@ -87,13 +80,13 @@ typedef enum {
                                                     0,		0,	     WRITE | EESAVE)\
 	X_BUF(37,	Reg_T_Number_Sensor_1,		0x1FF,	0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
 	X_BUF(38,	Reg_T_Number_Sensor_2,		0x1FF,	0,		0x1FF,	 WRITE | EESAVE | LIM_MASK)\
-	X_BUF(39,	Reg_T_Dot,					0,		0,		0x1,	 WRITE | EESAVE | LIM_MASK)\
+	X_BUF(39,	Reserved_5,					0,		0,		0,	     READ)\
 	X_BUF(40,	Reg_Cur_Sensor_Hall_Ratio,	132,	5,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(41,	Reg_Cur_Filter_Ratio,		30,		1,		0xFF,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(42,	Reg_Cur_Time_Measure,		1200,	100,	2000,	 WRITE | EESAVE | LIM_UNSIGN)\
 	X_BUF(43,	Reg_Cur_Scale,				1,		1,		1000,	 WRITE | EESAVE | LIM_UNSIGN)\
-	X_BUF(44,	Reg_Cur_Dot,				1,		0,		3,		 WRITE | EESAVE | LIM_MASK)\
-	X_BUF(45,	Reg_Cur_Zero_Level,			1,		0,		0,	     WRITE | EESAVE)\
+	X_BUF(44,	Reg_Cur_Dot,				0,		0,		3,		 WRITE | EESAVE | LIM_MASK)\
+	X_BUF(45,	Reg_Cur_Zero_Level,			200,	0,		0,	     WRITE | EESAVE)\
 	X_BUF(46,	Reg_Cur_Level_Warning_W1,	40,		0,		0,	     WRITE | EESAVE)\
 	X_BUF(47,	Reg_Cur_Level_Warning_W2,	0,		0,		0,	     WRITE | EESAVE)\
 	X_BUF(48,	Reg_Cur_Level_Alarm_W1,		45,		0,		0,	     WRITE | EESAVE)\

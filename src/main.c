@@ -106,7 +106,7 @@ sensor_param_init();
     	{
     	ADC_Val=(uint16_t)getADCval(i);
     	Adc_Filter_Value[i]=(Adc_Filter_Value[i]*7+ADC_Val)>>3;
-    	MBbuf_main[(i+Reg_T_0_Channel)] = calc_temperature(Adc_Filter_Value[i], MBbuf_main[Reg_T_Dot]&0x01);
+    	MBbuf_main[(i+Reg_T_0_Channel)] = calc_temperature(Adc_Filter_Value[i]);
     	if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Warning)]) MBbuf_main[Reg_T_Warning_bit]|=1<<i;
     	else MBbuf_main[Reg_T_Warning_bit] &=~(1<<i);
 
@@ -178,10 +178,11 @@ MBbuf_main[Reg_Cur_RMS_W2] = 0;
     	}
     	while(!(ulNotifiedValue&ADC_CURRENT_FIN));
 
-	Filter_Ratio = (ADC_COUNTS * MBbuf_main[Reg_Cur_Sensor_Hall_Ratio] + (mV_ADC>>1))/mV_ADC;
-    Irms = (((sqrt(Isum / Number_Of_Samples)) *(MBbuf_main[Reg_Cur_Scale] * Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]))+(Filter_Ratio>>1))/Filter_Ratio;
+	Filter_Ratio = ADC_COUNTS * MBbuf_main[Reg_Cur_Sensor_Hall_Ratio]; //divider
+	Irms = (((sqrt(Isum / Number_Of_Samples)) *MBbuf_main[Reg_Cur_Scale] * Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*mV_ADC)+(Filter_Ratio>>1))/Filter_Ratio;
 
-    if (Irms < (uint32_t)MBbuf_main[Reg_Cur_Zero_Level]) Irms=0;
+    Filter_Ratio=  ((MBbuf_main[Reg_Cur_Zero_Level]*Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*MBbuf_main[Reg_Cur_Scale])/1000);
+    if (Irms < Filter_Ratio) Irms=0;                                    //zero level
 
     MBbuf_main[Reg_Cur_Cross_Count] = (uint16_t)Cross_Count;
     MBbuf_main[Reg_Cur_RMS_W1] = (uint16_t)(Irms & 0xFFFF);

@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "modbus_reg.h"
 
 #define MB_FRAME_MIN     		4       /* Minimal size of a Modbus RTU frame	*/
 #define MB_FRAME_MAX     		256     /* Maximal size of a Modbus RTU frame	*/
@@ -59,8 +60,8 @@ typedef struct {					// Main program passes interface data to Modbus stack.
 	uint16_t    *p_read;			// Pointer to the begin of ParsWk array. Modbus takes data from the array
 	uint16_t    reg_read_last;		//
     uint16_t    reg_write_last;		//
-	uint16_t    eep_start_save;		//	функция modbus записывает сюда откуда сохранять данные (индекс массива)
-	uint8_t	    eep_indx;			// и сколько нужно проверить(после обработки пакета функция записи в ЕЕПРОМ должна обработать эти данные)
+	uint16_t    eep_start_save;		//	function modbus write here data start index
+	uint8_t	    eep_indx;			// and how many registers are pending validation
 	eMBEep  	eep_state;			//
 	uint8_t     slave_address;		//
 	uint8_t	    mb_index;

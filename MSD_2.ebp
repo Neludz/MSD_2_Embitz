@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.10" revision="0" />
+	<EmBitzVersion release="2.30" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="MSD_2" />
@@ -59,6 +59,7 @@
 		</Device>
 		<Compiler>
 			<Add option="-mfloat-abi=soft" />
+			<Add option="-Wunused" />
 			<Add option="-Os" />
 			<Add option="-g3" />
 			<Add option="-fno-strict-aliasing" />

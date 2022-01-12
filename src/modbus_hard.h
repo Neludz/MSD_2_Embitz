@@ -47,6 +47,14 @@
 
 #define	TXEIE_OFF	do { USART1->CR1  &= ~(USART_CR1_TXEIE); 	} 	while(0)
 
+typedef enum {
+    NO_PARITY_1_STOP	= 0x00,
+    NO_PARITY_2_STOP	= 0x01,
+    EVEN_PARITY_1_STOP	= 0x02,
+    ODD_PARITY_1_STOP	= 0x03,
+
+} Parity_Stop_Bits_t;
+
 void mh_Write_Eeprom (void *mbb);
 void mh_MB_Init(void);
 void mh_USB_Init(void);
@@ -54,7 +62,7 @@ void mh_USB_Transmit_Start (void *mbb);
 void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len);
 void mh_RS485_Init(void);
 void mh_Rs485_Transmit_Start (void *mbb);
-static void rs485_timer_callback (xTimerHandle xTimer);
+void rs485_timer_callback (xTimerHandle xTimer);
 void IO_Uart1_Init(void);
 void mh_task_Modbus (void *pvParameters);
 void mh_Factory (void);

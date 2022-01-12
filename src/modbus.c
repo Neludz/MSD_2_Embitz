@@ -1,7 +1,6 @@
 
 
 #include "modbus.h"
-#include "modbus_reg.h"
 
 //==================CRC=================================
 
@@ -65,7 +64,7 @@ unsigned int CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 
 //======================================================
 // check registers from request
-
+#ifdef EEPROM_REG
 eMBEep  Eeprom_Check_in_Request (uint16_t Start_Reg, uint16_t Count)
 {
 	if((Count+Start_Reg)>=NUM_BUF)
@@ -81,8 +80,9 @@ eMBEep  Eeprom_Check_in_Request (uint16_t Start_Reg, uint16_t Count)
 	}
 return 	EEP_FREE;
 }
+#endif
 //--------------------------------------------------------------------------------------
-
+#ifdef LIMIT_REG
 eMBExcep Limit_Check_in_Request (uint16_t Number_Reg, uint16_t Value)
 {
 	if (Write_Check(Number_Reg)==REG_ERR)
@@ -97,6 +97,7 @@ eMBExcep Limit_Check_in_Request (uint16_t Number_Reg, uint16_t Value)
 
 return MBE_NONE;
 }
+#endif
 //--------------------------------------------------------------------------------------
 
 void MBparsing(mb_struct *mbb)

@@ -1,6 +1,5 @@
 
 #include <modbus_hard.h>
-#include <string.h>
 //=========================================================================================
 
 extern uint16_t MBbuf_main [];
@@ -47,8 +46,6 @@ st_mb->eep_state = EEP_FREE;
 
 void mh_MB_Init(void)
 {
-    BaseType_t rtos_result;
-
     //create queue
     xModbusQueue=xQueueCreate(4,sizeof(mb_struct *));
 
@@ -138,7 +135,7 @@ TO_TRANSMT;
 }
 //--------------------------------------------------------------------------------------
 
-static void rs485_timer_callback (xTimerHandle xTimer)
+void rs485_timer_callback (xTimerHandle xTimer)
 {
         if( STATE_RCVE == MB_RS485.mb_state)
         {                                               // If we are receiving, it's the end event: t3.5
@@ -187,6 +184,7 @@ void USART1_IRQHandler (void)
 {
  BaseType_t xHigherPriorityTaskWoken = pdFALSE;
  uint16_t cnt;
+ ((void)(cnt));
  if (USART1->SR & USART_SR_RXNE)
 	{
     if ((USART1->SR & (USART_SR_NE|USART_SR_FE|USART_SR_PE|USART_SR_ORE)) == 0)
@@ -212,6 +210,7 @@ void USART1_IRQHandler (void)
         else
         	{
         	Error|=0x80;
+        	USART1->SR = ~USART_SR_RXNE;
         	}
         }
     else

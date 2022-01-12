@@ -7,7 +7,6 @@
 
 #ifndef MEASURE_NTC_H_
 #define MEASURE_NTC_H_
-
 //======================Include========================================
 #include <stdint.h>
 #include "math.h"
@@ -44,7 +43,7 @@ typedef struct
 
 //=========================   prototype   =========================
 //N_Dot -> знаков после запятой (0 или 1)
-int16_t calc_temperature(temperature_table_entry_type adcsum, uint16_t N_Dot) ;
+int16_t calc_temperature(temperature_table_entry_type adcsum) ;
 void calculate_table_NTC (NTC_Calculation_Data_t NTC_Data);
 
 

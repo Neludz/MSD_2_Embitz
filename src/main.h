@@ -41,8 +41,11 @@
 #include "emfat.h"
 #include "mass_mal.h"
 
+
+#define Version_MSD_2			214
+
+
 #define WATCH_DOG_TIME_MS		500
-#define Version_MSD_2			212
 #define MAX_DI  				4
 #define MAX_DI_TRIP_COUNTER 	2	//количество DI со счетчиком включения, max 32 (notification use number bit, see eeprom write task)
 #define COUNTER_EE_UPD_MS		600000
