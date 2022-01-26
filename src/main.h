@@ -74,7 +74,7 @@
 #define TIME_OFF_NO_USB 			500
 
 #define M_MODBUS_TASK_PRIORITY         (tskIDLE_PRIORITY + 3)
-#define M_MODBUS_TASK_STACK_SIZE       (configMINIMAL_STACK_SIZE)
+#define M_MODBUS_TASK_STACK_SIZE       (configMINIMAL_STACK_SIZE*2)
 
 void vMeasure_Temperature (void *pvParameters);
 void vMeasure_Current (void *pvParameters);
