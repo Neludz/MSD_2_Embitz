@@ -1,7 +1,7 @@
 
 
 #include "modbus.h"
-
+#include "modbus_reg.h"
 //==================CRC=================================
 
 /* Table of CRC values for high–order byte */

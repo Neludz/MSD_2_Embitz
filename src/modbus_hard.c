@@ -38,9 +38,7 @@ uint16_t len =  sizeof(default_state[0].Default_Value);
 		AT25_update_byte( ((st_mb->eep_start_save)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->eep_start_save)]), len);
 		}
 	}
-vTaskDelay((1500/portTICK_RATE_MS));
 st_mb->eep_state = EEP_FREE;
-
 }
 //--------------------------------------------------------------------------------------
 

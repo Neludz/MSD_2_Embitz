@@ -10,7 +10,7 @@
 #define MB_ADDRESS_BROADCAST  	00		/* MBBuff[0] analysis					*/
 
 #define MB_ANY_ADDRESS		  	00		/* 0 - any address						*/
-#define MB_MAX_REG				125		/*max quantity registers in inquiry. Should be less than MB_FRAME_MAX considering service bytes. Use for 03 function*/
+#define MB_MAX_REG				120		/*max quantity registers in inquiry. Should be less than MB_FRAME_MAX considering service bytes. Use for 03 function*/
 
 #define MB_FUNC_NONE							00
 #define MB_FUNC_READ_COILS						01

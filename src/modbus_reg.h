@@ -6,8 +6,8 @@
 #include <main.h>
 
 //======================Define========================================
-#define LIMIT_REG	//check limit
-#define EEPROM_REG	//use eeprom
+#define LIMIT_REG	1//check limit
+#define EEPROM_REG	1//use eeprom
 
 //=========================   Modbus registers X macros   =========================
 
