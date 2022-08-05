@@ -12,3 +12,9 @@ Overview
 Configuration
 -------------
 Use modbus protocol. Test file on USB.
+
+To Do
+-----------
+- Change size of usb flash txt data
+- Select version of modbus lib 
+
