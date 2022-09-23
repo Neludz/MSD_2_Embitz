@@ -1,8 +1,10 @@
 
-
 #include "modbus.h"
 #include "modbus_reg.h"
-//==================CRC=================================
+
+//-----------------------------------------------------------------------
+//  CRC
+//----------------------------------------------------------------------
 
 /* Table of CRC values for high–order byte */
 const unsigned char auchCRCHi[] = {
@@ -47,7 +49,6 @@ const char auchCRCLo[] = {
 0x40
 };
 
-
 unsigned int CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 {
 	unsigned char uchCRCHi = 0xFF ; 						/* high byte of CRC initialized  	*/
@@ -62,69 +63,70 @@ unsigned int CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 	return ((unsigned int)uchCRCHi << 8 | uchCRCLo);
 }
 
-//======================================================
-// check registers from request
+//-----------------------------------------------------------------------
+//  function
+//----------------------------------------------------------------------
+// check registers for saving in eeprom
 #ifdef EEPROM_REG
 eMBEep  Eeprom_Check_in_Request (uint16_t Start_Reg, uint16_t Count)
 {
 	if((Count+Start_Reg)>=NUM_BUF)
 	{
-	return 	EEP_FREE;
+		return 	EEP_FREE;
 	}
 	for (int32_t i = 0; i < Count; i++)
 	{
 		if(EESave_Check(Start_Reg+i)==REG_OK)
 		{
-		return EEP_SAVE;
+			return EEP_SAVE;
 		}
 	}
-return 	EEP_FREE;
+	return 	EEP_FREE;
 }
 #endif
-//--------------------------------------------------------------------------------------
+
+// check register limits
 #ifdef LIMIT_REG
 eMBExcep Limit_Check_in_Request (uint16_t Number_Reg, uint16_t Value)
 {
 	if (Write_Check(Number_Reg)==REG_ERR)
 	{
-	return MBE_ILLEGAL_DATA_ADDRESS;
+		return MBE_ILLEGAL_DATA_ADDRESS;
 	}
 
 	if (Limit_Check (Number_Reg, Value)==REG_ERR)
 	{
-	return	MBE_ILLEGAL_DATA_VALUE;
+		return	MBE_ILLEGAL_DATA_VALUE;
 	}
 
-return MBE_NONE;
+	return MBE_NONE;
 }
 #endif
-//--------------------------------------------------------------------------------------
 
 void MBparsing(mb_struct *mbb)
 {
-
-	if( InvalidFrame(mbb)) {
+	if( InvalidFrame(mbb))
+	{
 		mbb->mb_state = STATE_IDLE;
 		return;
 	}
 	if( FrameParse(mbb)) // Returns TRUE if a response is needed
-	    {
+	{
         mbb->mb_state=STATE_SEND;
 	    mbb->mb_index=0;
 	    mbb->f_start_trans(mbb);
-        }
+    }
 	else
-	    {
-         mbb->mb_state=STATE_IDLE;
-        }
+	{
+     	mbb->mb_state=STATE_IDLE;
+    }
 #ifdef EEPROM_REG
     if  (mbb->eep_state==EEP_SAVE)
-        {
+    {
         mbb->f_save(mbb);
-        }
+    }
 #endif
 }
-//--------------------------------------------------------------------------------------
 
 bool InvalidFrame( mb_struct *mbb)
 {
@@ -149,186 +151,185 @@ bool InvalidFrame( mb_struct *mbb)
 	}
 	return false;
 }
-//--------------------------------------------------------------------------------------
 
 bool FrameParse (mb_struct *mbb)
 {							// Returns TRUE if a response is needed
 #ifdef LIMIT_REG
-uint16_t 	Value, RegIndxInter, j;
-//eMBExcep	ExceptionInter;
+	uint16_t 	Value, RegIndxInter, j;
 #endif
+	uint16_t 	RegIndx, RegNmb, RegLast,   i;
+	uint8_t		BytesN;
+	eMBExcep	Exception;					// If a Modbus exception happens - we put the var in MBBuff[2]
 
-uint16_t 	RegIndx, RegNmb, RegLast,   i;
-uint8_t		BytesN;
-eMBExcep	Exception;					// If a Modbus exception happens - we put the var in MBBuff[2]
-
-bool NeedResponse = true;
+	bool NeedResponse = true;
 	if( mbb->p_mb_buff[0] == MB_ADDRESS_BROADCAST)
 	{
-	NeedResponse = false;				// We parse the request but we don'n give a response
+		NeedResponse = false;				// We parse the request but we don'n give a response
 	}
 
 	switch( mbb->p_mb_buff[1])
 	{					// Function code
 //--------------------------------------------------
 	case MB_FUNC_READ_HOLDING_REGISTER:
-					//		  03	0...LASTINDEX-1      0...125
-					// addr  func    AddrHi  AddrLo  QuantHi  QuantLo  CRC CRC
-					//  0	  1			2		3		4		5		 6	7
+		//		  03	0...LASTINDEX-1      0...125
+		// addr  func    AddrHi  AddrLo  QuantHi  QuantLo  CRC CRC
+		//  0	  1			2		3		4		5		 6	7
 		if( 8 == mbb->mb_index)
-		{								// In this function mb_index == 8.
-		RegIndx = (mbb->p_mb_buff[2]<<8) | (mbb->p_mb_buff[3]&0xFF);
-		RegNmb  = (mbb->p_mb_buff[4]<<8) | (mbb->p_mb_buff[5]&0xFF);
-		RegLast = RegIndx + RegNmb;
+		{
+			// In this function mb_index == 8.
+			RegIndx = (mbb->p_mb_buff[2]<<8) | (mbb->p_mb_buff[3]&0xFF);
+			RegNmb  = (mbb->p_mb_buff[4]<<8) | (mbb->p_mb_buff[5]&0xFF);
+			RegLast = RegIndx + RegNmb;
 			if( (RegIndx > mbb->reg_read_last) ||
                 ((RegLast-1) > mbb->reg_read_last) ||
-				 (RegNmb>MB_MAX_REG) )			// max quantity registers in inquiry
+				(RegNmb>MB_MAX_REG) )	// max quantity registers in inquiry
             {
-			Exception = MBE_ILLEGAL_DATA_ADDRESS;
-			break;
+				Exception = MBE_ILLEGAL_DATA_ADDRESS;
+				break;
             }
-														// Make response. MBBuff[0] and MBBuff[1] are ready
+			// Make response. MBBuff[0] and MBBuff[1] are ready
 			mbb->p_mb_buff[2] = RegNmb << 1;
 			mbb->mb_index = 3;
-	        	while( RegIndx < RegLast )
-	        	{
+	        while( RegIndx < RegLast )
+	        {
 	        	mbb->p_mb_buff[mbb->mb_index++] = (uint8_t)(*(mbb->p_read+RegIndx) >> 8)  ;
 	        	mbb->p_mb_buff[mbb->mb_index++] = (uint8_t)(*(mbb->p_read+RegIndx) & 0xFF);
 	        	++RegIndx;
-	        	}
-	    Exception = MBE_NONE;						// OK, make CRC to MBBuff[mb_index] and response is ready
-	    break;
+	        }
+	    	Exception = MBE_NONE;	// OK, make CRC to MBBuff[mb_index] and response is ready
+	    	break;
 		}
-	Exception = MBE_ILLEGAL_DATA_VALUE;	// PDU length incorrect
-	break;
+		Exception = MBE_ILLEGAL_DATA_VALUE;	// PDU length incorrect
+		break;
 		//--------------------------------------------------
 	case MB_FUNC_WRITE_MULTIPLE_REGISTERS:
-					//		  16	0...LASTINDEX-1      0...125	 0...250
-					// addr  func    AddrHi  AddrLo  QuantHi  QuantLo  Bytes  RG1Hi RG1LO ... CRC CRC
-					//  0	  1			2		3		4		5		 6		7	  8	  ...
+		//		  16	0...LASTINDEX-1      0...125	 0...250
+		// addr  func    AddrHi  AddrLo  QuantHi  QuantLo  Bytes  RG1Hi RG1LO ... CRC CRC
+		//  0	  1			2		3		4		5		 6		7	  8	  ...
 
 		if( mbb->mb_index > 10)
 		{
-		Exception = MBE_NONE;						// ...and mb_index is a length of response
-		       											// The must: mb_index == 11, 13, 15, ...
-		RegIndx = (mbb->p_mb_buff[2]<<8) | (mbb->p_mb_buff[3]&0xFF);
-		RegNmb  = (mbb->p_mb_buff[4]<<8) | (mbb->p_mb_buff[5]&0xFF);
-		RegLast = RegIndx + RegNmb;
-		BytesN	= mbb->p_mb_buff[6];
-			if(  (RegIndx > mbb->reg_write_last) ||
+			Exception = MBE_NONE;	// ...and mb_index is a length of response
+		       						// The must: mb_index == 11, 13, 15, ...
+			RegIndx = (mbb->p_mb_buff[2]<<8) | (mbb->p_mb_buff[3]&0xFF);
+			RegNmb  = (mbb->p_mb_buff[4]<<8) | (mbb->p_mb_buff[5]&0xFF);
+			RegLast = RegIndx + RegNmb;
+			BytesN	= mbb->p_mb_buff[6];
+			if(	(RegIndx > mbb->reg_write_last) ||
 				((RegLast-1) > mbb->reg_write_last) ||
 				(RegNmb>MB_MAX_REG))
 			{
-			Exception = MBE_ILLEGAL_DATA_ADDRESS;
-			break;
+				Exception = MBE_ILLEGAL_DATA_ADDRESS;
+				break;
 			}
 			if( BytesN != (RegNmb << 1) ||
 				mbb->mb_index != (9+BytesN) )
-			{				// 1 reg - mb_index=11, 2 regs - 13,... 5 regs - 19, etc.
-			Exception = MBE_ILLEGAL_DATA_VALUE;
-			break;
+			{
+				// 1 reg - mb_index=11, 2 regs - 13,... 5 regs - 19, etc.
+				Exception = MBE_ILLEGAL_DATA_VALUE;
+				break;
 			}
 
-		i = 7;							// Registers' values are from MBBuff[7] and more
-		#ifdef EEPROM_REG
-		//=================check EEPROM start==============================
-		mbb->eep_state = Eeprom_Check_in_Request(RegIndx, RegNmb);
+			i = 7;	// Registers' values are from MBBuff[7] and more
+#ifdef EEPROM_REG
+			//=================check EEPROM start==============================
+			mbb->eep_state = Eeprom_Check_in_Request(RegIndx, RegNmb);
 			if(mbb->eep_state==EEP_SAVE)
 			{
-			mbb->eep_start_save = RegIndx;
-			mbb->eep_indx = RegNmb;
+				mbb->eep_start_save = RegIndx;
+				mbb->eep_indx = RegNmb;
 			}
-		//=================check EEPROM end==============================
-		#endif
+			//=================check EEPROM end==============================
+#endif
 
-		#ifdef LIMIT_REG
-		//=================check data start==============================
+#ifdef LIMIT_REG
+			//=================check data start==============================
 			j = i;
-	            for (RegIndxInter = RegIndx; RegIndxInter < RegLast; RegIndxInter++)
-				{
+	        for (RegIndxInter = RegIndx; RegIndxInter < RegLast; RegIndxInter++)
+			{
 				Value = mbb->p_mb_buff[j++]<<8;
 				Value |= mbb->p_mb_buff[j++];
 				Exception = Limit_Check_in_Request(RegIndxInter, Value);
-					if	(Exception != MBE_NONE)
-					{
-					break;
-					}
-				}
-	            if(Exception != MBE_NONE)
+				if	(Exception != MBE_NONE)
 				{
-				break;
+					break;
 				}
-		//=================check data end==============================
-		#endif
+			}
+	        if(Exception != MBE_NONE)
+			{
+				break;
+			}
+			//=================check data end==============================
+#endif
 			while( RegIndx < RegLast)
 			{
-			*(mbb->p_write+RegIndx)  = mbb->p_mb_buff[i++]<<8;	// High, then Low byte
-			*(mbb->p_write+RegIndx) |= mbb->p_mb_buff[i++]	;	// ... are packed in a WORD
-			++RegIndx;
+				*(mbb->p_write+RegIndx)  = mbb->p_mb_buff[i++]<<8;	// High, then Low byte
+				*(mbb->p_write+RegIndx) |= mbb->p_mb_buff[i++]	;	// ... are packed in a WORD
+				++RegIndx;
 			}
-		mbb->mb_index = 6;									// MBBuff[0] to MBBuff[5] are ready (unchanged)
-		break;
+			mbb->mb_index = 6;	// MBBuff[0] to MBBuff[5] are ready (unchanged)
+			break;
 		}
-	Exception = MBE_ILLEGAL_DATA_VALUE;				// PDU length incorrect
-	break;
+		Exception = MBE_ILLEGAL_DATA_VALUE;	// PDU length incorrect
+		break;
 
 		//--------------------------------------------------
 	case MB_FUNC_WRITE_REGISTER:
-					//		  06		0...250     	 0...255
-					// addr  func    AddrHi  AddrLo   RG1Hi  	RG1LO   CRC		 CRC
-					//  0	  1			2		3		4		  5	     6	 	  7
+		//		  06		0...250     	 0...255
+		// addr  func    AddrHi  AddrLo   RG1Hi  	RG1LO   CRC		 CRC
+		//  0	  1			2		3		4		  5	     6	 	  7
 
 		if( mbb->mb_index == 8)
 		{
-		Exception = MBE_NONE;						// ...and mb_index is a length of response
-		RegIndx = (mbb->p_mb_buff[2]<<8) | (mbb->p_mb_buff[3]&0xFF);
+			Exception = MBE_NONE;	// ...and mb_index is a length of response
+			RegIndx = (mbb->p_mb_buff[2]<<8) | (mbb->p_mb_buff[3]&0xFF);
 
 			if((RegIndx > mbb->reg_write_last))
 			{
-			Exception = MBE_ILLEGAL_DATA_ADDRESS;
-			break;
+				Exception = MBE_ILLEGAL_DATA_ADDRESS;
+				break;
 			}
 
-		i = 4;					// Registers' value are from MBBuff[4]-[5]
-		#ifdef EEPROM_REG
-		//=================check EEPROM start==============================
-		mbb->eep_state = Eeprom_Check_in_Request(RegIndx, 1);
+			i = 4;	// Registers' value are from MBBuff[4]-[5]
+#ifdef EEPROM_REG
+			//=================check EEPROM start==============================
+			mbb->eep_state = Eeprom_Check_in_Request(RegIndx, 1);
 			if(mbb->eep_state==EEP_SAVE)
 			{
-			mbb->eep_start_save = RegIndx;
-			mbb->eep_indx = 1;
+				mbb->eep_start_save = RegIndx;
+				mbb->eep_indx = 1;
 			}
-		//=================check EEPROM end==============================
-		#endif
+			//=================check EEPROM end==============================
+#endif
 
-		#ifdef LIMIT_REG
-		//=================check data start==============================
-		RegIndxInter = RegIndx;
-		j = i;
+#ifdef LIMIT_REG
+			//=================check data start==============================
+			RegIndxInter = RegIndx;
+			j = i;
 
-		Value = mbb->p_mb_buff[j++]<<8;
-		Value |= mbb->p_mb_buff[j++];
-		Exception = Limit_Check_in_Request(RegIndxInter, Value);
+			Value = mbb->p_mb_buff[j++]<<8;
+			Value |= mbb->p_mb_buff[j++];
+			Exception = Limit_Check_in_Request(RegIndxInter, Value);
 			if	(Exception != MBE_NONE)
 			{
 			//mbb->eep_state = EEP_FREE;
-			break;
+				break;
 			}
-		//=================check data end==============================
-		#endif
-		*(mbb->p_write+RegIndx)  = mbb->p_mb_buff[i++]<<8;	// High, then Low byte
-		*(mbb->p_write+RegIndx) |= mbb->p_mb_buff[i++]	;	// ... are packed in a WORD
+			//=================check data end==============================
+#endif
+			*(mbb->p_write+RegIndx)  = mbb->p_mb_buff[i++]<<8;	// High, then Low byte
+			*(mbb->p_write+RegIndx) |= mbb->p_mb_buff[i++]	;	// ... are packed in a WORD
 
-		mbb->mb_index = 6;									// MBBuff[0] to MBBuff[5] are ready (unchanged)
+			mbb->mb_index = 6;	// MBBuff[0] to MBBuff[5] are ready (unchanged)
 
-		break;
+			break;
 		}
-	Exception = MBE_ILLEGAL_DATA_VALUE;				// PDU length incorrect
-	break;
+		Exception = MBE_ILLEGAL_DATA_VALUE;	// PDU length incorrect
+		break;
 		//--------------------------------------------------
 	default:
-	Exception = MBE_ILLEGAL_FUNCTION;
-	break;
+		Exception = MBE_ILLEGAL_FUNCTION;
+		break;
 	}
 
 	/*
@@ -339,11 +340,11 @@ bool NeedResponse = true;
 
 	if( Exception != MBE_NONE)
 	{						// Any exception?
-	mbb->p_mb_buff[1] |= MB_FUNC_ERROR;						// Add 0x80 to function code
-	mbb->p_mb_buff[2] =  Exception;							// Exception code
-	mbb->mb_index = 3;										// Length of response is fixed if exception
+		mbb->p_mb_buff[1] |= MB_FUNC_ERROR;						// Add 0x80 to function code
+		mbb->p_mb_buff[2] =  Exception;							// Exception code
+		mbb->mb_index = 3;										// Length of response is fixed if exception
 #ifdef EEPROM_REG
-	mbb->eep_state = EEP_FREE;
+		mbb->eep_state = EEP_FREE;
 #endif
 	}
 	i = CRC16( (uint8_t*)mbb->p_mb_buff, mbb->mb_index);				// MBBuff is a pointer, mb_index is a size

@@ -101,7 +101,7 @@ void EP3_OUT_Callback(void)
   NAKed till the end of the USART Xfer */
   if (USB_Rx_Cnt>4)
   {
-  mh_USB_Recieve(USB_Rx_Buffer, USB_Rx_Cnt);
+    mh_USB_Recieve(USB_Rx_Buffer, USB_Rx_Cnt);
   }
 
   //USB_To_USART_Send_Data(USB_Rx_Buffer, USB_Rx_Cnt);

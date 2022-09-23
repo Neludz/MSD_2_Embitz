@@ -14,7 +14,12 @@ uint16_t AT25_rxtx(uint16_t data)
   SPI2->DR = (data);
 
   while(!(SPI2->SR & SPI_SR_RXNE))
-    ;
+    {
+        if (xTaskGetSchedulerState()==taskSCHEDULER_RUNNING)
+        {
+          taskYIELD();
+        }
+    }
   return SPI2->DR;
 }
 
@@ -22,7 +27,16 @@ uint16_t AT25_rxtx(uint16_t data)
 #define AT25_rx() AT25_rxtx(0xFF)
 #define AT25_tx(data) AT25_rxtx(data)
 
-
+void AT25_wait_ready_bit(void)
+{
+    while (AT25_get_status_bit()&(AT_25_RDY_bit))
+    {
+        if (xTaskGetSchedulerState()==taskSCHEDULER_RUNNING)
+        {
+          taskYIELD();
+        }
+    }
+}
 
 uint8_t AT25_get_status_bit(void)
 {
@@ -39,10 +53,7 @@ uint8_t AT25_get_status_bit(void)
 
 void AT25_read_byte(uint16_t adr, uint8_t *data_out, uint16_t len)
 {
-
-
-        while ((AT25_get_status_bit())&(AT_25_RDY_bit))
-        ;
+    AT25_wait_ready_bit();
 	AT25_select();
 	AT25_tx(AT25_read_com);
 	AT25_tx((adr>>8));
@@ -60,8 +71,7 @@ void AT25_write_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
 {
     for (uint32_t i=0; i<len; i++)
     {
-    while ((AT25_get_status_bit())&(AT_25_RDY_bit))
-        ;
+    AT25_wait_ready_bit();
     AT25_select();
     AT25_rxtx(AT25_set_write_com);
     AT25_release();
@@ -85,8 +95,7 @@ uint8_t check;
 
 for (uint32_t i=0; i<len; i++)
     {
-    while ((AT25_get_status_bit())&(AT_25_RDY_bit))
-        ;
+    AT25_wait_ready_bit();
 	AT25_select();
 	AT25_tx(AT25_read_com);
 	AT25_tx((adr>>8));
@@ -98,8 +107,7 @@ for (uint32_t i=0; i<len; i++)
 
      if (check !=data_in[i])
         {
-        while ((AT25_get_status_bit())&(AT_25_RDY_bit))
-            ;
+        AT25_wait_ready_bit();
         AT25_select();
         AT25_rxtx(AT25_set_write_com);
         AT25_release();
@@ -118,9 +126,7 @@ for (uint32_t i=0; i<len; i++)
 
 void AT_25_Init (void)
 {
-
-    while ((AT25_get_status_bit())&(AT_25_RDY_bit))
-        ;
+    AT25_wait_ready_bit();
     AT25_select();
     AT25_rxtx(AT25_set_write_com);
     IO_SetLine(io_Eeprom_CS,ON);
@@ -129,6 +135,4 @@ void AT_25_Init (void)
     AT25_tx(AT25_write_status_com);
     AT25_tx(0x00);
     AT25_release();
-
-
 }

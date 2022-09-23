@@ -274,14 +274,14 @@
 1595841867 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_sil.c
 	"usb_lib.h"
 
-1612291777 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\clock.c
+1651216497 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\clock.c
 	"stm32f1xx_ll_rcc.h"
 
 1639036609 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\dma_103.c
 	<main.h>
 	<dma_103.h>
 
-1643188105 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
+1654680381 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
 	"clock.h"
 	<eeprom_AT25.h>
 	<measure_NTC.h>
@@ -311,20 +311,23 @@
 
 1567705034 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\clock.h
 
-1639034077 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.h
+1663844670 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.h
 	<stm32f1xx.h>
 	<stdint.h>
 	<stdbool.h>
 	<IO.h>
+	"FreeRTOS.h"
+	"semphr.h"
+	"task.h"
 
 1638651035 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.h
 
-1641975559 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\measure_ntc.h
+1645084735 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\measure_ntc.h
 	<stdint.h>
 	"math.h"
 	"main.h"
 
-1643188061 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.h
+1663855831 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.h
 	"modbus.h"
 	"modbus_reg.h"
 	"IO.h"
@@ -337,15 +340,14 @@
 	"queue.h"
 	"timers.h"
 
-1643195800 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.h
+1663855831 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.h
 	<stdint.h>
 	<stdbool.h>
-	"modbus_reg.h"
 
-1641884424 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h
+1663856181 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h
 	<stdint.h>
-	<stdbool.h>
-	<main.h>
+	"modbus_x_macros.h"
+	"modbus.h"
 
 1636760404 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\semphr.h
 	"queue.h"
@@ -367,10 +369,10 @@
 
 1637675737 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\mass_mal.h
 
-1621414599 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.c
+1663847627 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.c
 	<eeprom_AT25.h>
 
-1639034086 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.c
+1663847922 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.c
 	<stdint.h>
 	<stdbool.h>
 	<stm32f1xx.h>
@@ -378,17 +380,21 @@
 	<dma_103.h>
 	<main.h>
 
-1641975414 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\measure_ntc.c
+1645084735 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\measure_ntc.c
 	<measure_NTC.h>
 
-1640262541 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.c
+1663855831 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.c
 	"modbus.h"
+	"modbus_reg.h"
 
-1643186647 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
+1663856721 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
 	"main.h"
 
-1639984623 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.c
+1663856181 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.c
 	"modbus_reg.h"
+	"modbus.h"
+	<stdint.h>
+	<stdbool.h>
 
 1636760404 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\croutine.c
 	"FreeRTOS.h"
@@ -398,7 +404,7 @@
 1639033323 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\system_stm32f1xx.c
 	"stm32f1xx.h"
 
-1640350312 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\app.c
+1663855831 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\app.c
 	"main.h"
 	"usb_conf.h"
 	"emfat.h"
@@ -460,7 +466,7 @@
 	"usb_lib.h"
 	"usb_desc.h"
 
-1639066750 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_endp.c
+1663855831 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_user\usb_endp.c
 	"usb_istr.h"
 	<modbus_hard.h>
 	"usb_lib.h"
@@ -510,6 +516,15 @@
 	"usb_prop.h"
 	"usb_desc.h"
 
-1643187446 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.c
-	<modbus_hard.h>
+1663930552 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.c
+	"modbus_hard.h"
+	"modbus_reg.h"
+	"modbus.h"
+	"modbus_x_macros.h"
+	"main.h"
+
+1663856337 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_x_macros.h
+	"modbus_reg.h"
+	"modbus_hard.h"
+	"main.h"
 

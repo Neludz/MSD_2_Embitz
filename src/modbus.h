@@ -1,9 +1,8 @@
 #ifndef MODBUS_H_INCLUDED
 #define MODBUS_H_INCLUDED
-
 #include <stdint.h>
 #include <stdbool.h>
-#include "modbus_reg.h"
+
 
 #define MB_FRAME_MIN     		4       /* Minimal size of a Modbus RTU frame	*/
 #define MB_FRAME_MAX     		256     /* Maximal size of a Modbus RTU frame	*/
@@ -30,7 +29,6 @@ typedef enum {			// Actually only 1 variable uses this type: er_frame_bad
     EV_HAPPEND
 } eMBEvents;
 
-
 typedef enum {
     MBE_NONE 					= 0x00,
     MBE_ILLEGAL_FUNCTION 		= 0x01,
@@ -47,13 +45,10 @@ typedef enum {
 
 } eEM_state;
 
-
-
 typedef enum {
     EEP_FREE = 0,
     EEP_SAVE = 1
 } eMBEep;
-
 
 typedef struct {					// Main program passes interface data to Modbus stack.
 	uint16_t    *p_write;			// Pointer to the begin of ParsIn array. Modbus writes data in the array
@@ -73,16 +68,11 @@ typedef struct {					// Main program passes interface data to Modbus stack.
 	void    	(*f_start_trans) ( void *mbb);
 } mb_struct;
 
-
-
 unsigned int CRC16 ( unsigned char *puchMsg, unsigned int usDataLen ) ;
 void MBparsing(mb_struct *mbb);
 bool InvalidFrame( mb_struct *mbb);
 bool FrameParse (mb_struct *mbb);
 eMBEep  Eeprom_Check_in_Request (uint16_t Start_Reg, uint16_t Count);
 eMBExcep Limit_Check_in_Request (uint16_t Number_Reg, uint16_t Value);
-
-
-
 
 #endif /* MODBUS_H_INCLUDED */

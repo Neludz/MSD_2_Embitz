@@ -271,7 +271,7 @@ vTaskDelay(2500/portTICK_RATE_MS);
 	        if( ( ulNotifiedValue & (1<<i) ) != 0 )
 	        {
 	        /* Bit number i was set - process whichever event is represented by bit number i. */
-				if(default_state[i+Reg_DI_1_Trip_Counter].Permission & EESAVE)
+				if(default_state[i+Reg_DI_1_Trip_Counter].Permission & EESAVE_R)
 				{
 				/* 16-bits in modbus register */
 				AT25_update_byte( ((i+Reg_DI_1_Trip_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Trip_Counter+i]), 2);
@@ -662,7 +662,7 @@ int main(void)
 	ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
 	IO_Init();
 
-	flash_btock();
+	//flash_btock();
 
 	emfat_init(&emfat, "MSD_2", entries);
 
@@ -673,7 +673,7 @@ int main(void)
     USB_Interrupts_Config();
     USB_Init();
 
-	Init_IWDG(WATCH_DOG_TIME_MS);
+	//Init_IWDG(WATCH_DOG_TIME_MS);
 
 /*	timers	*/
 		for (uint32_t i = 0; i<MAX_DO; i++)
@@ -692,7 +692,7 @@ int main(void)
 	if(pdTRUE != xTaskCreate(vWrite_Count_EE,"Count",configMINIMAL_STACK_SIZE,NULL, tskIDLE_PRIORITY + 1, &Count_In_EE_Task)) ERROR_ACTION(TASK_NOT_CREATE,0);
 	if(pdTRUE != xTaskCreate(vUpdate_DO,"DO", 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL)) ERROR_ACTION(TASK_NOT_CREATE,0);
 
-	mh_MB_Init();   //create task for modbus
+	mh_Modbus_Init();   //create task for modbus
 
 /*	start OS	*/
 #ifdef DEBU_USER

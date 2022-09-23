@@ -56,7 +56,7 @@ typedef enum {
 } Parity_Stop_Bits_t;
 
 void mh_Write_Eeprom (void *mbb);
-void mh_MB_Init(void);
+void mh_Modbus_Init(void);
 void mh_USB_Init(void);
 void mh_USB_Transmit_Start (void *mbb);
 void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len);

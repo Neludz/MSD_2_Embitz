@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.30" revision="0" />
+	<EmBitzVersion release="2.41" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="MSD_2" />
@@ -82,8 +82,12 @@
 		<Cpp>
 			<Add option="-mfloat-abi=soft" />
 			<Add option="-Os" />
+			<Add option="-g3" />
 			<Add option="-fno-strict-aliasing" />
 		</Cpp>
+		<Assembler>
+			<Add option="-Wa,--gdwarf-2" />
+		</Assembler>
 		<Linker>
 			<Add option="-lm" />
 		</Linker>
@@ -216,6 +220,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\modbus_reg.h" />
+		<Unit filename="src\modbus_x_macros.h" />
 		<Unit filename="src\startup_stm32f103xb.S">
 			<Option compilerVar="CC" />
 			<Option weight="0" />
@@ -282,7 +287,7 @@
 			<code_completion />
 			<debugger>
 				<target_debugging_settings target="Release">
-					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="0" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="2" rstType="1" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
+					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="15" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="1" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
 				</target_debugging_settings>
 			</debugger>
 			<envvars />
