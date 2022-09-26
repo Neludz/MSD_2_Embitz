@@ -38,8 +38,8 @@ void mh_task_Modbus (void *pvParameters)
     mb_struct *st_mb;
     vTaskDelay(3000);
 
-//start recieve rs485 data
-DMA_Enable(DMA1_Channel5);
+    //start recieve rs485 data
+    DMA_Enable(DMA1_Channel5);
 
     while(1)
     {
@@ -51,15 +51,12 @@ DMA_Enable(DMA1_Channel5);
 //-----------------------------------------------------------------------
 // Function
 //-----------------------------------------------------------------------
-// Callback for rs485
 
 void USART1_IRQHandler (void)
 {
- BaseType_t xHigherPriorityTaskWoken = pdFALSE;
- uint16_t cnt;
- ((void)(cnt));
-
-
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    uint16_t cnt;
+    (void)cnt;
     if (USART1->SR & USART_SR_IDLE)
 	{
 	    cnt = USART1->DR;
@@ -71,6 +68,7 @@ void USART1_IRQHandler (void)
             MB_RS485.mb_state=STATE_RCVE;
             xTimerResetFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
             DMA_Enable(DMA1_Channel5);
+            return;
         }
         else
         {
@@ -78,40 +76,30 @@ void USART1_IRQHandler (void)
             MB_RS485.mb_state=STATE_IDLE;
             DMA1_Channel5->CNDTR = MB_FRAME_MAX;
             DMA_Enable(DMA1_Channel5);
+            return;
         }
 	}
-
-if(USART1->SR & (USART_SR_NE|USART_SR_FE|USART_SR_PE|USART_SR_ORE))
-    {
-        mh_Restart_RS485_DMA_ISR();
-        Error|=0x8;
-    }
     if (USART1->SR & USART_SR_TC)
     {
         USART1->SR = ~USART_SR_TC;
         MB_RS485.mb_state=STATE_IDLE;
         IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
         DMA_Disable(DMA1_Channel4);
+        return;
     }
-
-}
-
-void mh_Restart_RS485_DMA_ISR (void)
-{
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    DMA_Disable(DMA1_Channel5);
-    MB_RS485.mb_state=STATE_IDLE;
-    DMA1_Channel5->CNDTR = MB_FRAME_MAX;
-    xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
-//IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
-    DMA_Enable(DMA1_Channel5);
 }
 
 void DMA1_Channel5_IRQHandler ()
 {
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+
     DMA1->IFCR |= DMA_IFCR_CGIF5;
-    mh_Restart_RS485_DMA_ISR();
-   // IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
+    DMA_Disable(DMA1_Channel5);
+    MB_RS485.mb_state=STATE_IDLE;
+    DMA1_Channel5->CNDTR = MB_FRAME_MAX;
+    xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
+    IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
+    DMA_Enable(DMA1_Channel5);
 }
 
 void DMA1_Channel4_IRQHandler ()
@@ -151,7 +139,6 @@ void mh_Modbus_Init(void)
     mh_USB_Init();
     mh_RS485_Init();
 }
-
 
 void mh_USB_Init(void)
 {
@@ -237,21 +224,21 @@ DMA_DeInit_Di(DMA1_Channel5);		// Обнулили DMA канал
 
 USART1->CR3 |=USART_CR3_DMAR;
 
-DMA_Init_Di(  DMA1_Channel5,				//
-              (uint32_t)&(USART1->DR),		// Адрес откуда брать -- адрес регистра DR  в USART1
-              (uint32_t)RS485_MB_Buf,	// Адрес куда класть результат
-              sizeof(RS485_MB_Buf),		// Сколько класть? Так как буфер у нас из char, то sizeof будет равен числу элементов. Но лучше так не делать ;)
-              TransCompl_Int_Enable       +	// Прерывание по окончанию выключено
-              HalfCompl_Int_Disable       +	// Прерывание по половине выключено
-              TransError_Int_Enable       +	// Прерывание по ошибке выключено
-              ReadPerif                   +	// Читаем из периферии
-              CircularMode_Enable         +	// Цикличный режим включен
-              PeripheralInc_Disable       +	// Адрес периферии не увеличиваем
-              MemoryInc_Enable            +	// А вот адрес примного буфера увеличиваем, перебирая байт за байтом его
-              PDataSize_B                 +	// Размер данных из периферии - байт
-              MDataSize_B                 +	// Размер данных в памяти - байт
-              DMA_Priority_Hi            +	// Низкий приоритет
-              M2M_Disable                 );	// Режим копирования память-память выключен.
+DMA_Init_Di(  DMA1_Channel5,				// channel
+              (uint32_t)&(USART1->DR),		// periphery address/mem_to_mem source
+              (uint32_t)RS485_MB_Buf,	    // memory address/mem_to_mem destination
+              sizeof(RS485_MB_Buf),		    // registers count
+              TransCompl_Int_Enable       +	// interrupt complete
+              HalfCompl_Int_Disable       +	// interrupt half complete
+              TransError_Int_Enable       +	// interrupt error
+              ReadPerif                   +	// read from
+              CircularMode_Enable         +	// cyclic mode
+              PeripheralInc_Disable       +	// increment periphery mode
+              MemoryInc_Enable            +	// increment memory mode
+              PDataSize_B                 +	// periphery data size
+              MDataSize_B                 +	// memory data size
+              DMA_Priority_Hi             +	// priority
+              M2M_Disable                 );// memory to memory mode
 
 NVIC_SetPriority(DMA1_Channel5_IRQn,14);
 NVIC_EnableIRQ (DMA1_Channel5_IRQn);
@@ -263,27 +250,25 @@ DMA_DeInit_Di(DMA1_Channel4);		// Обнулили DMA канал
 USART1->SR &= ~(USART_SR_TC);
 USART1->CR3 |=USART_CR3_DMAT;
 
-DMA_Init_Di(  DMA1_Channel4,				//
-              (uint32_t)&(USART1->DR),		// Адрес откуда брать -- адрес регистра DR  в USART1
-              (uint32_t)RS485_MB_Buf,	// Buffer
-              100,		                // Сколько класть? Так как буфер у нас из char, то sizeof будет равен числу элементов. Но лучше так не делать ;)
-              TransCompl_Int_Disable       +	// Прерывание по окончанию выключено
-              HalfCompl_Int_Disable       +	// Прерывание по половине выключено
-              TransError_Int_Enable       +	// Прерывание по ошибке выключено
-              ReadMemory                  +	// Читаем из периферии
-              CircularMode_Disable         +	// Цикличный режим включен
-              PeripheralInc_Disable       +	// Адрес периферии не увеличиваем
-              MemoryInc_Enable            +	// А вот адрес примного буфера увеличиваем, перебирая байт за байтом его
-              PDataSize_B                 +	// Размер данных из периферии - байт
-              MDataSize_B                 +	// Размер данных в памяти - байт
-              DMA_Priority_Hi            +	// Низкий приоритет
-              M2M_Disable                 );	// Режим копирования память-память выключен.
+DMA_Init_Di(  DMA1_Channel4,				// channel
+              (uint32_t)&(USART1->DR),		// periphery address/mem_to_mem source
+              (uint32_t)RS485_MB_Buf,	    // memory address/mem_to_mem destination
+              100,		                    // registers count
+              TransCompl_Int_Disable      +	// interrupt complete
+              HalfCompl_Int_Disable       +	// interrupt half complete
+              TransError_Int_Enable       +	// interrupt error
+              ReadMemory                  +	// read from
+              CircularMode_Disable        +	// cyclic mode
+              PeripheralInc_Disable       +	// increment periphery mode
+              MemoryInc_Enable            +	// increment memory mode
+              PDataSize_B                 +	// periphery data size
+              MDataSize_B                 +	// memory data size
+              DMA_Priority_Hi            +	// priority
+              M2M_Disable                 );// memory to memory mode
 DMA1->IFCR = DMA_IFCR_CTCIF4;
 
 NVIC_SetPriority(DMA1_Channel4_IRQn,14);
 NVIC_EnableIRQ (DMA1_Channel4_IRQn);
-
-
 }
 
 void mh_Write_Eeprom (void *mbb)
@@ -317,14 +302,11 @@ void mh_USB_Transmit_Start (void *mbb)
 void mh_Rs485_Transmit_Start (void *mbb)
 {
     IO_SetLine(io_RS485_Switch, ON);   //RS485 to tx
-    //mb_struct *st_mb;
-    //st_mb = (void*) mbb;
-    //DMA_Disable(DMA1_Channel4);
-
-    DMA1_Channel4->CNDTR = MB_RS485.response_size;//st_mb->response_size;
+    mb_struct *st_mb;
+    st_mb = (void*) mbb;
+    DMA1_Channel4->CNDTR = st_mb->response_size;
 
     DMA_Enable(DMA1_Channel4);
-
 }
 
 void mh_Factory (void)
