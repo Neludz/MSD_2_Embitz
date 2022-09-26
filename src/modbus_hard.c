@@ -3,6 +3,7 @@
 #include "modbus_reg.h"
 #include "modbus.h"
 #include "modbus_x_macros.h"
+#include <dma_103.h>
 #include "main.h"
 //-----------------------------------------------------------------------
 // Variable
@@ -37,8 +38,9 @@ void mh_task_Modbus (void *pvParameters)
     mb_struct *st_mb;
     vTaskDelay(3000);
 
-//start recieve rs485 data
-    START_RECEIVE;
+    //start recieve rs485 data
+    DMA_Enable(DMA1_Channel5);
+
     while(1)
     {
         xQueueReceive(xModbusQueue,&st_mb,portMAX_DELAY);
@@ -49,94 +51,63 @@ void mh_task_Modbus (void *pvParameters)
 //-----------------------------------------------------------------------
 // Function
 //-----------------------------------------------------------------------
-// Callback for rs485
 
 void USART1_IRQHandler (void)
 {
- BaseType_t xHigherPriorityTaskWoken = pdFALSE;
- uint16_t cnt;
- ((void)(cnt));
- if (USART1->SR & USART_SR_RXNE)
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    uint16_t cnt;
+    (void)cnt;
+    if (USART1->SR & USART_SR_IDLE)
 	{
-    if ((USART1->SR & (USART_SR_NE|USART_SR_FE|USART_SR_PE|USART_SR_ORE)) == 0)
+	    cnt = USART1->DR;
+	    if (MB_RS485.mb_state==STATE_IDLE)
         {
-        xTimerResetFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);	// Timer reset anyway: received symbol means NO SILENCE
-        if( STATE_RCVE == MB_RS485.mb_state)
-            {
-            if(MB_RS485.mb_index > MB_FRAME_MAX-1)
-                {
-                 MB_RS485.er_frame_bad = EV_HAPPEND;	                 // This error will be processed later
-				 USART1->SR = ~USART_SR_RXNE;                            // Nothing more to do in RECEIVE state
-                 return;                                                 // Last acceptable position is  MB_FRAME_MAX-1
-                }                                                        // Ignore big frames
-            MB_RS485.p_mb_buff[MB_RS485.mb_index++] = BYTE_RECEIVED;	 // MAIN DOING: New byte to buffer
-            }
-        else if (All_Idle_Check((mb_struct*)&MB_RS485)==REG_OK)
-            {											// 1-st symbol come!
-        	MB_RS485.p_mb_buff[0] = BYTE_RECEIVED;		// Put it to buffer
-        	MB_RS485.mb_index = 1;						// "Clear" the rest of buffer
-        	MB_RS485.er_frame_bad = EV_NOEVENT;			// New buffer, no old events
-        	MB_RS485.mb_state=STATE_RCVE;				// MBMachine: begin of receiving the request
-            }
+          	MB_RS485.mb_index = MB_FRAME_MAX - DMA1_Channel5->CNDTR;
+            DMA_Disable(DMA1_Channel5);
+            DMA1_Channel5->CNDTR = MB_FRAME_MAX;
+            MB_RS485.mb_state=STATE_RCVE;
+            xTimerResetFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
+            DMA_Enable(DMA1_Channel5);
+            return;
+        }
         else
-        	{
-        	Error|=0x80;
-        	USART1->SR = ~USART_SR_RXNE;
-        	}
-        }
-    else
         {
-    	Error|=0x4;
-        cnt = BYTE_RECEIVED;
-        MB_RS485.mb_state=STATE_IDLE;
-        xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
-        TO_RECEIVE;
+            DMA_Disable(DMA1_Channel5);
+            MB_RS485.mb_state=STATE_IDLE;
+            DMA1_Channel5->CNDTR = MB_FRAME_MAX;
+            DMA_Enable(DMA1_Channel5);
+            return;
         }
-	return;
 	}
-
-if(USART1->SR & (USART_SR_NE|USART_SR_FE|USART_SR_PE|USART_SR_ORE))
+    if (USART1->SR & USART_SR_TC)
     {
-        cnt = BYTE_RECEIVED;
+        USART1->SR = ~USART_SR_TC;
         MB_RS485.mb_state=STATE_IDLE;
-        xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
-        Error|=0x8;
-        TO_RECEIVE;
+        IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
+        DMA_Disable(DMA1_Channel4);
         return;
     }
+}
 
-if ((USART1->SR & USART_SR_TXE)&&(USART1->CR1 & USART_CR1_TXEIE))
-    {
-    if( STATE_SEND == MB_RS485.mb_state)
-        {
-        if( MB_RS485.mb_index < MB_RS485.response_size)
-            {
-            BYTE_TO_SEND = MB_RS485.p_mb_buff[MB_RS485.mb_index++];//  sending of the next byte
-			}
-        else
-            {
-            MB_RS485.mb_state=STATE_SENT;
-            TXEIE_OFF;				// Frame sent. Wait for the last bit to be sent
-            }
-		}
-    else
-        {
-    	Error|=0x10;
-    	xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
-        TO_RECEIVE;
-        MB_RS485.mb_state=STATE_IDLE;
-        }
-    return;
-    }
+void DMA1_Channel5_IRQHandler ()
+{
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
 
-if (USART1->SR & USART_SR_TC)
-    {
-    USART1->SR = ~USART_SR_TC;
-    TO_RECEIVE; 							// RS-485 driver - to receive mode
+    DMA1->IFCR |= DMA_IFCR_CGIF5;
+    DMA_Disable(DMA1_Channel5);
     MB_RS485.mb_state=STATE_IDLE;
-    return;
-    }
-Error|=0x20;
+    DMA1_Channel5->CNDTR = MB_FRAME_MAX;
+    xTimerStopFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
+    IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
+    DMA_Enable(DMA1_Channel5);
+}
+
+void DMA1_Channel4_IRQHandler ()
+{
+    DMA_Disable(DMA1_Channel4);
+    DMA1->IFCR |= DMA_IFCR_CGIF4;
+    IO_SetLine(io_RS485_Switch, OFF);
+    MB_RS485.mb_state=STATE_IDLE;
 }
 
 // Callback for usb com
@@ -168,7 +139,6 @@ void mh_Modbus_Init(void)
     mh_USB_Init();
     mh_RS485_Init();
 }
-
 
 void mh_USB_Init(void)
 {
@@ -202,10 +172,6 @@ void mh_RS485_Init(void)
     MB_RS485.f_start_trans=mh_Rs485_Transmit_Start;
 
     Rs485_Time_ms = (MBbuf_main[Reg_RS485_Ans_Delay]);
-        if(Rs485_Time_ms < MIN_TIME_TO_START_TRANSMIT_MS)
-        {
-        Rs485_Time_ms=MIN_TIME_TO_START_TRANSMIT_MS;
-        }
     rs485_timer_handle = xTimerCreate( "T_RS485", Rs485_Time_ms/portTICK_RATE_MS, pdFALSE, NULL, rs485_timer_callback);
     IO_Uart1_Init();
 }
@@ -218,6 +184,7 @@ void rs485_timer_callback (xTimerHandle xTimer)
         mb_struct *st_mb=(mb_struct*)&MB_RS485;
         xQueueSend(xModbusQueue, &st_mb, 0);
         }
+
     return;
 }
 
@@ -225,8 +192,8 @@ void IO_Uart1_Init(void)
 {
 RCC->APB2ENR	|= RCC_APB2ENR_USART1EN;						//USART1 Clock ON
 USART1->BRR = Baud_rate[MBbuf_main[Reg_RS485_Baud_Rate]&0x3];	// Bodrate
-USART1->CR1  |= USART_CR1_UE | USART_CR1_TE
-				|USART_CR1_RE;									//  |USART_CR1_RXNEIE; // USART1 ON, TX ON, RX ON
+USART1->CR1  |= USART_CR1_UE | USART_CR1_TE | USART_CR1_IDLEIE | USART_CR1_RE | USART_CR1_TCIE;
+
       switch (MBbuf_main[Reg_Parity_Stop_Bits])
       {
             case NO_PARITY_1_STOP:
@@ -248,11 +215,60 @@ USART1->CR1  |= USART_CR1_UE | USART_CR1_TE
             break;
       }
 
-
-
-
 NVIC_SetPriority(USART1_IRQn,14);
 NVIC_EnableIRQ (USART1_IRQn);
+
+//DMA RX
+DMA_Disable(DMA1_Channel5);		// Выключили канал.
+DMA_DeInit_Di(DMA1_Channel5);		// Обнулили DMA канал
+
+USART1->CR3 |=USART_CR3_DMAR;
+
+DMA_Init_Di(  DMA1_Channel5,				// channel
+              (uint32_t)&(USART1->DR),		// periphery address/mem_to_mem source
+              (uint32_t)RS485_MB_Buf,	    // memory address/mem_to_mem destination
+              sizeof(RS485_MB_Buf),		    // registers count
+              TransCompl_Int_Enable       +	// interrupt complete
+              HalfCompl_Int_Disable       +	// interrupt half complete
+              TransError_Int_Enable       +	// interrupt error
+              ReadPerif                   +	// read from
+              CircularMode_Enable         +	// cyclic mode
+              PeripheralInc_Disable       +	// increment periphery mode
+              MemoryInc_Enable            +	// increment memory mode
+              PDataSize_B                 +	// periphery data size
+              MDataSize_B                 +	// memory data size
+              DMA_Priority_Hi             +	// priority
+              M2M_Disable                 );// memory to memory mode
+
+NVIC_SetPriority(DMA1_Channel5_IRQn,14);
+NVIC_EnableIRQ (DMA1_Channel5_IRQn);
+
+//DMA TX
+DMA_Disable(DMA1_Channel4);		// Выключили канал.
+DMA_DeInit_Di(DMA1_Channel4);		// Обнулили DMA канал
+
+USART1->SR &= ~(USART_SR_TC);
+USART1->CR3 |=USART_CR3_DMAT;
+
+DMA_Init_Di(  DMA1_Channel4,				// channel
+              (uint32_t)&(USART1->DR),		// periphery address/mem_to_mem source
+              (uint32_t)RS485_MB_Buf,	    // memory address/mem_to_mem destination
+              100,		                    // registers count
+              TransCompl_Int_Disable      +	// interrupt complete
+              HalfCompl_Int_Disable       +	// interrupt half complete
+              TransError_Int_Enable       +	// interrupt error
+              ReadMemory                  +	// read from
+              CircularMode_Disable        +	// cyclic mode
+              PeripheralInc_Disable       +	// increment periphery mode
+              MemoryInc_Enable            +	// increment memory mode
+              PDataSize_B                 +	// periphery data size
+              MDataSize_B                 +	// memory data size
+              DMA_Priority_Hi            +	// priority
+              M2M_Disable                 );// memory to memory mode
+DMA1->IFCR = DMA_IFCR_CTCIF4;
+
+NVIC_SetPriority(DMA1_Channel4_IRQn,14);
+NVIC_EnableIRQ (DMA1_Channel4_IRQn);
 }
 
 void mh_Write_Eeprom (void *mbb)
@@ -285,7 +301,12 @@ void mh_USB_Transmit_Start (void *mbb)
 
 void mh_Rs485_Transmit_Start (void *mbb)
 {
-TO_TRANSMT;
+    IO_SetLine(io_RS485_Switch, ON);   //RS485 to tx
+    mb_struct *st_mb;
+    st_mb = (void*) mbb;
+    DMA1_Channel4->CNDTR = st_mb->response_size;
+
+    DMA_Enable(DMA1_Channel4);
 }
 
 void mh_Factory (void)

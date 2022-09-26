@@ -26,27 +26,6 @@
 #define  BAUD_NUMBER        4
 #define	 RS_485_BAUD_LIST   {BAUD_9600, BAUD_19200, BAUD_57600, BAUD_115200}
 
-#define	 MIN_TIME_TO_START_TRANSMIT_MS    4
-
-
-#define	BYTE_RECEIVED	USART1->DR
-#define	BYTE_TO_SEND	USART1->DR
-
-
-#define START_RECEIVE do{USART1->CR1 |= USART_CR1_RXNEIE;} while(0)
-
-#define	TO_TRANSMT	do { IO_SetLine(io_RS485_Switch, ON); \
-            USART1->CR1  |= (USART_CR1_TCIE|USART_CR1_TXEIE);   } 	while(0)
-//USART1->CR1  &= ~(USART_CR1_RE|USART_CR1_RXNEIE)
-//USART1->CR1  |= (USART_CR1_TCIE)
-
-#define	TO_RECEIVE	do { IO_SetLine(io_RS485_Switch, OFF); \
-            USART1->CR1  &= ~(USART_CR1_TCIE|USART_CR1_TXEIE);	} 	while(0)
-//USART1->CR1  &= ~(USART_CR1_TCIE)
-//USART1->CR1  |= (USART_CR1_RE|USART_CR1_RXNEIE)
-
-#define	TXEIE_OFF	do { USART1->CR1  &= ~(USART_CR1_TXEIE); 	} 	while(0)
-
 typedef enum {
     NO_PARITY_1_STOP	= 0x00,
     NO_PARITY_2_STOP	= 0x01,

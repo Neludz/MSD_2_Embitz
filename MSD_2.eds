@@ -2,18 +2,11 @@
 <EmBitz_debug_session>
 	<debuggerLastSession>
 		<breakpoints>
-			<break type="0" enabled="1" file="src/modbus.c" line="139" />
-			<break type="0" enabled="1" file="src/modbus.c" line="143" />
-			<break type="0" enabled="1" file="src/modbus.c" line="148" />
-			<break type="0" enabled="1" file="src/modbus.c" line="136" />
-			<break type="0" enabled="1" file="src/modbus.c" line="133" />
+			<break type="0" enabled="1" file="src/modbus.c" line="123" />
 		</breakpoints>
 		<watches>
-			<watch key="MB_USB" format="0" array="0" start="0" count="0" expanded="1" live="0" />
-			<watch key="MB_USB.p_mb_buff" format="0" array="1" start="0" count="12" expanded="0" live="0" />
-			<watch key="USB_Rx_Buffer" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="USB_Rx_Cnt" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="st_mb" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="MB_RS485" format="0" array="0" start="0" count="0" expanded="1" live="0" />
+			<watch key="RS485_MB_Buf" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 		</watches>
 		<memory_view address="0x0" locked="0" live="0" options="290" />
 	</debuggerLastSession>
