@@ -81,8 +81,7 @@
 	X_BUF(48,	Reg_Cur_Level_Alarm_W1,		45,		0,		0,	     WRITE_R | EESAVE_R)\
 	X_BUF(49,	Reg_Cur_Level_Alarm_W2,		0,		0,		0,	     WRITE_R | EESAVE_R)\
 	X_BUF(50,	Reg_RS485_Baud_Rate,		1,		0,		0x03,	 WRITE_R | EESAVE_R | LIM_MASK)\
-	X_BUF(51,	Reg_RS485_Ans_Delay,	    5,		MIN_TIME_TO_START_TRANSMIT_MS,\
-                                                            100,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
+	X_BUF(51,	Reg_RS485_Ans_Delay,	    5,		0,      100,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
 	X_BUF(52,	Reg_RS485_Modbus_Address,	1,		1,		0xFA,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
 	X_BUF(53,	Reg_Parity_Stop_Bits,	    0,	    0,		0x03,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
 	X_BUF(56,	Reg_NTC_R2_Value_W1,        5000,	0,		0,       WRITE_R | EESAVE_R)\
