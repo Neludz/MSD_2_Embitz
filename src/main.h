@@ -42,7 +42,7 @@
 #include "mass_mal.h"
 
 
-#define Version_MSD_2			214
+#define Version_MSD_2			215
 
 
 #define WATCH_DOG_TIME_MS		500
