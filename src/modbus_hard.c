@@ -68,7 +68,6 @@ void USART1_IRQHandler (void)
             MB_RS485.mb_state=STATE_RCVE;
             xTimerResetFromISR(rs485_timer_handle, &xHigherPriorityTaskWoken);
             DMA_Enable(DMA1_Channel5);
-            return;
         }
         else
         {
@@ -76,7 +75,6 @@ void USART1_IRQHandler (void)
             MB_RS485.mb_state=STATE_IDLE;
             DMA1_Channel5->CNDTR = MB_FRAME_MAX;
             DMA_Enable(DMA1_Channel5);
-            return;
         }
 	}
     if (USART1->SR & USART_SR_TC)
@@ -85,7 +83,6 @@ void USART1_IRQHandler (void)
         MB_RS485.mb_state=STATE_IDLE;
         IO_SetLine(io_RS485_Switch, OFF);   //RS485 to recieve
         DMA_Disable(DMA1_Channel4);
-        return;
     }
 }
 

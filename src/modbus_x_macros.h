@@ -17,12 +17,12 @@
 #define REG_END_REGISTER                Reg_End
 
 //  MAIN_BUF_Start_Table_Mask
-#define READ_R			(0)
-#define WRITE_R_R			(0x01)	// 0 bit
-#define EESAVE_R_R		(0x02)	// 1 bit
-#define LIM_SIGN		(0x04)	// 2 bit for limit     		  <--|
-#define LIM_UNSIGN		(0x08)  // 3 bit for limit	    	  <--|----------------
-#define LIM_MASK	    (0x0C)	// 2 and 3 bit for limit	  <--|				  |
+//#define READ_R			(0)
+//#define WRITE_R_R			(0x01)	// 0 bit
+//#define EESAVE_R_R		(0x02)	// 1 bit
+//#define LIM_SIGN		    (0x04)	// 2 bit for limit          <--|
+//#define LIM_UNSIGN		(0x08)  // 3 bit for limit	        <--|--------------
+//#define LIM_MASK	        (0x0C)	// 2 and 3 bit for limit    <--|			  |
 //																				  |
 //	 Number		Name for enum			Default	   Min	    Max   	__________Permission_______
 //										 Value    Level    Level   |  R/W     EEPROM    LIMIT  |
