@@ -185,7 +185,7 @@ void readme_read_proc(uint8_t *dest, int size, uint32_t offset, size_t userdata)
 			}
 			else
 			{
-			dest[i]=' ';
+			dest[i]='\r';
 			}
 		}
 	}
