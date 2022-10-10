@@ -278,7 +278,7 @@ void mh_Write_Eeprom (void *mbb)
 	{
 		if(EESave_Check(i+(st_mb->eep_start_save))==REG_OK)
 		{
-            AT25_update_byte( ((st_mb->eep_start_save)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->eep_start_save)]), len);
+            AT25_FRTOS_update_byte( ((st_mb->eep_start_save)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->eep_start_save)]), len);
 		}
 	}
     st_mb->eep_state = EEP_FREE;
@@ -325,6 +325,7 @@ void mh_Factory (void)
 void mh_Buf_Init (void)
 {
     taskENTER_CRITICAL();
+    AT25_Init();
     uint16_t len =  sizeof(default_state[0].Default_Value);
 	for (int32_t i=0; i< NUM_BUF; i++)
 	{

@@ -274,7 +274,7 @@ vTaskDelay(2500/portTICK_RATE_MS);
 				if(default_state[i+Reg_DI_1_Trip_Counter].Permission & EESAVE_R)
 				{
 				/* 16-bits in modbus register */
-				AT25_update_byte( ((i+Reg_DI_1_Trip_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Trip_Counter+i]), 2);
+				AT25_FRTOS_update_byte( ((i+Reg_DI_1_Trip_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Trip_Counter+i]), 2);
 				}
 	        }
 		}
