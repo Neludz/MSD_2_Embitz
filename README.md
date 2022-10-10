@@ -15,3 +15,4 @@ Use modbus protocol. Test file on USB.
 
 To Do
 -------------
+-usb flash data size
