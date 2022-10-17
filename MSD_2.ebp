@@ -212,6 +212,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\modbus.h" />
+		<Unit filename="src\modbus_config.h" />
 		<Unit filename="src\modbus_hard.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -220,7 +221,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\modbus_reg.h" />
-		<Unit filename="src\modbus_x_macros.h" />
 		<Unit filename="src\startup_stm32f103xb.S">
 			<Option compilerVar="CC" />
 			<Option weight="0" />

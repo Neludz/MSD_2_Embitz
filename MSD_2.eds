@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_debug_session>
 	<debuggerLastSession>
-		<breakpoints>
-			<break type="0" enabled="1" file="src/modbus.c" line="123" />
-		</breakpoints>
 		<watches>
 			<watch key="MB_RS485" format="0" array="0" start="0" count="0" expanded="1" live="0" />
 			<watch key="RS485_MB_Buf" format="0" array="0" start="0" count="0" expanded="0" live="0" />
