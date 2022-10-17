@@ -29,7 +29,40 @@ SOFTWARE.
 
 //======================Includes========================================
 #include "main.h"
+#include <modbus_reg.h>
+#include <modbus_hard.h>
 
+#include "clock.h"
+
+#include <eeprom_AT25.h>
+#include <measure_NTC.h>
+
+#include <stdbool.h>
+#include "inttypes.h"
+#include "system_stm32f1xx.h"
+#include "stm32f1xx.h"
+#include <stdio.h>
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "semphr.h"
+#include "timers.h"
+#include "limits.h"
+
+#include "IO.h"
+#include "dma_103.h"
+#include "hw_config.h"
+#include "usb_lib.h"
+#include "usb_desc.h"
+#include "usb_pwr.h"
+#include "usb_istr.h"
+
+#include "math.h"
+#include <string.h>
+
+#include "emfat.h"
+#include "mass_mal.h"
 //======================Variables========================================
 
 extern uint16_t MBbuf_main[];
@@ -88,34 +121,34 @@ USB_Istr();
 
 void vMeasure_Temperature (void *pvParameters)
 {
-int32_t i=0;
-uint32_t Adc_Filter_Value[ADC_CHANNEL_T];
-uint32_t Adc_Filter_T_MCU=0;
-uint32_t ADC_Val;
+    int32_t i=0;
+    uint32_t Adc_Filter_Value[ADC_CHANNEL_T];
+    uint32_t Adc_Filter_T_MCU=0;
+    uint32_t ADC_Val;
 	for (i =0; i<ADC_CHANNEL_T;i++)
 	{
-	Adc_Filter_Value[i]=0;
-	MBbuf_main[(i+Reg_T_0_Channel)] = TEMPERATURE_NO_MEASURE;
+        Adc_Filter_Value[i]=0;
+        MBbuf_main[(i+Reg_T_0_Channel)] = TEMPERATURE_NO_MEASURE;
 	}
-MBbuf_main[(Reg_T_Alarm_bit)]=0;
-MBbuf_main[(Reg_T_Warning_bit)]=0;
-sensor_param_init();
+    MBbuf_main[(Reg_T_Alarm_bit)]=0;
+    MBbuf_main[(Reg_T_Warning_bit)]=0;
+    sensor_param_init();
 	while(1)
 	{
     	for(i =0; i<ADC_CHANNEL_T;i++)
     	{
-    	ADC_Val=(uint16_t)getADCval(i);
-    	Adc_Filter_Value[i]=(Adc_Filter_Value[i]*7+ADC_Val)>>3;
-    	MBbuf_main[(i+Reg_T_0_Channel)] = calc_temperature(Adc_Filter_Value[i]);
-    	if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Warning)]) MBbuf_main[Reg_T_Warning_bit]|=1<<i;
-    	else MBbuf_main[Reg_T_Warning_bit] &=~(1<<i);
+            ADC_Val=(uint16_t)getADCval(i);
+            Adc_Filter_Value[i]=(Adc_Filter_Value[i]*7+ADC_Val)>>3;
+            MBbuf_main[(i+Reg_T_0_Channel)] = calc_temperature(Adc_Filter_Value[i]);
+            if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Warning)]) MBbuf_main[Reg_T_Warning_bit]|=1<<i;
+            else MBbuf_main[Reg_T_Warning_bit] &=~(1<<i);
 
-    	if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Alarm)]) MBbuf_main[Reg_T_Alarm_bit]|=1<<i;
-    	else MBbuf_main[Reg_T_Alarm_bit] &=~(1<<i);
+            if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Alarm)]) MBbuf_main[Reg_T_Alarm_bit]|=1<<i;
+            else MBbuf_main[Reg_T_Alarm_bit] &=~(1<<i);
     	}
-	Adc_Filter_T_MCU=((Adc_Filter_T_MCU*3 + getMCUtemp())>>2);
-	MBbuf_main[Reg_T_MSD]=Adc_Filter_T_MCU;
-    vTaskDelay(9/portTICK_RATE_MS);
+        Adc_Filter_T_MCU=((Adc_Filter_T_MCU*3 + getMCUtemp())>>2);
+        MBbuf_main[Reg_T_MSD]=Adc_Filter_T_MCU;
+        vTaskDelay(9/portTICK_RATE_MS);
     }
 }
 
@@ -123,49 +156,49 @@ sensor_param_init();
 
 void vMeasure_Current (void *pvParameters)
 {
-int64_t Isum=0;
-uint32_t Filter_Ratio = 0;
-uint32_t Cross_Count=0;
-uint32_t ulNotifiedValue;
-bool lastVCross=0;
-bool checkVCross=0;
-int32_t zz=0;
-int32_t Filtered_I=0;
-uint32_t Irms=0;
+    int64_t Isum=0;
+    uint32_t Filter_Ratio = 0;
+    uint32_t Cross_Count=0;
+    uint32_t ulNotifiedValue;
+    bool lastVCross=0;
+    bool checkVCross=0;
+    int32_t Intermediate_I=0;
+    int32_t Filtered_I=0;
+    uint32_t Irms=0;
 
-MBbuf_main[Reg_Cur_RMS_W1] = 0;
-MBbuf_main[Reg_Cur_RMS_W2] = 0;
+    MBbuf_main[Reg_Cur_RMS_W1] = 0;
+    MBbuf_main[Reg_Cur_RMS_W2] = 0;
 
 	while(1)
     {
     	if (!MBbuf_main[Reg_Mode_Cur])
     	{
-    	MBbuf_main[Reg_Cur_RMS_W1] = 0;
-    	MBbuf_main[Reg_Cur_RMS_W2] = 0;
-    	ADC_Current_Off();
-    	vTaskSuspend(NULL);
-    	ADC_Current_On();
+            MBbuf_main[Reg_Cur_RMS_W1] = 0;
+            MBbuf_main[Reg_Cur_RMS_W2] = 0;
+            ADC_Current_Off();
+            vTaskSuspend(NULL);
+            ADC_Current_On();
     	}
-    Isum=0;
-    Number_Of_Samples=0;
-    Cross_Count = 0;
-    Inow=0;
-    zz=0;
-    Filtered_I=0;
-    //tick1 =  Main_Timer_Set (MBbuf_main[Reg_Cur_Time_Measure]);
-	xTimerChangePeriod(xCurrent_Timer, (MBbuf_main[Reg_Cur_Time_Measure]/portTICK_RATE_MS), 0);
-	xTimerStart(xCurrent_Timer, 0);
-    ADC_Current_Start();
+        Isum=0;
+        Number_Of_Samples=0;
+        Cross_Count = 0;
+        Inow=0;
+        Intermediate_I=0;
+        Filtered_I=0;
+        //tick1 =  Main_Timer_Set (MBbuf_main[Reg_Cur_Time_Measure]);
+        xTimerChangePeriod(xCurrent_Timer, (MBbuf_main[Reg_Cur_Time_Measure]/portTICK_RATE_MS), 0);
+        xTimerStart(xCurrent_Timer, 0);
+        ADC_Current_Start();
 
     	do
     	{
-    	 xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
+            xTaskNotifyWait(0x00, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
     		if(ulNotifiedValue&ADC_CURRENT_SAMPLE)
     		{
-    		zz += ((Inow-OFFSET_I) - Filtered_I);								//фильтрация и смещение дискрет с АЦП (с датчика половина опорного->ноль)
-    		Filtered_I = (( zz* MBbuf_main[Reg_Cur_Filter_Ratio]) >> 8);
-    		Isum+= (Filtered_I)*(Filtered_I);
-    		lastVCross = checkVCross;
+                Intermediate_I += ((Inow-OFFSET_I) - Filtered_I);	//фильтрация и смещение дискрет с АЦП (с датчика половина опорного->ноль)
+                Filtered_I = (( Intermediate_I * MBbuf_main[Reg_Cur_Filter_Ratio]) >> 8);
+                Isum+= (Filtered_I)*(Filtered_I);
+                lastVCross = checkVCross;
     			if (Filtered_I > OFFSET_I_Plus) checkVCross = true;
     			if (Filtered_I < OFFSET_I_Minus) checkVCross = false;
     			if (Number_Of_Samples==1) lastVCross = checkVCross;
@@ -173,24 +206,24 @@ MBbuf_main[Reg_Cur_RMS_W2] = 0;
     		}
     		if(!(ulNotifiedValue&ADC_CURRENT_FIN))
     		{
-    		ADC_Current_Start();
+                ADC_Current_Start();
     		}
     	}
     	while(!(ulNotifiedValue&ADC_CURRENT_FIN));
 
-	Filter_Ratio = ADC_COUNTS * MBbuf_main[Reg_Cur_Sensor_Hall_Ratio]; //divider
-	Irms = (((sqrt(Isum / Number_Of_Samples)) *MBbuf_main[Reg_Cur_Scale] * Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*mV_ADC)+(Filter_Ratio>>1))/Filter_Ratio;
+        Filter_Ratio = ADC_COUNTS * MBbuf_main[Reg_Cur_Sensor_Hall_Ratio]; //divider
+        Irms = (((sqrt(Isum / Number_Of_Samples)) *MBbuf_main[Reg_Cur_Scale] * Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*mV_ADC)+(Filter_Ratio>>1))/Filter_Ratio;
 
-    Filter_Ratio=  ((MBbuf_main[Reg_Cur_Zero_Level]*Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*MBbuf_main[Reg_Cur_Scale])/1000);
-    if (Irms < Filter_Ratio) Irms=0;                                    //zero level
+        Filter_Ratio=  ((MBbuf_main[Reg_Cur_Zero_Level]*Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*MBbuf_main[Reg_Cur_Scale])/1000);
+        if (Irms < Filter_Ratio) Irms=0;                                    //zero level
 
-    MBbuf_main[Reg_Cur_Cross_Count] = (uint16_t)Cross_Count;
-    MBbuf_main[Reg_Cur_RMS_W1] = (uint16_t)(Irms & 0xFFFF);
-    MBbuf_main[Reg_Cur_RMS_W2] = (uint16_t)((Irms >>16) & 0xFFFF);
-    MBbuf_main[Reg_Cur_N_Measure_W1] =	(uint16_t) Number_Of_Samples & 0xFFFF;
-    MBbuf_main[Reg_Cur_N_Measure_W2] = (uint16_t)((Number_Of_Samples >>16) & 0xFFFF);
-    Itotal=Irms;
-  	vTaskDelay((199/portTICK_RATE_MS));
+        MBbuf_main[Reg_Cur_Cross_Count] = (uint16_t)Cross_Count;
+        MBbuf_main[Reg_Cur_RMS_W1] = (uint16_t)(Irms & 0xFFFF);
+        MBbuf_main[Reg_Cur_RMS_W2] = (uint16_t)((Irms >>16) & 0xFFFF);
+        MBbuf_main[Reg_Cur_N_Measure_W1] =	(uint16_t) Number_Of_Samples & 0xFFFF;
+        MBbuf_main[Reg_Cur_N_Measure_W2] = (uint16_t)((Number_Of_Samples >>16) & 0xFFFF);
+        Itotal=Irms;
+        vTaskDelay((199/portTICK_RATE_MS));
     }
 }
 
@@ -274,7 +307,7 @@ vTaskDelay(2500/portTICK_RATE_MS);
 				if(default_state[i+Reg_DI_1_Trip_Counter].Permission & EESAVE_R)
 				{
 				/* 16-bits in modbus register */
-				AT25_FRTOS_update_byte( ((i+Reg_DI_1_Trip_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Trip_Counter+i]), 2);
+				AT25_mutex_update_byte( ((i+Reg_DI_1_Trip_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Trip_Counter+i]), 2);
 				}
 	        }
 		}

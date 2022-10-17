@@ -25,6 +25,6 @@
 void AT25_Init (void);
 void AT25_write_byte(uint16_t adr, uint8_t *data_in, uint16_t len);
 void AT25_read_byte(uint16_t adr, uint8_t *data_out, uint16_t len);
-void AT25_FRTOS_update_byte(uint16_t adr, uint8_t *data_out, uint16_t len);
+void AT25_mutex_update_byte(uint16_t adr, uint8_t *data_out, uint16_t len);
 void AT25_update_byte(uint16_t adr, uint8_t *data_in, uint16_t len);
 #endif

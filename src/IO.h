@@ -1,6 +1,9 @@
 #ifndef _IO_H
 #define _IO_H
 
+#include <stdint.h>
+#include <stdbool.h>
+
 #define IN	  	  (0x00)
 #define OUT_10MHz (0x01)
 #define OUT_2MHz  (0x02)

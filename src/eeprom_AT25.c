@@ -88,7 +88,7 @@ void AT25_write_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
 }
 
 
-void AT25_FRTOS_update_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
+void AT25_mutex_update_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
 {
     uint8_t check;
     xSemaphoreTake( xMutex, portMAX_DELAY);

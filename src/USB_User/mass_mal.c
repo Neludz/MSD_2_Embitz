@@ -41,7 +41,11 @@
 #include "main.h"
 #include "mass_mal.h"
 #include "emfat.h"
-
+#include <stdbool.h>
+#include "inttypes.h"
+#include "system_stm32f1xx.h"
+#include "stm32f1xx.h"
+#include <stdio.h>
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/

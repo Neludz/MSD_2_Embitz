@@ -8,46 +8,18 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
-#include "clock.h"
-
-#include <eeprom_AT25.h>
-#include <measure_NTC.h>
-#include <modbus_hard.h>
-
-#include <stdbool.h>
-#include "inttypes.h"
-#include "system_stm32f1xx.h"
-#include "stm32f1xx.h"
-#include <stdio.h>
-
 #include "FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
 #include "semphr.h"
 #include "timers.h"
-#include "limits.h"
-
-#include "IO.h"
-#include "dma_103.h"
-#include "hw_config.h"
-#include "usb_lib.h"
-#include "usb_desc.h"
-#include "usb_pwr.h"
-#include "usb_istr.h"
-
-#include "math.h"
-#include <string.h>
-
-#include "emfat.h"
-#include "mass_mal.h"
-
+//#include "limits.h"
 
 #define Version_MSD_2			215
 
-
 #define WATCH_DOG_TIME_MS		500
 #define MAX_DI  				4
-#define MAX_DI_TRIP_COUNTER 	2	//количество DI со счетчиком включения, max 32 (notification use number bit, see eeprom write task)
+#define MAX_DI_TRIP_COUNTER 	2	    //количество DI со счетчиком включения, max 32 (notification use number bit, see eeprom write task)
 #define COUNTER_EE_UPD_MS		600000
 #define MAX_DO  				2
 #define	TIMER_ID_DO_1	        111
@@ -57,8 +29,8 @@
 #define OFFSET_I_Plus  			(+15)
 #define OFFSET_I_Minus  		(-15)
 
-#define ADC_CURRENT_SAMPLE		0x01	//mask_for_notify
-#define ADC_CURRENT_FIN			0x02	//mask_for_notify
+#define ADC_CURRENT_SAMPLE		0x01        //mask_for_notify
+#define ADC_CURRENT_FIN			0x02	    //mask_for_notify
 
 #define SIZE_NTC_TABLE              166
 

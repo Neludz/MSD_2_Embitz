@@ -7,7 +7,7 @@
 
 //======================Include========================================
 #include <measure_NTC.h>
-
+#include <string.h>
 /*
   NTCCALUG02A502G; ADC 12bit:
      R1(T1): 5êÎì(25°Ñ)

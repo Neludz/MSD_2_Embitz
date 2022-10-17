@@ -1,6 +1,12 @@
 #ifndef DMA_H_INCLUDED
 #define DMA_H_INCLUDED
 
+#include <stdbool.h>
+#include "inttypes.h"
+#include "system_stm32f1xx.h"
+#include "stm32f1xx.h"
+#include <stdio.h>
+
 #define DMAEnable ((uint16_t)(1<<0))
 #define DMADisable ((uint16_t)0)
 

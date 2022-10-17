@@ -18,7 +18,7 @@ const char readme_file[] =
 	"Firmware version ";
 
 const char index_file [] =
-		"<html><head><meta http-equiv=\"refresh\" content=\"0; url=https://plutongroup.github.io/msd_2/\"/><title>MSD_2 Shortcut</title></head><body></body></html>";
+	"<html><head><meta http-equiv=\"refresh\" content=\"0; url=https://plutongroup.github.io/msd_2/\"/><title>MSD_2 Shortcut</title></head><body></body></html>";
 
 const char test_file[TEST_SIZE] = {
 	0x52, 0x61, 0x72, 0x21, 0x1A, 0x07, 0x01, 0x00, 0xF3, 0xE1, 0x82, 0xEB, 0x0B, 0x01, 0x05, 0x07,
@@ -163,29 +163,29 @@ void readme_read_proc(uint8_t *dest, int size, uint32_t offset, size_t userdata)
 	{
 		if ((offset+i) < Len_String)
 		{
-		dest[i]	= readme_file[offset+i];
+            dest[i]	= readme_file[offset+i];
 		}
 		else
 		{
-		cur = (offset+i) - Len_String;
+            cur = (offset+i) - Len_String;
 			if (cur<(1+end))
 			{
 				if(cur==(1))
 				{
-				dest[i]	= '.';
+                    dest[i]	= '.';
 				}
 				else if(cur>(1))
 				{
-				dest[i]	= ver_s[cur-1];
+                    dest[i]	= ver_s[cur-1];
 				}
 				else
 				{
-				dest[i]	= ver_s[cur];
+                    dest[i]	= ver_s[cur];
 				}
 			}
 			else
 			{
-			dest[i]='\r';
+                dest[i]='\r';
 			}
 		}
 	}
@@ -205,11 +205,11 @@ void index_read_proc(uint8_t *dest, int size, uint32_t offset, size_t userdata)
 	{
 		if ((offset+i) < Len_String)
 		{
-		dest[i]	= index_file[offset+i];
+            dest[i]	= index_file[offset+i];
 		}
 		else
 		{
-		dest[i]=' ';
+            dest[i]=' ';
 		}
 	}
 }

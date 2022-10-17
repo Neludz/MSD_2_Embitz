@@ -1,29 +1,33 @@
 #ifndef MODBUS_X_H_INCLUDED
 #define MODBUS_X_H_INCLUDED
 
-#include "modbus_reg.h"
-#include "modbus_hard.h"
+#include <stdint.h>
 #include "main.h"
+#include <measure_NTC.h>
+//-----------------------------------------------------------------------
+// Modbus registers X macros
+//-----------------------------------------------------------------------
 
 //-----------------------------------------------------------------------
 // define
 //-----------------------------------------------------------------------
-#define LIMIT_REG	//check limit
-#define EEPROM_REG	//use eeprom
+#define LIMIT_REG	1//check limit
+#define EEPROM_REG	1//use eeprom
 
-//-----------------------------------------------------------------------
-// Modbus registers X macros
-//-----------------------------------------------------------------------
+// If not define "MODBUS_REG_END_TO_END" then number register is determined in "a" field from X-macros
+//#define MODBUS_REG_END_TO_END
+
 #define REG_END_REGISTER                Reg_End
 
 //  MAIN_BUF_Start_Table_Mask
-//#define READ_R			(0)
-//#define WRITE_R_R			(0x01)	// 0 bit
-//#define EESAVE_R_R		(0x02)	// 1 bit
-//#define LIM_SIGN		    (0x04)	// 2 bit for limit          <--|
-//#define LIM_UNSIGN		(0x08)  // 3 bit for limit	        <--|--------------
-//#define LIM_MASK	        (0x0C)	// 2 and 3 bit for limit    <--|			  |
-//																				  |
+#define READ_R		    (0)
+#define WRITE_R		    (0x01)	// 0 bit
+#define EESAVE_R		(0x02)	// 1 bit
+#define LIM_SIGN		(0x04)	// 2 bit for limit              <--|
+#define LIM_UNSIGN	    (0x08)  // 3 bit for limit	            <--|-------------
+#define LIM_MASK	    (0x0C)	// 2 and 3 bit for limit        <--|            |
+//                                                                              |
+#define LIM_BIT_MASK	        LIM_MASK
 //	 Number		Name for enum			Default	   Min	    Max   	__________Permission_______
 //										 Value    Level    Level   |  R/W     EEPROM    LIMIT  |
 //														  or Mask  | 						   |
