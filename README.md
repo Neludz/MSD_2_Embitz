@@ -1,18 +1,18 @@
-###MSD_2
+# MSD_2
 
 Module for connecting devices to the upper level of automation.
 
-##Overview
+## Overview
 
 - Measure temperature with NTC resistor (9 channel)
 - 4 DI
 - 2 DO
 - Current hall sensor (1 channel)
 
-##Configuration
+## Configuration
 
 Use modbus protocol. Test file on USB.
 
-##To Do
+## To Do
 
 -usb flash data size
