@@ -303,7 +303,7 @@
 	</File>
 	<File name="src\eeprom_AT25.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="716" topLine="0" />
+			<Cursor1 position="714" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="src\IO.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
@@ -316,7 +316,7 @@
 			<Cursor1 position="30" topLine="12" />
 		</Cursor>
 	</File>
-	<File name="src\main.c" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\main.c" open="1" top="1" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="22074" topLine="683" />
 		</Cursor>
@@ -346,7 +346,7 @@
 			<Cursor1 position="565" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\modbus_config.h" open="1" top="1" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus_config.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="5878" topLine="76" />
 		</Cursor>
