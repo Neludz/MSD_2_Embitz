@@ -9,11 +9,7 @@
 #define MAIN_H_
 
 #include "FreeRTOS.h"
-#include "task.h"
-#include "queue.h"
-#include "semphr.h"
 #include "timers.h"
-//#include "limits.h"
 
 #define Version_MSD_2			215
 

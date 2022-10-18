@@ -377,14 +377,3 @@ void MBparsing(mb_struct *mbb)
     }
 #endif
 }
-
-
-
-
-
-
-
-
-
-
-

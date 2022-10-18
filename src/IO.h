@@ -76,17 +76,17 @@
 typedef enum
 {
 #define X_IO(a,b,c,d,e,f)	a,
-	IO_TABLE
+    IO_TABLE
 #undef X_IO
-NUM_IO		//count
+    NUM_IO		//count
 } tIOLine;
 
 typedef enum
 {
-	OFF = 0,
-	ON = 1,
-	LOW = 0,
-	HIGH =1,
+    OFF = 0,
+    ON = 1,
+    LOW = 0,
+    HIGH =1,
 } tIOState;
 
 void IO_Init(void);

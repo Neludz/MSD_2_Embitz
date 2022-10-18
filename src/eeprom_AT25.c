@@ -1,8 +1,15 @@
 
-#include <eeprom_AT25.h>
 /*
  * SPI
  */
+
+#include <eeprom_AT25.h>
+#include <stm32f1xx.h>
+#include <stdint.h>
+#include <IO.h>
+
+#include "FreeRTOS.h"
+#include "semphr.h"
 
 #define AT25_select() IO_SetLine(io_Eeprom_CS,OFF)
 #define AT25_release() IO_SetLine(io_Eeprom_CS,ON)
@@ -22,7 +29,6 @@ uint16_t AT25_rxtx(uint16_t data)
     }
     return SPI2->DR;
 }
-
 
 #define AT25_rx() AT25_rxtx(0xFF)
 #define AT25_tx(data) AT25_rxtx(data)

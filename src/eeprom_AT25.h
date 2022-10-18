@@ -1,15 +1,7 @@
 #ifndef _EE_AT25_H
 #define _EE_AT25_H
 
-#include <stm32f1xx.h>
 #include <stdint.h>
-#include <stdbool.h>
-#include <IO.h>
-
-#include "FreeRTOS.h"
-#include "semphr.h"
-#include "task.h"
-
 
 #define  AT25_READ_COM              0x3
 #define  AT25_WRITE_COM             0x2
