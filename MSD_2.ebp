@@ -14,7 +14,6 @@
 				<Option create_hex="1" />
 				<Option compiler="armgcc_eb" />
 				<Option projectDeviceOptionsRelation="0" />
-				<Option projectAssemblerOptionsRelation="1" />
 				<Option projectIncludeDirsRelation="1" />
 				<Option projectLibDirsRelation="1" />
 				<Device>
@@ -84,9 +83,6 @@
 			<Add option="-g3" />
 			<Add option="-fno-strict-aliasing" />
 		</Cpp>
-		<Assembler>
-			<Add option="-Wa,--gdwarf-2" />
-		</Assembler>
 		<Linker>
 			<Add option="-lm" />
 		</Linker>
