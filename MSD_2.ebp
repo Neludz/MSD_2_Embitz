@@ -23,8 +23,6 @@
 					<Add option="$heap=0x0000" />
 				</Device>
 				<Compiler>
-					<Add option="-fdata-sections" />
-					<Add option="-ffunction-sections" />
 					<Add option="-Os" />
 					<Add option="-g3" />
 					<Add symbol="RELEASE_TARGET" />
