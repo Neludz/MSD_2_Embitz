@@ -10,10 +10,10 @@
 #define OUT_50MHz (0x03)
 
 
-#define OUT_PP   (0x00)
-#define OUT_OD   (0x04)
-#define OUT_APP  (0x08)
-#define OUT_AOD  (0x0C)
+#define OUT_PP   (0x00) // General purpose output push-pull
+#define OUT_OD   (0x04) // General purpose output Open-drain
+#define OUT_APP  (0x08) // Alternate function output Push-pull
+#define OUT_AOD  (0x0C) // Alternate function output Open-drain
 
 #define IN_ADC   (0x00)
 #define IN_HIZ   (0x04)
@@ -47,7 +47,7 @@
 #define IO_TABLE\
 	X_IO(io_LED,			GPIOA,	15,			OUT_2MHz,	OUT_PP,		LOW)	\
 	X_IO(io_RS485_Switch,	GPIOA,  8, 			OUT_2MHz,	OUT_PP,  	LOW)	\
-	X_IO(io_RX,				GPIOA,  10, 		IN,			IN_PULL,  	HIGH)	\
+	X_IO(io_RX,				GPIOA,  10, 		IN,			IN_HIZ,  	HIGH)	\
 	X_IO(io_TX,				GPIOA,  9, 			OUT_50MHz,	OUT_APP, 	HIGH)	\
 	X_IO(io_DI_1,			GPIOB,  4, 			IN,			IN_PULL,	HIGH)	\
 	X_IO(io_DI_2,			GPIOB,  5,  		IN,			IN_PULL,	HIGH)	\

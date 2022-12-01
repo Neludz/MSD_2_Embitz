@@ -149,7 +149,7 @@ void vMeasure_Temperature (void *pvParameters)
         }
         Adc_Filter_T_MCU=((Adc_Filter_T_MCU*3 + getMCUtemp())>>2);
         MBbuf_main[Reg_T_MSD]=Adc_Filter_T_MCU;
-        vTaskDelay(9/portTICK_RATE_MS);
+        vTaskDelay(29/portTICK_RATE_MS);
     }
 }
 
