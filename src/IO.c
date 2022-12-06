@@ -10,14 +10,6 @@
 volatile uint16_t ADC_DMA[ADC_CHANNEL_ALL * 9];
 
 //--------------X macros---------------------------------------------------------
-typedef struct
-{
-    GPIO_TypeDef* GPIOx;
-    uint16_t GPIO_Pin;
-    uint8_t MODE;
-    uint8_t DefState;
-} tGPIO_Line;
-
 const tGPIO_Line IOs[NUM_IO] =
 {
 #define X_IO(a,b,c,d,e,f)	{b,c,d+e,f},

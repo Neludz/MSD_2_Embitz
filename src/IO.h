@@ -3,21 +3,31 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stm32f1xx.h>
 
-#define IN	  	  (0x00)
-#define OUT_10MHz (0x01)
-#define OUT_2MHz  (0x02)
-#define OUT_50MHz (0x03)
+#define IN	  	  (0x00)    //MODE_1
+#define OUT_10MHz (0x01)    //MODE_1
+#define OUT_2MHz  (0x02)    //MODE_1
+#define OUT_50MHz (0x03)    //MODE_1
 
 
-#define OUT_PP   (0x00) // General purpose output push-pull
-#define OUT_OD   (0x04) // General purpose output Open-drain
-#define OUT_APP  (0x08) // Alternate function output Push-pull
-#define OUT_AOD  (0x0C) // Alternate function output Open-drain
+#define OUT_PP   (0x00) // MODE_2 - General purpose output push-pull
+#define OUT_OD   (0x04) // MODE_2 - General purpose output Open-drain
+#define OUT_APP  (0x08) // MODE_2 - Alternate function output Push-pull
+#define OUT_AOD  (0x0C) // MODE_2 - Alternate function output Open-drain
 
-#define IN_ADC   (0x00)
-#define IN_HIZ   (0x04)
-#define IN_PULL  (0x08)
+#define IN_ADC   (0x00)     //MODE_2
+#define IN_HIZ   (0x04)     //MODE_2
+#define IN_PULL  (0x08)     //MODE_2
+
+typedef struct
+{
+    GPIO_TypeDef* GPIOx;
+    uint16_t GPIO_Pin;
+    uint8_t MODE;
+    uint8_t DefState;
+} tGPIO_Line;
+
 /*
 #define ADC_DMA_Temperature_ON() 		do {DMA1_Channel1->CCR |=  DMA_CCR1_EN;\
 										ADC1->CR2 |= ADC_CR2_ADON;  \
