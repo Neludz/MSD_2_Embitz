@@ -96,7 +96,7 @@ TaskHandle_t Count_In_EE_Task;
 
 //extern emfat_t emfat;
 //extern  emfat_entry_t entries[];
-
+extern PCD_HandleTypeDef hpcd_USB_FS;
 //======================Interrupt========================================
 
 void ADC1_2_IRQHandler (void)
@@ -742,6 +742,16 @@ int main(void)
 
 
     return 0;
+}
+void Error_Handler(void)
+{
+  /* USER CODE BEGIN Error_Handler_Debug */
+  /* User can add his own implementation to report the HAL error return state */
+  __disable_irq();
+  while (1)
+  {
+  }
+  /* USER CODE END Error_Handler_Debug */
 }
 
 void vApplicationIdleHook( void )

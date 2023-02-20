@@ -16,7 +16,7 @@
 	"portable.h"
 	<reent.h>
 
-1676882334 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\freertosconfig.h
+1676888316 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\freertosconfig.h
 
 1665413836 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\projdefs.h
 
@@ -395,7 +395,7 @@
 	"stm32f1xx.h"
 	"stm32f1xx_hal.h"
 
-1669883858 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
+1676888264 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
 	"FreeRTOS.h"
 	"timers.h"
 
@@ -506,7 +506,7 @@
 	<dma_103.h>
 	<main.h>
 
-1676880850 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
+1676888264 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
 	"main.h"
 	<modbus_reg.h>
 	<modbus_hard.h>
@@ -526,15 +526,9 @@
 	"limits.h"
 	"IO.h"
 	"dma_103.h"
-	"hw_config.h"
-	"usb_lib.h"
-	"usb_desc.h"
-	"usb_pwr.h"
-	"usb_istr.h"
 	"math.h"
 	<string.h>
-	"emfat.h"
-	"mass_mal.h"
+	"stm32f1xx_hal.h"
 	"usb_device.h"
 
 1666017054 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h

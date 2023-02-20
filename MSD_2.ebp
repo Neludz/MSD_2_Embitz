@@ -68,6 +68,7 @@
 			<Add symbol="HSE_VALUE=8000000U" />
 			<Add symbol="SYSCLK_FREQ=72000000U" />
 			<Add symbol="USE_FULL_LL_DRIVER" />
+			<Add symbol="USE_HAL_DRIVER" />
 			<Add symbol="xPortSysTickHandler=SysTick_Handler" />
 			<Add symbol="xPortPendSVHandler=PendSV_Handler" />
 			<Add symbol="vPortSVCHandler=SVC_Handler" />
@@ -304,13 +305,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\USB_DEVICE\Target\usbd_conf.h" />
-		<Unit filename="src\USB_User\app.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\emfat.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\emfat.h" />
 		<Unit filename="stm32f103c8_flash.ld" />
 		<Unit filename="STM32F103xx.svd" />
 		<Extensions>
