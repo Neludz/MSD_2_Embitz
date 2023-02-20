@@ -150,31 +150,97 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Libraries\LL\stm32f1xx_ll_usart.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_core.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_def.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_init.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_int.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_lib.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_mem.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_regs.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_sil.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\inc\usb_type.h" />
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_core.c">
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_init.c">
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_core.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_def.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Src\usbd_core.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_int.c">
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_mem.c">
+		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_regs.c">
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_cortex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_dma.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_dma_ex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_exti.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash_ex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_gpio.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_gpio_ex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc_ex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Libraries\STM32_USB-FS-Device_Driver\src\usb_sil.c">
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_cortex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_exti.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pwr.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim_ex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usb.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\Clock.c">
@@ -218,9 +284,26 @@
 			<Option compilerVar="CC" />
 			<Option weight="0" />
 		</Unit>
+		<Unit filename="src\stm32f1xx_hal_conf.h" />
 		<Unit filename="src\system_stm32f1xx.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\USB_DEVICE\App\usb_device.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\App\usb_device.h" />
+		<Unit filename="src\USB_DEVICE\App\usbd_cdc_if.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\App\usbd_cdc_if.h" />
+		<Unit filename="src\USB_DEVICE\App\usbd_desc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\App\usbd_desc.h" />
+		<Unit filename="src\USB_DEVICE\Target\usbd_conf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\Target\usbd_conf.h" />
 		<Unit filename="src\USB_User\app.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -228,52 +311,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\USB_User\emfat.h" />
-		<Unit filename="src\USB_User\hw_config.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\hw_config.h" />
-		<Unit filename="src\USB_User\mass_mal.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\mass_mal.h" />
-		<Unit filename="src\USB_User\memory.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\memory.h" />
-		<Unit filename="src\USB_User\scsi_data.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_bot.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_bot.h" />
-		<Unit filename="src\USB_User\usb_conf.h" />
-		<Unit filename="src\USB_User\usb_desc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_desc.h" />
-		<Unit filename="src\USB_User\usb_endp.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_istr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_istr.h" />
-		<Unit filename="src\USB_User\usb_prop.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_prop.h" />
-		<Unit filename="src\USB_User\usb_pwr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_pwr.h" />
-		<Unit filename="src\USB_User\usb_scsi.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\USB_User\usb_scsi.h" />
-		<Unit filename="src\USB_User\virtualComPort.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="stm32f103c8_flash.ld" />
 		<Unit filename="STM32F103xx.svd" />
 		<Extensions>

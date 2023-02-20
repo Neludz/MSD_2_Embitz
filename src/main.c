@@ -52,17 +52,21 @@ SOFTWARE.
 
 #include "IO.h"
 #include "dma_103.h"
-#include "hw_config.h"
-#include "usb_lib.h"
-#include "usb_desc.h"
-#include "usb_pwr.h"
-#include "usb_istr.h"
+//#include "hw_config.h"
+//#include "usb_lib.h"
+//#include "usb_desc.h"
+//#include "usb_pwr.h"
+//#include "usb_istr.h"
 
 #include "math.h"
 #include <string.h>
+#include "stm32f1xx_hal.h"
 
-#include "emfat.h"
-#include "mass_mal.h"
+//#include "emfat.h"
+//#include "mass_mal.h"
+
+#include "usb_device.h"
+
 //======================Variables========================================
 //#define DEBU_USER
 
@@ -90,8 +94,8 @@ TaskHandle_t RS485_Task;
 TaskHandle_t USB_CDC_Task;
 TaskHandle_t Count_In_EE_Task;
 
-extern emfat_t emfat;
-extern  emfat_entry_t entries[];
+//extern emfat_t emfat;
+//extern  emfat_entry_t entries[];
 
 //======================Interrupt========================================
 
@@ -113,7 +117,8 @@ void ADC1_2_IRQHandler (void)
 
 void USB_LP_CAN1_RX0_IRQHandler(void)
 {
-    USB_Istr();
+   HAL_PCD_IRQHandler(&hpcd_USB_FS);
+   // USB_Istr();
 }
 
 //-------------------------------------------------------------------------
@@ -696,18 +701,19 @@ int main(void)
     ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
     IO_Init();
 
-    flash_btock();
+    //flash_btock();
 
-    emfat_init(&emfat, "MSD_2", entries);
+    //emfat_init(&emfat, "MSD_2", entries);
 
     mh_Buf_Init();
 
-    Set_System();
-    Set_USBClock();
-    USB_Interrupts_Config();
-    USB_Init();
+    MX_USB_DEVICE_Init();
+    //Set_System();
+   //Set_USBClock();
+    //USB_Interrupts_Config();
+    //USB_Init();
 
-    Init_IWDG(WATCH_DOG_TIME_MS);
+    //Init_IWDG(WATCH_DOG_TIME_MS);
 
     /*	timers	*/
     for (uint32_t i = 0; i<MAX_DO; i++)

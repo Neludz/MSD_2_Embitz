@@ -10,7 +10,7 @@
 
 #include "IO.h"
 #include <dma_103.h>
-#include "hw_config.h"
+//#include "hw_config.h"
 #include "main.h"
 #include <eeprom_AT25.h>
 
@@ -288,11 +288,13 @@ void mh_USB_Transmit_Start (void *mbb)
 {
     mb_struct *st_mb;
     st_mb = (void*) mbb;
-    st_mb->mb_index=0;
-    while (st_mb->mb_index < st_mb->response_size)
-    {
-        USB_Send_Data((uint8_t) st_mb->p_mb_buff[st_mb->mb_index++]);
-    }
+   // st_mb->mb_index=0;
+    CDC_Transmit_FS (st_mb->p_mb_buff, st_mb->response_size);
+
+   // while (st_mb->mb_index < st_mb->response_size)
+   // {
+   //     USB_Send_Data((uint8_t) st_mb->p_mb_buff[st_mb->mb_index++]);
+   // }
     MB_USB.mb_state=STATE_IDLE;
 }
 
