@@ -37,6 +37,7 @@
 					<Add option="-Wa,--no-warn" />
 				</Assembler>
 				<Linker>
+					<Add option="-eb_lib=n" />
 					<Add option="-Wl,--gc-sections" />
 					<Add option="-flto" />
 				</Linker>
@@ -83,6 +84,9 @@
 			<Add option="-fno-strict-aliasing" />
 		</Cpp>
 		<Linker>
+			<Add option="-u _scanf_float" />
+			<Add option="-u _printf_float" />
+			<Add option="-eb_lib=n" />
 			<Add option="-lm" />
 		</Linker>
 		<Unit filename="cmsis\cmsis_compiler.h" />
@@ -168,77 +172,13 @@
 		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_cortex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_dma.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_dma_ex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_exti.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_flash_ex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_gpio.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_gpio_ex.h" />
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h" />
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pwr.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_rcc_ex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_tim_ex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_bus.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_cortex.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_dma.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_exti.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_gpio.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_pwr.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_rcc.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_system.h" />
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_utils.h" />
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_cortex.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_dma.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_exti.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash_ex.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_gpio_ex.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd_ex.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pwr.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_rcc_ex.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim_ex.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usb.c">
@@ -252,6 +192,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\dma_103.h" />
+		<Unit filename="src\ebmon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\ebmon.h" />
 		<Unit filename="src\eeprom_AT25.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -311,7 +255,7 @@
 			<code_completion />
 			<debugger>
 				<target_debugging_settings target="Release">
-					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="15" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="1" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
+					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="15" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="0" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
 				</target_debugging_settings>
 			</debugger>
 			<envvars />

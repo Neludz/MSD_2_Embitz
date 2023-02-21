@@ -68,19 +68,27 @@ void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state);
 
 void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
 {
+
   if(pcdHandle->Instance==USB)
   {
   /* USER CODE BEGIN USB_MspInit 0 */
 
   /* USER CODE END USB_MspInit 0 */
     /* Peripheral clock enable */
-    __HAL_RCC_USB_CLK_ENABLE();
-
+   // __HAL_RCC_USB_CLK_ENABLE();
+  RCC->CFGR		&= ~ RCC_CFGR_USBPRE;
+  /* Enable the USB clock */
+  RCC->APB1ENR    |= RCC_APB1ENR_USBEN;
     /* Peripheral interrupt init */
-    HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
-  /* USER CODE BEGIN USB_MspInit 1 */
 
+
+  NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn,14);			                        // Очень важный момент!!! Надо правильно выставить приоритеты. Они должны быть в диапазоне между
+                                                                      // configKERNEL_INTERRUPT_PRIORITY  и configMAX_SYSCALL_INTERRUPT_PRIORITY
+  NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
+   // HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 0, 0);
+    //HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
+  /* USER CODE BEGIN USB_MspInit 1 */
+//printf ( "if(pcdHandle->Instance==USB)\n" );
   /* USER CODE END USB_MspInit 1 */
   }
 }

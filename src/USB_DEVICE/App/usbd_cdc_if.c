@@ -20,7 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_cdc_if.h"
-
+#include "modbus_hard.h"
 /* USER CODE BEGIN INCLUDE */
 
 /* USER CODE END INCLUDE */
@@ -149,6 +149,7 @@ USBD_CDC_ItfTypeDef USBD_Interface_fops_FS =
   */
 static int8_t CDC_Init_FS(void)
 {
+   // printf ( "CDC_Init_FS\n");
   /* USER CODE BEGIN 3 */
   /* Set Application Buffers */
   USBD_CDC_SetTxBuffer(&hUsbDeviceFS, UserTxBufferFS, 0);
@@ -258,8 +259,8 @@ static int8_t CDC_Control_FS(uint8_t cmd, uint8_t* pbuf, uint16_t length)
   */
 static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
 {
-
-    mh_USB_Recieve(Buf, Len);
+//printf ( "CDC_Receive_FS-%d-%d-%d; Len= %d\n",Buf[0], Buf[1], Buf[7],*Len);
+    mh_USB_Recieve(Buf, *Len);
   /* USER CODE BEGIN 6 */
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
@@ -280,6 +281,7 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   */
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len)
 {
+//     printf ( "CDC_Transmit_FS-%d-%d-%d\n",Buf[0], Buf[1], Buf[7]);
   uint8_t result = USBD_OK;
   /* USER CODE BEGIN 7 */
   USBD_CDC_HandleTypeDef *hcdc = (USBD_CDC_HandleTypeDef*)hUsbDeviceFS.pClassData;

@@ -117,8 +117,9 @@ void ADC1_2_IRQHandler (void)
 
 void USB_LP_CAN1_RX0_IRQHandler(void)
 {
-   HAL_PCD_IRQHandler(&hpcd_USB_FS);
-   // USB_Istr();
+
+    HAL_PCD_IRQHandler(&hpcd_USB_FS);
+    // USB_Istr();
 }
 
 //-------------------------------------------------------------------------
@@ -706,10 +707,10 @@ int main(void)
     //emfat_init(&emfat, "MSD_2", entries);
 
     mh_Buf_Init();
-
     MX_USB_DEVICE_Init();
+
     //Set_System();
-   //Set_USBClock();
+    //Set_USBClock();
     //USB_Interrupts_Config();
     //USB_Init();
 
@@ -745,13 +746,13 @@ int main(void)
 }
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
-  /* USER CODE END Error_Handler_Debug */
+    /* USER CODE BEGIN Error_Handler_Debug */
+    /* User can add his own implementation to report the HAL error return state */
+    __disable_irq();
+    while (1)
+    {
+    }
+    /* USER CODE END Error_Handler_Debug */
 }
 
 void vApplicationIdleHook( void )
