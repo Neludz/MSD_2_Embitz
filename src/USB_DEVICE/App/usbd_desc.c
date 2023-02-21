@@ -22,6 +22,8 @@
 #include "usbd_core.h"
 #include "usbd_desc.h"
 #include "usbd_conf.h"
+#include "stm32f1xx_hal.h"
+#include "stm32f1xx.h"
 
 /* USER CODE BEGIN INCLUDE */
 
@@ -232,9 +234,9 @@ uint8_t * USBD_FS_LangIDStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
   * @param  length : Pointer to data length variable
   * @retval Pointer to descriptor buffer
   */
-  __ALIGN_BEGIN const uint8_t Composite_StringProduct[Composite_SIZ_STRING_PRODUCT] __ALIGN_END =
+  __ALIGN_BEGIN const uint8_t COMPOSITE_StringProduct[COMPOSITE_SIZ_STRING_PRODUCT] __ALIGN_END =
   {
-    Composite_SIZ_STRING_PRODUCT,          /* bLength */
+    COMPOSITE_SIZ_STRING_PRODUCT,          /* bLength */
     USB_DESC_TYPE_STRING,        /* bDescriptorType */
     'M', 0, 'S', 0, 'D', 0, '_', 0, '2', 0, ' ', 0, 'C', 0,
     'o', 0, 'm', 0, 'p', 0, 'o', 0, 's', 0, 'i', 0, 't', 0,
@@ -244,7 +246,7 @@ uint8_t * USBD_FS_LangIDStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 uint8_t * USBD_FS_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length)
 {
     UNUSED(speed);
-    *length = sizeof(Composite_StringProduct);
+    *length = sizeof(COMPOSITE_StringProduct);
 //  if(speed == 0)
 //  {
 //    USBD_GetString((uint8_t *)USBD_PRODUCT_STRING_FS, USBD_StrDesc, length);
@@ -253,7 +255,7 @@ uint8_t * USBD_FS_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length
 //  {
 //    USBD_GetString((uint8_t *)USBD_PRODUCT_STRING_FS, USBD_StrDesc, length);
 //  }
-  return  (uint8_t *) Composite_StringProduct;//USBD_StrDesc;
+  return  (uint8_t *) COMPOSITE_StringProduct;//USBD_StrDesc;
 }
 
 /**
@@ -262,9 +264,9 @@ uint8_t * USBD_FS_ProductStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *length
   * @param  length : Pointer to data length variable
   * @retval Pointer to descriptor buffer
   */
-    __ALIGN_BEGIN const uint8_t USBD_FS_StringManufacturer[Composite_SIZ_STRING_VENDOR] __ALIGN_END=
+    __ALIGN_BEGIN const uint8_t USBD_FS_StringManufacturer[COMPOSITE_SIZ_STRING_VENDOR] __ALIGN_END=
   {
-    Composite_SIZ_STRING_VENDOR, /* Size of Vendor string */
+    COMPOSITE_SIZ_STRING_VENDOR, /* Size of Vendor string */
     USB_DESC_TYPE_STRING,  /* bDescriptorType*/
     /* Manufacturer:  */
     'M', 0, 'S', 0, 'D', 0, '_', 0, '2', 0
@@ -285,9 +287,9 @@ uint8_t * USBD_FS_ManufacturerStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *l
   * @param  length : Pointer to data length variable
   * @retval Pointer to descriptor buffer
   */
-    __ALIGN_BEGIN const uint8_t Composite_StringSerial[Composite_SIZ_STRING_SERIAL] __ALIGN_END=
+    __ALIGN_BEGIN const uint8_t Composite_StringSerial[COMPOSITE_SIZ_STRING_SERIAL] __ALIGN_END=
   {
-    Composite_SIZ_STRING_SERIAL,           /* bLength */
+    COMPOSITE_SIZ_STRING_SERIAL,           /* bLength */
     USB_DESC_TYPE_STRING,        /* bDescriptorType */
     'M', 0, 'S', 0, 'D', 0,'_', 0,'2', 0
   };

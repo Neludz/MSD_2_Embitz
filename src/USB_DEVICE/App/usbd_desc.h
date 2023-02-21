@@ -51,10 +51,10 @@
 
 #define  USB_SIZ_STRING_SERIAL       0x1A
 
-#define Composite_SIZ_STRING_VENDOR             12
-#define Composite_SIZ_STRING_PRODUCT            48
-#define Composite_SIZ_STRING_SERIAL             12
-#define Composite_SIZ_STRING_LANGID             4
+#define COMPOSITE_SIZ_STRING_VENDOR             12
+#define COMPOSITE_SIZ_STRING_PRODUCT            48
+#define COMPOSITE_SIZ_STRING_SERIAL             12
+#define COMPOSITE_SIZ_STRING_LANGID             4
 
 /* USER CODE BEGIN EXPORTED_CONSTANTS */
 

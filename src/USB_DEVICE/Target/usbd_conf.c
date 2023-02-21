@@ -24,7 +24,7 @@
 #include "usbd_def.h"
 #include "usbd_core.h"
 #include "usbd_cdc.h"
-
+#include "main.h"
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -75,8 +75,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
 
   /* USER CODE END USB_MspInit 0 */
     /* Peripheral clock enable */
-   // __HAL_RCC_USB_CLK_ENABLE();
-  RCC->CFGR		&= ~ RCC_CFGR_USBPRE;
+  //  __HAL_RCC_USB_CLK_ENABLE();
   /* Enable the USB clock */
   RCC->APB1ENR    |= RCC_APB1ENR_USBEN;
     /* Peripheral interrupt init */
@@ -85,6 +84,7 @@ void HAL_PCD_MspInit(PCD_HandleTypeDef* pcdHandle)
   NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn,14);			                        // Очень важный момент!!! Надо правильно выставить приоритеты. Они должны быть в диапазоне между
                                                                       // configKERNEL_INTERRUPT_PRIORITY  и configMAX_SYSCALL_INTERRUPT_PRIORITY
   NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
+
    // HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 0, 0);
     //HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
   /* USER CODE BEGIN USB_MspInit 1 */
@@ -101,10 +101,10 @@ void HAL_PCD_MspDeInit(PCD_HandleTypeDef* pcdHandle)
 
   /* USER CODE END USB_MspDeInit 0 */
     /* Peripheral clock disable */
-    __HAL_RCC_USB_CLK_DISABLE();
-
+   // __HAL_RCC_USB_CLK_DISABLE();
+    RCC->APB1ENR    &= ~RCC_APB1ENR_USBEN;
     /* Peripheral interrupt Deinit*/
-    HAL_NVIC_DisableIRQ(USB_LP_CAN1_RX0_IRQn);
+    NVIC_DisableIRQ(USB_LP_CAN1_RX0_IRQn);
 
   /* USER CODE BEGIN USB_MspDeInit 1 */
 
@@ -210,11 +210,12 @@ void HAL_PCD_SuspendCallback(PCD_HandleTypeDef *hpcd)
   USBD_LL_Suspend((USBD_HandleTypeDef*)hpcd->pData);
   /* Enter in STOP mode. */
   /* USER CODE BEGIN 2 */
-  if (hpcd->Init.low_power_enable)
-  {
-    /* Set SLEEPDEEP bit and SleepOnExit of Cortex System Control Register. */
-    SCB->SCR |= (uint32_t)((uint32_t)(SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk));
-  }
+   Set_Time_For_Blink(TIME_ON_NO_USB, TIME_OFF_NO_USB);
+//  if (hpcd->Init.low_power_enable)
+//  {
+//    /* Set SLEEPDEEP bit and SleepOnExit of Cortex System Control Register. */
+//    SCB->SCR |= (uint32_t)((uint32_t)(SCB_SCR_SLEEPDEEP_Msk | SCB_SCR_SLEEPONEXIT_Msk));
+//  }
   /* USER CODE END 2 */
 }
 
@@ -231,7 +232,7 @@ void HAL_PCD_ResumeCallback(PCD_HandleTypeDef *hpcd)
 #endif /* USE_HAL_PCD_REGISTER_CALLBACKS */
 {
   /* USER CODE BEGIN 3 */
-
+ Set_Time_For_Blink(TIME_ON_USB, TIME_OFF_USB);
   /* USER CODE END 3 */
   USBD_LL_Resume((USBD_HandleTypeDef*)hpcd->pData);
 }
@@ -627,12 +628,10 @@ void HAL_PCDEx_SetConnectionState(PCD_HandleTypeDef *hpcd, uint8_t state)
   if (state == 1)
   {
     /* Configure Low connection state. */
-
   }
   else
   {
     /* Configure High connection state. */
-
   }
   /* USER CODE END 6 */
 }

@@ -68,7 +68,7 @@ SOFTWARE.
 #include "usb_device.h"
 
 //======================Variables========================================
-//#define DEBU_USER
+#define DEBU_USER
 
 extern uint16_t MBbuf_main[];
 
