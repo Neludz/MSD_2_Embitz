@@ -54,6 +54,7 @@ typedef enum
 {
     STATE_IDLE,			// Ready to get a frame from Master
     STATE_RCVE,			// Frame is being received
+    STATE_WAIT,	        // Frame is wait to parse
     STATE_PARS,			// Frame is being parsed (may take some time)
     STATE_SEND,			// Response frame is being sent
     STATE_SENT			// Last byte sent to shift register. Waiting "Last Bit Sent" interrupt
