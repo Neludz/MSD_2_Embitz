@@ -2,8 +2,14 @@
 <EmBitz_debug_session>
 	<debuggerLastSession>
 		<watches>
-			<watch key="MB_RS485" format="0" array="0" start="0" count="0" expanded="1" live="0" />
-			<watch key="RS485_MB_Buf" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="ADC_DMA" format="1" array="1" start="0" count="81" expanded="0" live="0" />
+			<watch key="Adc_Filter_Value" format="0" array="1" start="0" count="11" expanded="0" live="0" />
+			<watch key="MB_RS485" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="USB_buf" format="1" array="1" start="0" count="20" expanded="0" live="0" />
+			<watch key="UserRxBufferFS" format="1" array="1" start="0" count="29" expanded="0" live="0" />
+			<watch key="UserTxBufferFS" format="1" array="1" start="0" count="45" expanded="0" live="0" />
+			<watch key="mbb-&gt;mb_index" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="mbb-&gt;p_mb_buff" format="1" array="1" start="0" count="14" expanded="1" live="0" />
 		</watches>
 		<memory_view address="0x0" locked="0" live="0" options="290" />
 	</debuggerLastSession>

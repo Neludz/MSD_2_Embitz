@@ -219,8 +219,8 @@ void IO_Init(void)
     IO_SPI_Init();
 
 // ADC
-    RCC->CFGR 		&= ~RCC_CFGR_ADCPRE;
-    RCC->CFGR		|= RCC_CFGR_ADCPRE_DIV8;
+   // RCC->CFGR 		&= ~RCC_CFGR_ADCPRE;
+   // RCC->CFGR		|= RCC_CFGR_ADCPRE_DIV8;
     RCC->APB2ENR	|= RCC_APB2ENR_ADC1EN|RCC_APB2ENR_ADC2EN;
 
     IO_ADC_Init();
@@ -230,6 +230,9 @@ void IO_Init(void)
 
 // DMA
     RCC->AHBENR     |= RCC_AHBENR_DMA1EN;
+
+    DMA_Disable(DMA1_Channel1);		    // Выключили канал.
+    DMA_DeInit_Di(DMA1_Channel1);		// Обнулили DMA канал
 
     DMA_Init_Di(  DMA1_Channel1,				// 1 канал 1 контроллера.
                   (uint32_t)&ADC1->DR,		    // Адрес откуда брать -- адрес регистра DR  в USART1
@@ -249,7 +252,6 @@ void IO_Init(void)
 //Включаем DMA - поехали!
     DMA_Enable(DMA1_Channel1);
     ADC1->CR2 |= ADC_CR2_SWSTART;
-
 //NVIC_SetPriority(DMA1_Channel1_IRQn,14);
 //NVIC_EnableIRQ(DMA1_Channel1_IRQn);
 }
