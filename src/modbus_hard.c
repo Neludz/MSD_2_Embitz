@@ -10,7 +10,6 @@
 
 #include "IO.h"
 #include <dma_103.h>
-//#include "hw_config.h"
 #include "main.h"
 #include <eeprom_AT25.h>
 

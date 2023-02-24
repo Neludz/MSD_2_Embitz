@@ -52,18 +52,11 @@ SOFTWARE.
 
 #include "IO.h"
 #include "dma_103.h"
-//#include "hw_config.h"
-//#include "usb_lib.h"
-//#include "usb_desc.h"
-//#include "usb_pwr.h"
-//#include "usb_istr.h"
-
 #include "math.h"
 #include <string.h>
 #include "stm32f1xx_hal.h"
 
-//#include "emfat.h"
-//#include "mass_mal.h"
+#include "emfat.h"
 
 #include "usb_device.h"
 
@@ -94,9 +87,8 @@ TaskHandle_t RS485_Task;
 TaskHandle_t USB_CDC_Task;
 TaskHandle_t Count_In_EE_Task;
 
-//extern emfat_t emfat;
-//extern  emfat_entry_t entries[];
-extern PCD_HandleTypeDef hpcd_USB_FS;
+extern emfat_t emfat;
+extern  emfat_entry_t entries[];
 //======================Interrupt========================================
 
 void ADC1_2_IRQHandler (void)
@@ -114,16 +106,6 @@ void ADC1_2_IRQHandler (void)
 }
 
 //-------------------------------------------------------------------------
-
-void USB_LP_CAN1_RX0_IRQHandler(void)
-{
-
-    HAL_PCD_IRQHandler(&hpcd_USB_FS);
-    // USB_Istr();
-}
-
-//-------------------------------------------------------------------------
-
 //======================Task========================================
 
 void vMeasure_Temperature (void *pvParameters)
@@ -704,15 +686,11 @@ int main(void)
 
     //flash_btock();
 
-    //emfat_init(&emfat, "MSD_2", entries);
+    emfat_init(&emfat, "MSD_2", entries);
 
     mh_Buf_Init();
-    MX_USB_DEVICE_Init();
 
-    //Set_System();
-    //Set_USBClock();
-    //USB_Interrupts_Config();
-    //USB_Init();
+    MX_USB_DEVICE_Init();
 
     //Init_IWDG(WATCH_DOG_TIME_MS);
 

@@ -25,6 +25,8 @@
 #include "usbd_desc.h"
 #include "usbd_cdc.h"
 #include "usbd_cdc_if.h"
+#include "usbd_msc_cdc.h"
+#include "usbd_storage_if.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -61,18 +63,17 @@ USBD_HandleTypeDef hUsbDeviceFS;
   * Init USB device Library, add supported class and start the library
   * @retval None
   */
-void MX_USB_DEVICE_Init(void)
+ void MX_USB_DEVICE_Init(void)
 {
   /* USER CODE BEGIN USB_DEVICE_Init_PreTreatment */
 
   /* USER CODE END USB_DEVICE_Init_PreTreatment */
-//printf ( "USBD_Init\n" );
   /* Init Device Library, add supported class and start the library. */
   if (USBD_Init(&hUsbDeviceFS, &FS_Desc, DEVICE_FS) != USBD_OK)
   {
     Error_Handler();
   }
-  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_CDC) != USBD_OK)
+  if (USBD_RegisterClass(&hUsbDeviceFS, &USBD_MSC_CDC_ClassDriver) != USBD_OK)
   {
     Error_Handler();
   }
@@ -80,11 +81,15 @@ void MX_USB_DEVICE_Init(void)
   {
     Error_Handler();
   }
+  if (USBD_MSC_RegisterStorage(&hUsbDeviceFS, &USBD_Storage_Interface_fops_FS) != USBD_OK)
+  {
+    Error_Handler();
+  }
+
   if (USBD_Start(&hUsbDeviceFS) != USBD_OK)
   {
     Error_Handler();
   }
-//printf ( "USBD_INIT end\n" );
   /* USER CODE BEGIN USB_DEVICE_Init_PostTreatment */
 
   /* USER CODE END USB_DEVICE_Init_PostTreatment */

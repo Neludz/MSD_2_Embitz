@@ -27,6 +27,9 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_conf.h"
+//#include "usbd_cdc.h"
+//#include "usbd_msc.h"
+//#include "stm32f1xx_hal_pcd.h"
 
 /** @addtogroup STM32_USBD_DEVICE_LIBRARY
   * @{
@@ -253,10 +256,12 @@ typedef struct _USBD_HandleTypeDef
   uint32_t                dev_remote_wakeup;
 
   USBD_SetupReqTypedef    request;
-  USBD_DescriptorsTypeDef *pDesc;
-  USBD_ClassTypeDef       *pClass;
+  const USBD_DescriptorsTypeDef *pDesc;
+  const USBD_ClassTypeDef       *pClass;
   void                    *pClassData;
   void                    *pUserData;
+  void                    *pClassData_2;
+  void                    *pUserData_2;
   void                    *pData;
 } USBD_HandleTypeDef;
 

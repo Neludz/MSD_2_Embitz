@@ -41,9 +41,9 @@ extern "C" {
 /** @defgroup usbd_cdc_Exported_Defines
   * @{
   */
-#define CDC_IN_EP                                   0x81U  /* EP1 for data IN */
-#define CDC_OUT_EP                                  0x01U  /* EP1 for data OUT */
-#define CDC_CMD_EP                                  0x82U  /* EP2 for CDC commands */
+//#define CDC_IN_EP                                   0x81U  /* EP1 for data IN */
+//#define CDC_OUT_EP                                  0x01U  /* EP1 for data OUT */
+//#define CDC_CMD_EP                                  0x82U  /* EP2 for CDC commands */
 
 #ifndef CDC_HS_BINTERVAL
 #define CDC_HS_BINTERVAL                          0x10U
@@ -159,6 +159,15 @@ uint8_t  USBD_CDC_SetRxBuffer(USBD_HandleTypeDef   *pdev,
 uint8_t  USBD_CDC_ReceivePacket(USBD_HandleTypeDef *pdev);
 
 uint8_t  USBD_CDC_TransmitPacket(USBD_HandleTypeDef *pdev);
+
+ uint8_t  USBD_CDC_Init(USBD_HandleTypeDef *pdev, uint8_t cfgidx);
+ uint8_t  USBD_CDC_DeInit(USBD_HandleTypeDef *pdev, uint8_t cfgidx);
+ uint8_t  USBD_CDC_Setup(USBD_HandleTypeDef *pdev, USBD_SetupReqTypedef *req);
+ uint8_t  USBD_CDC_DataIn(USBD_HandleTypeDef *pdev, uint8_t epnum);
+ uint8_t  USBD_CDC_DataOut(USBD_HandleTypeDef *pdev, uint8_t epnum);
+ uint8_t  USBD_CDC_EP0_RxReady(USBD_HandleTypeDef *pdev);
+
+
 /**
   * @}
   */

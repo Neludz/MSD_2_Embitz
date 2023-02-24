@@ -432,11 +432,13 @@ static void USBD_GetDescriptor(USBD_HandleTypeDef *pdev,
       if (pdev->dev_speed == USBD_SPEED_HIGH)
       {
         pbuf = pdev->pClass->GetHSConfigDescriptor(&len);
+        printf("USBD_SPEED_HIGH\n");
        // pbuf[1] = USB_DESC_TYPE_CONFIGURATION;
       }
       else
       {
         pbuf = pdev->pClass->GetFSConfigDescriptor(&len);
+        printf("!!!USBD_SPEED_HIGH\n");
        // pbuf[1] = USB_DESC_TYPE_CONFIGURATION;
       }
       break;

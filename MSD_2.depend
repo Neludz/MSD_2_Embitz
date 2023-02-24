@@ -373,22 +373,22 @@
 1676880370 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb-fs-device_driver\src\usb_sil.c
 	"usb_lib.h"
 
-1676988220 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\cdc\src\usbd_cdc.c
+1677226418 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\cdc\src\usbd_cdc.c
 	"usbd_cdc.h"
 	"usbd_ctlreq.h"
 	"stm32f1xx_hal.h"
 
-1676988676 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\cdc\inc\usbd_cdc.h
+1677160751 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\cdc\inc\usbd_cdc.h
 	"usbd_ioreq.h"
 
 1676986659 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\inc\usbd_ioreq.h
 	"usbd_def.h"
 	"usbd_core.h"
 
-1676986659 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\inc\usbd_def.h
+1677153420 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\inc\usbd_def.h
 	"usbd_conf.h"
 
-1676987280 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\target\usbd_conf.h
+1677154543 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\target\usbd_conf.h
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -411,7 +411,7 @@
 1676988485 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\src\usbd_core.c
 	"usbd_core.h"
 
-1676986659 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\src\usbd_ctlreq.c
+1677220856 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\src\usbd_ctlreq.c
 	"usbd_ctlreq.h"
 	"usbd_ioreq.h"
 
@@ -506,7 +506,7 @@
 	<dma_103.h>
 	<main.h>
 
-1676991033 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
+1677226636 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
 	"main.h"
 	<modbus_reg.h>
 	<modbus_hard.h>
@@ -529,6 +529,7 @@
 	"math.h"
 	<string.h>
 	"stm32f1xx_hal.h"
+	"emfat.h"
 	"usb_device.h"
 
 1666017054 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h
@@ -603,27 +604,29 @@
 1665413836 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\system_stm32f1xx.c
 	"stm32f1xx.h"
 
-1676986659 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usb_device.c
+1677226636 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usb_device.c
 	"usb_device.h"
 	"usbd_core.h"
 	"usbd_desc.h"
 	"usbd_cdc.h"
 	"usbd_cdc_if.h"
+	"usbd_msc_cdc.h"
+	"usbd_storage_if.h"
 
 1676988926 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_desc.h
 	"usbd_def.h"
 
-1676989152 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_cdc_if.h
+1677161684 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_cdc_if.h
 	"usbd_cdc.h"
 
-1676988978 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_desc.c
+1677074333 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_desc.c
 	"usbd_core.h"
 	"usbd_desc.h"
 	"usbd_conf.h"
 	"stm32f1xx_hal.h"
 	"stm32f1xx.h"
 
-1676991626 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\target\usbd_conf.c
+1677226636 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\target\usbd_conf.c
 	"stm32f1xx.h"
 	"stm32f1xx_hal.h"
 	"usbd_def.h"
@@ -767,14 +770,14 @@
 	<string.h>
 	"usbd_cdc_if.h"
 
-1676986659 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_cdc_if.c
+1677223298 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_cdc_if.c
 	"usbd_cdc_if.h"
 	"modbus_hard.h"
 
-1676986659 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.c
+1677220278 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.c
 	"ebmon.h"
 
-1676986659 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.h
+1677220278 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.h
 	<stdint.h>
 	<stdio.h>
 
@@ -784,4 +787,67 @@
 1676894491 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\ebmon.h
 	<stdint.h>
 	<stdio.h>
+
+1677165720 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\src\usbd_msc.c
+	"usbd_msc.h"
+
+1677160456 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\inc\usbd_msc.h
+	"usbd_msc_bot.h"
+	"usbd_msc_scsi.h"
+	"usbd_ioreq.h"
+
+1666687043 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\inc\usbd_msc_bot.h
+	"usbd_core.h"
+
+1666687043 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\inc\usbd_msc_scsi.h
+	"usbd_def.h"
+
+1677154543 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\src\usbd_msc_bot.c
+	"usbd_msc_bot.h"
+	"usbd_msc.h"
+	"usbd_msc_scsi.h"
+	"usbd_ioreq.h"
+
+1666687043 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\src\usbd_msc_data.c
+	"usbd_msc_data.h"
+
+1666687043 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\inc\usbd_msc_data.h
+	"usbd_conf.h"
+
+1677154543 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\class\msc\src\usbd_msc_scsi.c
+	"usbd_msc_bot.h"
+	"usbd_msc_scsi.h"
+	"usbd_msc.h"
+	"usbd_msc_data.h"
+
+1677227061 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_storage_if.c
+	"usbd_storage_if.h"
+	"emfat.h"
+
+1676874942 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_storage_if.h
+	"usbd_msc.h"
+
+1677226354 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\usbd_msc_cdc.c
+	"usbd_msc_cdc.h"
+	"usbd_desc.h"
+	"usbd_ctlreq.h"
+	"usbd_cdc.h"
+	"usbd_msc.h"
+
+1677053129 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\usbd_msc_cdc.h
+	"usbd_ioreq.h"
+
+1671017402 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\emfat.h
+	<stddef.h>
+	<stdint.h>
+	<string.h>
+	<stdbool.h>
+
+1677226810 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app.c
+	"main.h"
+	"emfat.h"
+	"stdlib.h"
+
+1671017402 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\emfat.c
+	"emfat.h"
 

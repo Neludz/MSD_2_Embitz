@@ -37,7 +37,6 @@
 					<Add option="-Wa,--no-warn" />
 				</Assembler>
 				<Linker>
-					<Add option="-eb_lib=n" />
 					<Add option="-Wl,--gc-sections" />
 					<Add option="-flto" />
 				</Linker>
@@ -84,8 +83,6 @@
 			<Add option="-fno-strict-aliasing" />
 		</Cpp>
 		<Linker>
-			<Add option="-u _scanf_float" />
-			<Add option="-u _printf_float" />
 			<Add option="-eb_lib=n" />
 			<Add option="-lm" />
 		</Linker>
@@ -159,6 +156,22 @@
 		<Unit filename="Libraries\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc_bot.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc_data.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc_scsi.h" />
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc_bot.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc_data.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Libraries\STM32_USB_Device_Library\Class\MSC\Src\usbd_msc_scsi.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_core.h" />
 		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h" />
 		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_def.h" />
@@ -172,6 +185,9 @@
 		<Unit filename="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h" />
+		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h" />
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h" />
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h" />
 		<Unit filename="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h" />
@@ -192,10 +208,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\dma_103.h" />
-		<Unit filename="src\ebmon.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="src\ebmon.h" />
 		<Unit filename="src\eeprom_AT25.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -233,6 +245,9 @@
 		<Unit filename="src\system_stm32f1xx.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src\USB_DEVICE\app.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="src\USB_DEVICE\App\usb_device.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -245,10 +260,22 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\USB_DEVICE\App\usbd_desc.h" />
+		<Unit filename="src\USB_DEVICE\App\usbd_storage_if.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\App\usbd_storage_if.h" />
+		<Unit filename="src\USB_DEVICE\emfat.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\emfat.h" />
 		<Unit filename="src\USB_DEVICE\Target\usbd_conf.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\USB_DEVICE\Target\usbd_conf.h" />
+		<Unit filename="src\USB_DEVICE\usbd_msc_cdc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\USB_DEVICE\usbd_msc_cdc.h" />
 		<Unit filename="stm32f103c8_flash.ld" />
 		<Unit filename="STM32F103xx.svd" />
 		<Extensions>

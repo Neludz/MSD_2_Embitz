@@ -128,7 +128,7 @@ uint8_t * USBD_FS_InterfaceStrDescriptor(USBD_SpeedTypeDef speed, uint16_t *leng
   * @{
   */
 
-USBD_DescriptorsTypeDef FS_Desc =
+const USBD_DescriptorsTypeDef FS_Desc =
 {
   USBD_FS_DeviceDescriptor
 , USBD_FS_LangIDStrDescriptor
@@ -149,9 +149,9 @@ __ALIGN_BEGIN const  uint8_t USBD_FS_DeviceDesc[USB_LEN_DEV_DESC] __ALIGN_END =
   USB_DESC_TYPE_DEVICE,       /*bDescriptorType*/
   0x00,                       /*bcdUSB */
   0x02,
-  0x02,                       /*bDeviceClass*/
+  0xEF,                       /*bDeviceClass*/
   0x02,                       /*bDeviceSubClass*/
-  0x00,                       /*bDeviceProtocol*/
+  0x01,                       /*bDeviceProtocol*/
   USB_MAX_EP0_SIZE,           /*bMaxPacketSize*/
   LOBYTE(USBD_VID),           /*idVendor*/
   HIBYTE(USBD_VID),           /*idVendor*/
