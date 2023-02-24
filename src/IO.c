@@ -219,8 +219,8 @@ void IO_Init(void)
     IO_SPI_Init();
 
 // ADC
-   // RCC->CFGR 		&= ~RCC_CFGR_ADCPRE;
-   // RCC->CFGR		|= RCC_CFGR_ADCPRE_DIV8;
+    // RCC->CFGR 		&= ~RCC_CFGR_ADCPRE;
+    // RCC->CFGR		|= RCC_CFGR_ADCPRE_DIV8;
     RCC->APB2ENR	|= RCC_APB2ENR_ADC1EN|RCC_APB2ENR_ADC2EN;
 
     IO_ADC_Init();

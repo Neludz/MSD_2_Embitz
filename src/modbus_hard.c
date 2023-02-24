@@ -73,7 +73,7 @@ void USART1_IRQHandler (void)
     (void) cnt;
     if (USART1->SR & USART_SR_RXNE)
     {
-       // xTimerResetFromISR(rs485_timer_handle, NULL);	// Timer reset anyway: received symbol means NO SILENCE
+        // xTimerResetFromISR(rs485_timer_handle, NULL);	// Timer reset anyway: received symbol means NO SILENCE
         if( STATE_RCVE == MB_RS485.mb_state)
         {
             if(MB_RS485.mb_index >= MB_FRAME_MAX-1)
@@ -276,8 +276,8 @@ void mh_USB_Transmit_Start (void *mbb)
 
 void mh_Rs485_Transmit_Start (void *mbb)
 {
-mh_EnableTransmission(true);
-USART1->CR1 |= USART_CR1_TXEIE;
+    mh_EnableTransmission(true);
+    USART1->CR1 |= USART_CR1_TXEIE;
 }
 
 void mh_Factory (void)

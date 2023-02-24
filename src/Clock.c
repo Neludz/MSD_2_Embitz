@@ -14,7 +14,7 @@
 
 void ClockInit(void)
 {
-    #ifdef USE_HSE
+#ifdef USE_HSE
     LL_RCC_HSE_Enable();
 
 
@@ -23,7 +23,7 @@ void ClockInit(void)
         // Wait HSE
     }
     LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSE);
-    #endif
+#endif
 
 
     LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);                                     //MAX 72MHz
@@ -44,10 +44,10 @@ void ClockInit(void)
     }
 
 
-    #ifndef SYSCLK_FREQ
-    #define SYSCLK_FREQ 72000000U
-    #warning SYSCLK_FREQ set up to MAX automatically!!! Check this shit!
-    #endif
+#ifndef SYSCLK_FREQ
+#define SYSCLK_FREQ 72000000U
+#warning SYSCLK_FREQ set up to MAX automatically!!! Check this shit!
+#endif
 
     /* Enable Prefetch Buffer */
     FLASH->ACR |= FLASH_ACR_PRFTBE;
@@ -55,17 +55,17 @@ void ClockInit(void)
     /* Flash 2 wait state */
     FLASH->ACR &= (uint32_t)((uint32_t)~FLASH_ACR_LATENCY);
 
-    #if SYSCLK_FREQ<24000000U
+#if SYSCLK_FREQ<24000000U
     FLASH->ACR |= (uint32_t)FLASH_ACR_LATENCY_0; // Если SystemCoreClock <= 24 МГц
-    #endif
+#endif
 
-    #if SYSCLK_FREQ>=24000000U && SYSCLK_FREQ<48000000U
+#if SYSCLK_FREQ>=24000000U && SYSCLK_FREQ<48000000U
     FLASH->ACR |= (uint32_t)FLASH_ACR_LATENCY_1; // Если 24< SystemCoreClock <= 48, через такт.
-    #endif
+#endif
 
-    #if SYSCLK_FREQ>=48000000U
+#if SYSCLK_FREQ>=48000000U
     FLASH->ACR |= (uint32_t)FLASH_ACR_LATENCY_2;  // Если больше 48, то через два такта.
-    #endif
+#endif
 
     LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
 #endif

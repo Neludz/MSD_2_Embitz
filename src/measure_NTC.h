@@ -30,11 +30,11 @@ typedef uint8_t temperature_table_index_type;
 typedef struct
 {
     uint32_t           NTC_r2;						//sensor data
-     int16_t           NTC_b;						//sensor data
-     int16_t           NTC_t2;						//sensor data
+    int16_t           NTC_b;						//sensor data
+    int16_t           NTC_t2;						//sensor data
     uint32_t           NTC_r_divider;				//R in device
-     int16_t           NTC_start_temperature;
-     int16_t           NTC_step_temperature;
+    int16_t           NTC_start_temperature;
+    int16_t           NTC_step_temperature;
     uint16_t           NTC_temper_number_step;
     uint16_t           NTC_adc_resolution;
     uint16_t           NTC_adc_multipler;

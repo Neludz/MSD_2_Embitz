@@ -35,14 +35,14 @@ uint16_t AT25_rxtx(uint16_t data)
 
 uint8_t AT25_get_status_bit(void)
 {
-	uint8_t data;
+    uint8_t data;
 
     AT25_select();
-	AT25_tx(AT25_READ_STATUS_COM);
-	data = AT25_rx();
-	AT25_release();
+    AT25_tx(AT25_READ_STATUS_COM);
+    data = AT25_rx();
+    AT25_release();
 
-	return ((uint8_t) data);
+    return ((uint8_t) data);
 }
 
 
@@ -53,7 +53,7 @@ void AT25_wait_ready_bit(void)
     {
         if (xTaskGetSchedulerState()==taskSCHEDULER_RUNNING)
         {
-          taskYIELD();
+            taskYIELD();
         }
     }
 }
@@ -62,15 +62,15 @@ void AT25_wait_ready_bit(void)
 void AT25_read_byte(uint16_t adr, uint8_t *data_out, uint16_t len)
 {
     AT25_wait_ready_bit();
-	AT25_select();
-	AT25_tx(AT25_READ_COM);
-	AT25_tx((adr>>8));
-	AT25_tx((adr & 0xFF));
+    AT25_select();
+    AT25_tx(AT25_READ_COM);
+    AT25_tx((adr>>8));
+    AT25_tx((adr & 0xFF));
     for (uint32_t i=0; i<len; i++)
     {
         data_out[i] = AT25_rx();
     }
-	AT25_release();
+    AT25_release();
 }
 
 void AT25_write_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
