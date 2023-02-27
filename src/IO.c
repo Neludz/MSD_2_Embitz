@@ -12,7 +12,7 @@ volatile uint16_t ADC_DMA[ADC_CHANNEL_ALL * 9];
 //--------------X macros---------------------------------------------------------
 const tGPIO_Line IOs[NUM_IO] =
 {
-#define X_IO(a,b,c,d,e,f)	{b,c,d+e,f},
+#define X_IO(a,b,c,d,e,f,g)	{b,c,d+e,f,g},
     IO_TABLE
 #undef X_IO
 };
@@ -39,22 +39,37 @@ void IO_SetLine(tIOLine Line, bool State)
         IOs[Line].GPIOx->BRR = 1 << (IOs[Line].GPIO_Pin);
     }
 }
-
 //---------------------------------------------------------------------------------
 bool IO_GetLine(tIOLine Line)
-{
-    if (Line < NUM_IO)
-        return (((IOs[Line].GPIOx->IDR) & (1<<(IOs[Line].GPIO_Pin))) == 0);
-    else
-        return false;
-}
-//---------------------------------------------------------------------------------
-bool IO_GetLineDO(tIOLine Line)
 {
     if (Line < NUM_IO)
         return (((IOs[Line].GPIOx->IDR) & (1<<(IOs[Line].GPIO_Pin))) != 0);
     else
         return false;
+}
+
+//---------------------------------------------------------------------------------
+bool IO_GetLineActive(tIOLine Line)
+{
+    if (Line < NUM_IO)
+    {
+        bool pin_set = (((IOs[Line].GPIOx->IDR) & (1<<(IOs[Line].GPIO_Pin))) ? true : false);
+        return (pin_set == ( IOs[Line].ActiveState ? true : false));
+    }
+    else
+        return false;
+}
+//---------------------------------------------------------------------------------
+void IO_SetLineActive(tIOLine Line, bool State)
+{
+    if (State ^ IOs[Line].ActiveState)
+    {
+        IOs[Line].GPIOx->BRR = 1 << (IOs[Line].GPIO_Pin);   //reset
+    }
+    else
+    {
+        IOs[Line].GPIOx->BSRR = 1 << (IOs[Line].GPIO_Pin);  //set
+    }
 }
 
 //---------------------------------------------------------------------------------

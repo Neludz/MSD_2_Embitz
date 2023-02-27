@@ -19,47 +19,50 @@
 
 //======================Variable========================================
 static temperature_table_entry_type termo_table[TEMPERATURE_TABLE_SIZE];
-NTC_Calculation_Data_t NTC_Parametr;
+//NTC_Calculation_Data_t NTC_Parametr;
+int16_t           NTC_start_temperature;
+int16_t           NTC_step_temperature;
+uint16_t           NTC_temper_number_step;
 //test=20000*exp(3977/263.15-3977/298.15);
 //test_2=(8*test*1024)/((20000+test));
 
 //======================Function========================================
 
 
-
 void calculate_table_NTC (NTC_Calculation_Data_t NTC_Data)
 {
     uint32_t i;
     float  r_Value, Temp_t1, Temp_t2;
-    memcpy(&NTC_Parametr, &NTC_Data, sizeof(NTC_Calculation_Data_t));
-    Temp_t2=(float) NTC_Parametr.NTC_t2+273.15;
+    //memcpy(&NTC_Parametr, &NTC_Data, sizeof(NTC_Calculation_Data_t));
+    NTC_start_temperature = NTC_Data.NTC_start_temperature;
+    NTC_step_temperature = NTC_Data.NTC_step_temperature;
+    NTC_temper_number_step = NTC_Data.NTC_temper_number_step;
+    Temp_t2=(float) NTC_Data.NTC_t2+273.15;
 
-    if (NTC_Parametr.NTC_temper_number_step>TEMPERATURE_TABLE_SIZE)
+    if (NTC_Data.NTC_temper_number_step>TEMPERATURE_TABLE_SIZE)
     {
-        NTC_Parametr.NTC_temper_number_step = TEMPERATURE_TABLE_SIZE;
+        NTC_Data.NTC_temper_number_step = TEMPERATURE_TABLE_SIZE;
     }
 
-    for (i=0; i <  NTC_Parametr.NTC_temper_number_step; i++)
+    for (i=0; i <  NTC_Data.NTC_temper_number_step; i++)
     {
-        Temp_t1=(((float)NTC_Parametr.NTC_start_temperature+(float)i*(float)NTC_Parametr.NTC_step_temperature))+273.15;
-        r_Value=((float)NTC_Parametr.NTC_r2*exp(((float)NTC_Parametr.NTC_b/Temp_t1)-((float)NTC_Parametr.NTC_b/Temp_t2)));
-        termo_table[i] = (temperature_table_entry_type)((r_Value*(float)NTC_Parametr.NTC_adc_multipler*(float)NTC_Parametr.NTC_adc_resolution*2+r_Value+(float)NTC_Parametr.NTC_r_divider)/
-                         (2*(r_Value + (float)NTC_Parametr.NTC_r_divider)));
+        Temp_t1=(((float)NTC_Data.NTC_start_temperature+(float)i*(float)NTC_Data.NTC_step_temperature))+273.15;
+        r_Value=((float)NTC_Data.NTC_r2*exp(((float)NTC_Data.NTC_b/Temp_t1)-((float)NTC_Data.NTC_b/Temp_t2)));
+        termo_table[i] = (temperature_table_entry_type)((r_Value*(float)NTC_Data.NTC_adc_multipler*(float)NTC_Data.NTC_adc_resolution*2+r_Value+(float)NTC_Data.NTC_r_divider)/
+                         (2*(r_Value + (float)NTC_Data.NTC_r_divider)));
     }
-
 }
-
 
 int16_t calc_temperature(temperature_table_entry_type adcsum)
 {
     temperature_table_index_type l = 0;
-    temperature_table_index_type r = ( NTC_Parametr.NTC_temper_number_step) - 1;
+    temperature_table_index_type r = ( NTC_temper_number_step) - 1;
     temperature_table_entry_type thigh = TEMPERATURE_TABLE_READ(r);
     int32_t TEMPERATURE_TABLE_START_RATE;
     int32_t TEMPERATURE_TABLE_STEP_RATE;
 
-    TEMPERATURE_TABLE_START_RATE = NTC_Parametr.NTC_start_temperature;
-    TEMPERATURE_TABLE_STEP_RATE = NTC_Parametr.NTC_step_temperature;
+    TEMPERATURE_TABLE_START_RATE = NTC_start_temperature;
+    TEMPERATURE_TABLE_STEP_RATE = NTC_step_temperature;
 
     if (adcsum <= thigh)
     {

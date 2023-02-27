@@ -228,7 +228,7 @@ void vRead_DI (void *pvParameters)
     MBbuf_main[(Reg_Status_DI_Bit)]=0;
     for(i = 0; i<MAX_DI; i++)
     {
-        X_DI[i] = IO_GetLine(io_DI_1+i);		//если вход включен при старте, то счетчик не работает
+        X_DI[i] = IO_GetLineActive(io_DI_1+i);		//если вход включен при старте, то счетчик не работает
         Previous_State[i] = X_DI[i];
         Last_State[i] = X_DI[i];
         DI_Check[i] = X_DI[i];
@@ -248,7 +248,7 @@ void vRead_DI (void *pvParameters)
         for(i = 0; i<MAX_DI; i++)
         {
             Previous_State[i] = Last_State[i];
-            Last_State[i] = IO_GetLine(io_DI_1+i);
+            Last_State[i] = IO_GetLineActive(io_DI_1+i);
             if (Last_State[i] == Previous_State[i])
             {
                 if(DI_Check[i] != Last_State[i])
@@ -508,7 +508,7 @@ void vUpdate_DO (void *pvParameters)
                         }
                     }
                 }
-                if(IO_GetLineDO(io_DOut_1 + i))
+                if(IO_GetLineActive(io_DOut_1 + i))
                 {
                     if (((MBbuf_main[Reg_DO_Off_Bit]>>i) & 1)||(x_d && (!X_DI[i>>1]))||((!x_d) && (X_DI[i>>1])))
                     {
@@ -529,7 +529,7 @@ void vUpdate_DO (void *pvParameters)
         }
         for (i=0; i<MAX_DO; i++)
         {
-            if(IO_GetLineDO(io_DOut_1 + i))	MBbuf_main[Reg_Status_DO_Bit]|=1<<i;
+            if(IO_GetLineActive(io_DOut_1 + i))	MBbuf_main[Reg_Status_DO_Bit]|=1<<i;
             else MBbuf_main[Reg_Status_DO_Bit]&= ~(1<<i);
         }
         vTaskDelay(311/portTICK_RATE_MS);
@@ -683,11 +683,11 @@ int main(void)
 {
     ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
     IO_Init();
-    flash_btock();
+  //  flash_btock();
     emfat_init(&emfat, "MSD_2", entries);
     mh_Buf_Init();
     MX_USB_DEVICE_Init();
-    Init_IWDG(WATCH_DOG_TIME_MS);
+   // Init_IWDG(WATCH_DOG_TIME_MS);
 
     /*	timers	*/
     for (uint32_t i = 0; i<MAX_DO; i++)
