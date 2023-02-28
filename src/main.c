@@ -79,8 +79,6 @@ int32_t Time_Blink_Off = TIME_OFF_NO_USB;
 
 xTimerHandle xCurrent_Timer;
 xTimerHandle xOne_Shot_Timers [MAX_DO];
-const portBASE_TYPE xOne_Shot_TimersID[MAX_DO] = TIMER_ID_DO_LIST;
-
 TaskHandle_t Current_Task;
 TaskHandle_t Temperature_Task;
 TaskHandle_t RS485_Task;
@@ -599,13 +597,13 @@ void Set_Time_For_Blink (uint32_t On_Timer, uint32_t Off_Timer)
 
 void vOne_Shot_Timers_Function (xTimerHandle xTimer)
 {
-    unsigned portBASE_TYPE *pxTimerID;
+    uint32_t pxTimerID;
 
 // получаем идентификатор таймера
-    pxTimerID = (pvTimerGetTimerID(xTimer));
+    pxTimerID = (uint32_t) pvTimerGetTimerID(xTimer);
     for (int32_t i=0; i<MAX_DO; i++)
     {
-        if (*pxTimerID == xOne_Shot_TimersID[i])
+        if (pxTimerID == i)
         {
             IO_SetLine((io_DOut_1 + i), OFF);
             return;
@@ -683,16 +681,16 @@ int main(void)
 {
     ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
     IO_Init();
-  //  flash_btock();
+    flash_btock();
     emfat_init(&emfat, "MSD_2", entries);
     mh_Buf_Init();
     MX_USB_DEVICE_Init();
-   // Init_IWDG(WATCH_DOG_TIME_MS);
+    Init_IWDG(WATCH_DOG_TIME_MS);
 
     /*	timers	*/
     for (uint32_t i = 0; i<MAX_DO; i++)
     {
-        xOne_Shot_Timers[i]=xTimerCreate("One_Shot_Timer_n", 10000/portTICK_RATE_MS, pdFALSE, (void*)(&(xOne_Shot_TimersID[i])), vOne_Shot_Timers_Function);
+        xOne_Shot_Timers[i]=xTimerCreate("One_Shot_Timer_n", 10000/portTICK_RATE_MS, pdFALSE, (void *)i, vOne_Shot_Timers_Function);
     }
     xCurrent_Timer=xTimerCreate("xCurrent_T", 1200/portTICK_RATE_MS, pdFALSE, NULL, vCurrent_Timers_Function);
     /*	Semaphore	*/

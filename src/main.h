@@ -18,9 +18,6 @@
 #define MAX_DI_TRIP_COUNTER 	2	    //количество DI со счетчиком включения, max 32 (notification use number bit, see eeprom write task)
 #define COUNTER_EE_UPD_MS		600000
 #define MAX_DO  				2
-#define	TIMER_ID_DO_1	        111
-#define	TIMER_ID_DO_2        	222
-#define	TIMER_ID_DO_LIST   		{TIMER_ID_DO_1, TIMER_ID_DO_2}
 
 #define OFFSET_I_Plus  			(+15)
 #define OFFSET_I_Minus  		(-15)

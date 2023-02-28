@@ -37,7 +37,7 @@ volatile mb_struct MB_USB;
 uint8_t RS485_MB_Buf[MB_FRAME_MAX];
 uint8_t USB_MB_Buf[MB_FRAME_MAX];
 
-const uint16_t Baud_rate[BAUD_NUMBER]= {BAUD_9600, BAUD_19200, BAUD_57600, BAUD_115200};
+const uint16_t Baud_rate[BAUD_NUMBER]= RS_485_BAUD_LIST;
 
 extern const t_default_state default_state[];
 
