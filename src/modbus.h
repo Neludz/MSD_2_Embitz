@@ -85,10 +85,12 @@ typedef struct  					// Main program passes interface data to Modbus stack.
     uint8_t     *p_mb_buff;			//
     uint8_t		response_size;		                // Set in FrameParse(), used in transmit
 #if (EEPROM_REG == 1)
-    void   		(*f_save) ( void *mbb);             //for span of register, depending on implementation of Eeprom_Check_Func
+    void   		(*f_save) ( void *mbb);             //for span of register, use "EESave_Check" in this function for every register
 #endif
     void    	(*f_start_trans) ( void *mbb);      //start transmit
-    void    	(*f_start_receive) ( void *mbb);    //only if stop receive while parsing and in that time can change receive buffer
+    void    	(*f_start_receive) ( void *mbb);    //only if you stop the exchange during parsing, it can be NULL,
+                                                    //then when using one buffer, check the "mb_state"
+                                                    //so as not to change buffer while parsing it
 } mb_struct;
 
 void MBparsing(mb_struct *mbb);

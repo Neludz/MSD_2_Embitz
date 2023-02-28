@@ -3,6 +3,7 @@
 	<debuggerLastSession>
 		<watches>
 			<watch key=" IOs[io_LED].ActiveState" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="*pxTimerID" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="IOs" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="IOs[Line].ActiveState" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="Line" format="0" array="0" start="0" count="0" expanded="0" live="0" />
