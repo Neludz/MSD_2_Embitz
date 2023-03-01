@@ -66,7 +66,6 @@
 	X_BUF(31,	Reg_Mode_DO,				0,		0,		0x6,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
 	X_BUF(32,	Reg_Mode_DI_Trip_Counter,	0,		0,		0x1,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
 	X_BUF(33,	Reg_DO_1_Delay,				100,	1,		0xFF,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
-	X_BUF(34,	Reg_DO_2_Delay,				100,	1,		0xFF,	 WRITE_R | EESAVE_R | LIM_UNSIGN)\
 	X_BUF(35,	Reg_T_level_Warning,		TEMPERATURE_OVER,\
                                                     0,		0,	     WRITE_R | EESAVE_R)\
 	X_BUF(36,	Reg_T_level_Alarm,			TEMPERATURE_OVER,\

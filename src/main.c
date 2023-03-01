@@ -463,7 +463,7 @@ void vUpdate_DO (void *pvParameters)
                 {
                     if ((Temp_Mask>>i) & 1)
                     {
-                        xTimerChangePeriod(xOne_Shot_Timers[i],MBbuf_main[i+Reg_DO_1_Delay]*100/(portTICK_RATE_MS),0);
+                        xTimerChangePeriod(xOne_Shot_Timers[i],MBbuf_main[Reg_DO_1_Delay]*100/(portTICK_RATE_MS),0);
                         if (xTimerReset(xOne_Shot_Timers[i], 0)==pdTRUE)
                         {
                             IO_SetLine((io_DOut_1 + i), ON);
@@ -491,7 +491,7 @@ void vUpdate_DO (void *pvParameters)
                 {
                     if(x_d && X_DI[i>>1])
                     {
-                        xTimerChangePeriod(xOne_Shot_Timers[i],MBbuf_main[i+Reg_DO_1_Delay]*100/(portTICK_RATE_MS),0);
+                        xTimerChangePeriod(xOne_Shot_Timers[i],MBbuf_main[Reg_DO_1_Delay]*100/(portTICK_RATE_MS),0);
                         if (xTimerReset(xOne_Shot_Timers[i], 0)==pdTRUE)
                         {
                             IO_SetLine((io_DOut_1 + i), ON);
@@ -499,7 +499,7 @@ void vUpdate_DO (void *pvParameters)
                     }
                     if((!x_d) && (!X_DI[i>>1]))
                     {
-                        xTimerChangePeriod(xOne_Shot_Timers[i],MBbuf_main[i+Reg_DO_1_Delay]*100/(portTICK_RATE_MS),0);
+                        xTimerChangePeriod(xOne_Shot_Timers[i],MBbuf_main[Reg_DO_1_Delay]*100/(portTICK_RATE_MS),0);
                         if (xTimerReset(xOne_Shot_Timers[i], 0)==pdTRUE)
                         {
                             IO_SetLine((io_DOut_1 + i), ON);
