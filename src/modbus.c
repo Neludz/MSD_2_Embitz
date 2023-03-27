@@ -64,6 +64,37 @@ static unsigned int mb_CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 //  function
 //----------------------------------------------------------------------
 
+#if (MB_CALLBACK_REG == 1)
+static CBState_t mb_cb_check_in_request (uint16_t Start_Reg, uint16_t Count)
+{
+    for (int32_t i = 0; i < Count; i++)
+    {
+        if(mb_reg_CB_option_check(Start_Reg+i)==MB_OK)
+        {
+            return MB_CB_PRESENT;
+        }
+    }
+    return 	MB_CB_FREE;
+}
+#endif
+
+// check register limits
+#if (MB_LIMIT_REG == 1)
+static MBExcep_t mb_reg_limit_check_in_request (uint16_t Number_Reg, uint16_t Value)
+{
+    if (mb_reg_write_option_check(Number_Reg)==MB_ERROR)
+    {
+        return MBE_ILLEGAL_DATA_ADDRESS;
+    }
+
+    if (mb_reg_limit_check (Number_Reg, Value)==MB_ERROR)
+    {
+        return	MBE_ILLEGAL_DATA_VALUE;
+    }
+    return MBE_NONE;
+}
+#endif
+
 static bool invalid_frame( MBStruct_t *mbb)
 {
     uint8_t	PDU_len;
@@ -177,7 +208,7 @@ static bool frame_parse (MBStruct_t *mbb)
             i = 7;	// Registers' values are from MBBuff[7] and more
 #if (MB_CALLBACK_REG == 1)
             //=================check EEPROM start==============================
-            mbb->cb_state = cb_check_in_request(RegIndx, RegNmb);
+            mbb->cb_state = mb_cb_check_in_request(RegIndx, RegNmb);
             if(mbb->cb_state==MB_CB_PRESENT)
             {
                 mbb->cb_reg_start = RegIndx;
@@ -237,7 +268,7 @@ static bool frame_parse (MBStruct_t *mbb)
             i = 4;	// Registers' value are from MBBuff[4]-[5]
 #if (MB_CALLBACK_REG == 1)
             //=================check EEPROM start==============================
-            mbb->cb_state = cb_check_in_request(RegIndx, 1);
+            mbb->cb_state = mb_cb_check_in_request(RegIndx, 1);
             if(mbb->cb_state==MB_CB_PRESENT)
             {
                 mbb->cb_reg_start = RegIndx;

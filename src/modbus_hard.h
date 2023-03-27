@@ -41,6 +41,5 @@ void IO_Uart1_Init(void);
 void mh_task_Modbus (void *pvParameters);
 void mh_Factory (void);
 void mh_Buf_Init (void);
-void mh_test_arg (uint32_t number);
 
 #endif /* MODBUS_HARD_H_INCLUDED */

@@ -314,8 +314,3 @@ void mh_Buf_Init (void)
     MBbuf_main[Reg_Set_Default_Reset]=0;
     taskEXIT_CRITICAL();
 }
-
-void mh_test_arg (uint32_t number)
-{
-    MBbuf_main[Reg_End]=MBRegParam[number].Default_Value + MBbuf_main[number];
-}

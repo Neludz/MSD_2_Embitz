@@ -48,7 +48,6 @@ MBError_t mb_reg_option_check (uint16_t number, uint16_t option_mask);
 RegParameters_t mb_getRegParam (uint16_t number);
 const void* mb_getRegUserArg1 (uint16_t number);
 
-//modbus.c func
-CBState_t cb_check_in_request (uint16_t Start_Reg, uint16_t Count);
-MBExcep_t mb_reg_limit_check_in_request (uint16_t Number_Reg, uint16_t Value);
+MBError_t mb_reg_write_option_check (uint16_t number);
+MBError_t mb_reg_CB_option_check (uint16_t number);
 #endif /* MODBUS_REG_H_INCLUDED*/

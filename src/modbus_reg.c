@@ -98,40 +98,13 @@ const void* mb_getRegUserArg1 (uint16_t number)
 }
 #endif
 
-// function need for modbus.c
-#if (MB_CALLBACK_REG == 1)
-CBState_t cb_check_in_request (uint16_t Start_Reg, uint16_t Count)
+//************** func for modbus.c **************
+MBError_t mb_reg_write_option_check (uint16_t number)
 {
-    if((Count+Start_Reg)>=MB_NUM_BUF)
-    {
-        return 	MB_CB_FREE;
-    }
-    for (int32_t i = 0; i < Count; i++)
-    {
-        if(mb_reg_option_check(Start_Reg+i, CB_WR)==MB_OK)
-        {
-            return MB_CB_PRESENT;
-        }
-    }
-    return 	MB_CB_FREE;
+   return mb_reg_option_check(number, WRITE_R);
 }
-#endif
 
-// function need for modbus.c
-// check register limits
-#if (MB_LIMIT_REG == 1)
-MBExcep_t mb_reg_limit_check_in_request (uint16_t Number_Reg, uint16_t Value)
+MBError_t mb_reg_CB_option_check (uint16_t number)
 {
-    if (mb_reg_option_check(Number_Reg, WRITE_R)==MB_ERROR)
-    {
-        return MBE_ILLEGAL_DATA_ADDRESS;
-    }
-
-    if (mb_reg_limit_check (Number_Reg, Value)==MB_ERROR)
-    {
-        return	MBE_ILLEGAL_DATA_VALUE;
-    }
-
-    return MBE_NONE;
+   return mb_reg_option_check(number, CB_WR);
 }
-#endif
