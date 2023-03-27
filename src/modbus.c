@@ -63,42 +63,6 @@ static unsigned int mb_CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 //-----------------------------------------------------------------------
 //  function
 //----------------------------------------------------------------------
-// check registers for saving in eeprom
-#if (MB_CALLBACK_REG == 1)
-static CBState_t cb_check_in_request (uint16_t Start_Reg, uint16_t Count)
-{
-    if((Count+Start_Reg)>=MB_NUM_BUF)
-    {
-        return 	MB_CB_FREE;
-    }
-    for (int32_t i = 0; i < Count; i++)
-    {
-        if(mb_reg_option_check(Start_Reg+i, CB_WR)==MB_OK)
-        {
-            return MB_CB_PRESENT;
-        }
-    }
-    return 	MB_CB_FREE;
-}
-#endif
-
-// check register limits
-#if (MB_LIMIT_REG == 1)
-static MBExcep_t mb_reg_limit_check_in_request (uint16_t Number_Reg, uint16_t Value)
-{
-    if (mb_reg_option_check(Number_Reg, WRITE_R)==MB_ERROR)
-    {
-        return MBE_ILLEGAL_DATA_ADDRESS;
-    }
-
-    if (mb_reg_limit_check (Number_Reg, Value)==MB_ERROR)
-    {
-        return	MBE_ILLEGAL_DATA_VALUE;
-    }
-
-    return MBE_NONE;
-}
-#endif
 
 static bool invalid_frame( MBStruct_t *mbb)
 {
