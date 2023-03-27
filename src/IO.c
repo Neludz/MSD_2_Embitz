@@ -18,7 +18,7 @@ const tGPIO_Line IOs[NUM_IO] =
 };
 
 //---------------------------------------------------------------------------------
-void Delay_ms(uint32_t ms)
+void IO_delay_ms(uint32_t ms)
 {
     volatile uint32_t nCount;
 //RCC_ClocksTypeDef RCC_Clocks;
@@ -31,13 +31,9 @@ void Delay_ms(uint32_t ms)
 void IO_SetLine(tIOLine Line, bool State)
 {
     if (State)
-    {
         IOs[Line].GPIOx->BSRR = 1 << (IOs[Line].GPIO_Pin);
-    }
     else
-    {
         IOs[Line].GPIOx->BRR = 1 << (IOs[Line].GPIO_Pin);
-    }
 }
 //---------------------------------------------------------------------------------
 bool IO_GetLine(tIOLine Line)
@@ -138,7 +134,7 @@ void IO_ADC_Init(void)
     ADC2->CR2  |= (ADC_CR2_ADON);								//вкл
 
     //-=calibration=-
-    Delay_ms(1);
+    IO_delay_ms(1);
     ADC1->CR2  |= (ADC_CR2_RSTCAL);
     while ( ADC1->CR2  & (ADC_CR2_RSTCAL))
         ;
@@ -158,11 +154,11 @@ void IO_ADC_Init(void)
 
 //---------------------------------------------------------------------------------
 /**
- * @brief getADCval - calculate median value for `nch` channel
+ * @brief IO_getADCval - calculate median value for `nch` channel
  * @param nch - number of channel
  * @return
  */
-uint16_t getADCval(int nch)
+uint16_t IO_getADCval(int nch)
 {
     int i, addr = nch;
 #define PIX_SORT(a,b) { if ((a)>(b)) PIX_SWAP((a),(b)); }
@@ -196,9 +192,9 @@ uint16_t getADCval(int nch)
 
 //---------------------------------------------------------------------------------
 // return MCU temperature (degrees of celsius * 10)
-int32_t getMCUtemp()
+int32_t IO_getMCUtemp()
 {
-    int32_t ADval = getADCval(ADC_N_CHANNEL_T_MCU);
+    int32_t ADval = IO_getADCval(ADC_N_CHANNEL_T_MCU);
     int32_t temperature = (1430-((mV_ADC*ADval)/ADC_COUNTS));
     temperature *= (int32_t)(10);
     temperature /= (int32_t)(43);
@@ -247,9 +243,9 @@ void IO_Init(void)
     RCC->AHBENR     |= RCC_AHBENR_DMA1EN;
 
     DMA_Disable(DMA1_Channel1);		    // Выключили канал.
-    DMA_DeInit_Di(DMA1_Channel1);		// Обнулили DMA канал
+    DMA_DeInitDi(DMA1_Channel1);		// Обнулили DMA канал
 
-    DMA_Init_Di(  DMA1_Channel1,				// 1 канал 1 контроллера.
+    DMA_InitDi(  DMA1_Channel1,				// 1 канал 1 контроллера.
                   (uint32_t)&ADC1->DR,		    // Адрес откуда брать -- адрес регистра DR  в USART1
                   (uint32_t)&ADC_DMA[0],	    // Адрес куда класть результат
                   (ADC_CHANNEL_ALL*9),    		// Сколько класть? Так как буфер у нас из char, то sizeof будет равен числу элементов. Но лучше так не делать ;)

@@ -44,7 +44,7 @@ Info:
 
 extern uint16_t MBbuf_main[];
 
-extern const t_default_state default_state[NUM_BUF] ;
+extern const RegParameters_t MBRegParam[MB_NUM_BUF] ;
 
 const uint32_t Dot_count [4]= {1,10,100,1000};
 
@@ -103,7 +103,7 @@ void vMeasure_Temperature (void *pvParameters)
     {
         for(i =0; i<ADC_CHANNEL_T; i++)
         {
-            ADC_Val=(uint16_t)getADCval(i);
+            ADC_Val=(uint16_t)IO_getADCval(i);
             Adc_Filter_Value[i]=(Adc_Filter_Value[i]*7+ADC_Val)>>3;
             MBbuf_main[(i+Reg_T_0_Channel)] = calc_temperature(Adc_Filter_Value[i]);
             if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Warning)]) MBbuf_main[Reg_T_Warning_bit]|=1<<i;
@@ -112,12 +112,11 @@ void vMeasure_Temperature (void *pvParameters)
             if ((int16_t)MBbuf_main[(i+Reg_T_0_Channel)]>=(int16_t)MBbuf_main[(Reg_T_level_Alarm)]) MBbuf_main[Reg_T_Alarm_bit]|=1<<i;
             else MBbuf_main[Reg_T_Alarm_bit] &=~(1<<i);
         }
-        Adc_Filter_T_MCU=((Adc_Filter_T_MCU*3 + getMCUtemp())>>2);
+        Adc_Filter_T_MCU=((Adc_Filter_T_MCU*3 + IO_getMCUtemp())>>2);
         MBbuf_main[Reg_T_MSD]=Adc_Filter_T_MCU;
         vTaskDelay(29/portTICK_RATE_MS);
     }
 }
-
 //-------------------------------------------------------------------------
 
 void vMeasure_Current (void *pvParameters)
@@ -177,10 +176,10 @@ void vMeasure_Current (void *pvParameters)
         }
         while(!(ulNotifiedValue&ADC_CURRENT_FIN));
 
-        Filter_Ratio = ADC_COUNTS * MBbuf_main[Reg_Cur_Sensor_Hall_Ratio]; //divider
+        Filter_Ratio = ADC_COUNTS * MBbuf_main[Reg_Cur_Sens_Hall_Ratio]; //divider
         Irms = (((sqrt(Isum / Number_Of_Samples)) *MBbuf_main[Reg_Cur_Scale] * Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*mV_ADC)+(Filter_Ratio>>1))/Filter_Ratio;
 
-        Filter_Ratio=  ((MBbuf_main[Reg_Cur_Zero_Level]*Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*MBbuf_main[Reg_Cur_Scale])/1000);
+        Filter_Ratio = ((MBbuf_main[Reg_Cur_Zero_Level]*Dot_count[MBbuf_main[Reg_Cur_Dot]&0x03]*MBbuf_main[Reg_Cur_Scale])/1000);
         if (Irms < Filter_Ratio) Irms=0;                                    //zero level
 
         MBbuf_main[Reg_Cur_Cross_Count] = (uint16_t)Cross_Count;
@@ -192,7 +191,6 @@ void vMeasure_Current (void *pvParameters)
         vTaskDelay((199/portTICK_RATE_MS));
     }
 }
-
 //-------------------------------------------------------------------------
 
 void vRead_DI (void *pvParameters)
@@ -240,11 +238,11 @@ void vRead_DI (void *pvParameters)
                         MBbuf_main[Reg_Status_DI_Bit] |=  X_DI[i]<<i;
                     }
 
-                    if((i<MAX_DI_TRIP_COUNTER) && (MBbuf_main[Reg_Mode_DI_Trip_Counter]))
+                    if((i<MAX_DI_TRIP_COUNTER) && (MBbuf_main[Reg_Mode_DI_Counter]))
                     {
                         if(!DI_Check[i] && X_DI[i])
                         {
-                            MBbuf_main[Reg_DI_1_Trip_Counter+i]=(MBbuf_main[Reg_DI_1_Trip_Counter+i]+1) & 0xFFFF;
+                            MBbuf_main[Reg_DI_1_Counter+i]=(MBbuf_main[Reg_DI_1_Counter+i]+1) & 0xFFFF;
                             xTaskNotify(Count_In_EE_Task, (1<<i), eSetBits);
                         }
                     }
@@ -255,7 +253,6 @@ void vRead_DI (void *pvParameters)
         vTaskDelay(71/portTICK_RATE_MS);
     }
 }
-
 //-------------------------------------------------------------------------
 
 void vWrite_Count_EE (void *pvParameters)
@@ -270,10 +267,10 @@ void vWrite_Count_EE (void *pvParameters)
             if( ( ulNotifiedValue & (1<<i) ) != 0 )
             {
                 /* Bit number i was set - process whichever event is represented by bit number i. */
-                if(default_state[i+Reg_DI_1_Trip_Counter].Permission & EESAVE_R)
+                if(MBRegParam[i+Reg_DI_1_Counter].Options & CB_WR)
                 {
                     /* 16-bits in modbus register */
-                    AT25_mutex_update_byte( ((i+Reg_DI_1_Trip_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Trip_Counter+i]), 2);
+                    AT25_mutex_update_byte( ((i+Reg_DI_1_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Counter+i]), 2);
                 }
             }
         }
@@ -317,11 +314,10 @@ void vBlinker (void *pvParameters)
 #ifdef DEBU_USER
         printf ( "1 sec \n" );
 #endif
-        MBbuf_main[Reg_Error_Count] = Error;
+        MBbuf_main[MB_ERRORor_Count] = Error;
         MBbuf_main[Reg_T_Max] = max_temperature();
     }
 }
-
 //-------------------------------------------------------------------------
 
 void vUpdate_DO (void *pvParameters)
@@ -378,7 +374,7 @@ void vUpdate_DO (void *pvParameters)
         case 2:	//DO_1 следит за током
         {
             I_Comparison_Max = MBbuf_main[Reg_Cur_Level_Alarm_W1]|(MBbuf_main[Reg_Cur_Level_Alarm_W2]<<16);
-            I_Comparison_Min = MBbuf_main[Reg_Cur_Level_Warning_W1]|(MBbuf_main[Reg_Cur_Level_Warning_W2]<<16);
+            I_Comparison_Min = MBbuf_main[Reg_Cur_Lev_Warn_W1]|(MBbuf_main[Reg_Cur_Lev_Warn_W1]<<16);
             if ((Itotal >= I_Comparison_Min) && (Itotal >= I_Comparison_Max))
             {
                 IO_SetLine((io_DOut_1 ), ON);
@@ -395,7 +391,7 @@ void vUpdate_DO (void *pvParameters)
         {
             //current
             I_Comparison_Max = MBbuf_main[Reg_Cur_Level_Alarm_W1]|(MBbuf_main[Reg_Cur_Level_Alarm_W2]<<16);
-            I_Comparison_Min = MBbuf_main[Reg_Cur_Level_Warning_W1]|(MBbuf_main[Reg_Cur_Level_Warning_W2]<<16);
+            I_Comparison_Min = MBbuf_main[Reg_Cur_Lev_Warn_W1]|(MBbuf_main[Reg_Cur_Lev_Warn_W1]<<16);
             if ((Itotal >= I_Comparison_Min) && (Itotal >= I_Comparison_Max))
             {
                 IO_SetLine((io_DOut_1 ), ON);
@@ -512,7 +508,6 @@ void vUpdate_DO (void *pvParameters)
         vTaskDelay(311/portTICK_RATE_MS);
     }
 }
-
 //-------------------------------------------------------------------------
 
 //======================Function========================================
@@ -560,9 +555,9 @@ void sensor_param_init(void)
     NTC.NTC_adc_resolution=ADC_COUNTS;
     NTC.NTC_b=(int16_t)MBbuf_main[Reg_NTC_B_Value];
     NTC.NTC_t2=(int16_t)MBbuf_main[Reg_NTC_T2_Value];
-    NTC.NTC_start_temperature=(int16_t)MBbuf_main[Reg_NTC_Start_Temperature];
-    NTC.NTC_step_temperature=(int16_t)MBbuf_main[Reg_NTC_Step_Temperature];
-    NTC.NTC_temper_number_step=MBbuf_main[Reg_NTC_Temper_Number_Step];
+    NTC.NTC_start_temperature=(int16_t)MBbuf_main[Reg_NTC_Start_Temper];
+    NTC.NTC_step_temperature=(int16_t)MBbuf_main[Reg_NTC_Step_Temper];
+    NTC.NTC_temper_number_step=MBbuf_main[Reg_NTC_Temper_N_Step];
     calculate_table_NTC(NTC);
 }
 //-------------------------------------------------------------------------
@@ -626,7 +621,6 @@ void flash_btock(void)
     	}
     	*/
 }
-
 //-------------------------------------------------------------------------
 
 void Init_IWDG(uint16_t tw) // Параметр tw от 7мс до 26200мс
@@ -638,7 +632,6 @@ void Init_IWDG(uint16_t tw) // Параметр tw от 7мс до 26200мс
     IWDG->KR=0xAAAA; // Перезагрузка
     IWDG->KR=0xCCCC; // Пуск таймера
 }
-
 //-------------------------------------------------------------------------
 
 // Функция перезагрузки сторожевого таймера IWDG
@@ -647,7 +640,6 @@ void IWDG_res(void)
 {
     IWDG->KR=0xAAAA; // Перезагрузка
 }
-
 /*
 **===========================================================================
 **
@@ -690,8 +682,6 @@ int main(void)
     printf ( "[ INFO ] Program start now\n" );
 #endif
     vTaskStartScheduler();
-
-
     return 0;
 }
 void Error_Handler(void)

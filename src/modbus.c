@@ -2,7 +2,7 @@
 #include "modbus_config.h"
 #include <stdio.h>
 
-#if ((EEPROM_REG == 1) || (LIMIT_REG == 1))
+#if ((MB_CALLBACK_REG == 1) || (MB_LIMIT_REG == 1))
 #include "modbus_reg.h"
 #endif
 //-----------------------------------------------------------------------
@@ -46,7 +46,7 @@ static const uint16_t wCRCTable[] =
     0X8201, 0X42C0, 0X4380, 0X8341, 0X4100, 0X81C1, 0X8081, 0X4040
 } ;
 
-static unsigned int CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
+static unsigned int mb_CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 {
     uint8_t nTemp;
     uint16_t wCRCWord = 0xFFFF;
@@ -64,34 +64,34 @@ static unsigned int CRC16 ( unsigned char *puchMsg, unsigned int usDataLen )
 //  function
 //----------------------------------------------------------------------
 // check registers for saving in eeprom
-#if (EEPROM_REG == 1)
-static eMBEep  Eeprom_Check_in_Request (uint16_t Start_Reg, uint16_t Count)
+#if (MB_CALLBACK_REG == 1)
+static CBState_t cb_check_in_request (uint16_t Start_Reg, uint16_t Count)
 {
-    if((Count+Start_Reg)>=NUM_BUF)
+    if((Count+Start_Reg)>=MB_NUM_BUF)
     {
-        return 	EEP_FREE;
+        return 	MB_CB_FREE;
     }
     for (int32_t i = 0; i < Count; i++)
     {
-        if(EESave_Check(Start_Reg+i)==REG_OK)
+        if(mb_reg_option_check(Start_Reg+i, CB_WR)==MB_OK)
         {
-            return EEP_SAVE;
+            return MB_CB_PRESENT;
         }
     }
-    return 	EEP_FREE;
+    return 	MB_CB_FREE;
 }
 #endif
 
 // check register limits
-#if (LIMIT_REG == 1)
-static eMBExcep Limit_Check_in_Request (uint16_t Number_Reg, uint16_t Value)
+#if (MB_LIMIT_REG == 1)
+static MBExcep_t mb_reg_limit_check_in_request (uint16_t Number_Reg, uint16_t Value)
 {
-    if (Write_Check(Number_Reg)==REG_ERR)
+    if (mb_reg_option_check(Number_Reg, WRITE_R)==MB_ERROR)
     {
         return MBE_ILLEGAL_DATA_ADDRESS;
     }
 
-    if (Limit_Check (Number_Reg, Value)==REG_ERR)
+    if (mb_reg_limit_check (Number_Reg, Value)==MB_ERROR)
     {
         return	MBE_ILLEGAL_DATA_VALUE;
     }
@@ -100,7 +100,7 @@ static eMBExcep Limit_Check_in_Request (uint16_t Number_Reg, uint16_t Value)
 }
 #endif
 
-static bool InvalidFrame( mb_struct *mbb)
+static bool invalid_frame( MBStruct_t *mbb)
 {
     uint8_t	PDU_len;
     if( EV_HAPPEND == mbb->er_frame_bad)
@@ -115,14 +115,14 @@ static bool InvalidFrame( mb_struct *mbb)
     {
         return true;
     }
-#if (EEPROM_REG == 1)
-    if(mbb->eep_state!=EEP_FREE)
+#if (MB_CALLBACK_REG == 1)
+    if(mbb->cb_state!=MB_CB_FREE)
     {
         return true;
     }
 #endif
     PDU_len = mbb->mb_index;
-    if( CRC16( (uint8_t*)mbb->p_mb_buff, PDU_len))
+    if( mb_CRC16( (uint8_t*)mbb->p_mb_buff, PDU_len))
     {
         return true;
     }
@@ -130,15 +130,15 @@ static bool InvalidFrame( mb_struct *mbb)
 }
 
 
-static bool FrameParse (mb_struct *mbb)
+static bool frame_parse (MBStruct_t *mbb)
 {
     // Returns TRUE if a response is needed
-#if (LIMIT_REG == 1)
+#if (MB_LIMIT_REG == 1)
     uint16_t 	Value, RegIndxInter, j;
 #endif
     uint16_t 	RegIndx, RegNmb, RegLast,   i;
     uint8_t		BytesN;
-    eMBExcep	Exception;					// If a Modbus exception happens - we put the var in MBBuff[2]
+    MBExcep_t	Exception;					// If a Modbus exception happens - we put the var in MBBuff[2]
 
     bool NeedResponse = true;
     if( mbb->p_mb_buff[0] == MB_ADDRESS_BROADCAST)
@@ -211,25 +211,25 @@ static bool FrameParse (mb_struct *mbb)
             }
 
             i = 7;	// Registers' values are from MBBuff[7] and more
-#if (EEPROM_REG == 1)
+#if (MB_CALLBACK_REG == 1)
             //=================check EEPROM start==============================
-            mbb->eep_state = Eeprom_Check_in_Request(RegIndx, RegNmb);
-            if(mbb->eep_state==EEP_SAVE)
+            mbb->cb_state = cb_check_in_request(RegIndx, RegNmb);
+            if(mbb->cb_state==MB_CB_PRESENT)
             {
-                mbb->eep_start_save = RegIndx;
-                mbb->eep_indx = RegNmb;
+                mbb->cb_reg_start = RegIndx;
+                mbb->cb_index = RegNmb;
             }
             //=================check EEPROM end==============================
 #endif
 
-#if (LIMIT_REG == 1)
+#if (MB_LIMIT_REG == 1)
             //=================check data start==============================
             j = i;
             for (RegIndxInter = RegIndx; RegIndxInter < RegLast; RegIndxInter++)
             {
                 Value = mbb->p_mb_buff[j++]<<8;
                 Value |= mbb->p_mb_buff[j++];
-                Exception = Limit_Check_in_Request(RegIndxInter, Value);
+                Exception = mb_reg_limit_check_in_request(RegIndxInter, Value);
                 if	(Exception != MBE_NONE)
                 {
                     break;
@@ -271,28 +271,28 @@ static bool FrameParse (mb_struct *mbb)
             }
 
             i = 4;	// Registers' value are from MBBuff[4]-[5]
-#if (EEPROM_REG == 1)
+#if (MB_CALLBACK_REG == 1)
             //=================check EEPROM start==============================
-            mbb->eep_state = Eeprom_Check_in_Request(RegIndx, 1);
-            if(mbb->eep_state==EEP_SAVE)
+            mbb->cb_state = cb_check_in_request(RegIndx, 1);
+            if(mbb->cb_state==MB_CB_PRESENT)
             {
-                mbb->eep_start_save = RegIndx;
-                mbb->eep_indx = 1;
+                mbb->cb_reg_start = RegIndx;
+                mbb->cb_index = 1;
             }
             //=================check EEPROM end==============================
 #endif
 
-#if (LIMIT_REG  == 1)
+#if (MB_LIMIT_REG  == 1)
             //=================check data start==============================
             RegIndxInter = RegIndx;
             j = i;
 
             Value = mbb->p_mb_buff[j++]<<8;
             Value |= mbb->p_mb_buff[j++];
-            Exception = Limit_Check_in_Request(RegIndxInter, Value);
+            Exception = mb_reg_limit_check_in_request(RegIndxInter, Value);
             if	(Exception != MBE_NONE)
             {
-                //mbb->eep_state = EEP_FREE;
+                //mbb->cb_state = MB_CB_FREE;
                 break;
             }
             //=================check data end==============================
@@ -324,22 +324,22 @@ static bool FrameParse (mb_struct *mbb)
         mbb->p_mb_buff[1] |= MB_FUNC_ERROR;						// Add 0x80 to function code
         mbb->p_mb_buff[2] =  Exception;							// Exception code
         mbb->mb_index = 3;										// Length of response is fixed if exception
-#if (EEPROM_REG == 1)
-        mbb->eep_state = EEP_FREE;
+#if (MB_CALLBACK_REG == 1)
+        mbb->cb_state = MB_CB_FREE;
 #endif
     }
-    i = CRC16( (uint8_t*)mbb->p_mb_buff, mbb->mb_index);				// MBBuff is a pointer, mb_index is a size
+    i = mb_CRC16( (uint8_t*)mbb->p_mb_buff, mbb->mb_index);				// MBBuff is a pointer, mb_index is a size
     mbb->p_mb_buff[mbb->mb_index++] = i & 0xFF;						// CRC: Lo then Hi
     mbb->p_mb_buff[mbb->mb_index  ] = i >> 8;
     mbb->response_size = mbb->mb_index+1;
     return NeedResponse? true:false;
 }
 
-void MBparsing(mb_struct *mbb)
+void mb_parsing(MBStruct_t *mbb)
 {
-    if( InvalidFrame(mbb))
+    if( invalid_frame(mbb))
     {
-        mbb->mb_state = STATE_IDLE;
+        mbb->mb_state = MB_STATE_IDLE;
         if (mbb->f_start_receive != NULL)
         {
             mbb->f_start_receive(mbb);
@@ -347,24 +347,25 @@ void MBparsing(mb_struct *mbb)
         return;
     }
 
-    if( FrameParse(mbb)) // Returns TRUE if a response is needed
+    if( frame_parse(mbb)) // Returns TRUE if a response is needed
     {
-        mbb->mb_state=STATE_SEND;
-        mbb->mb_index=0;
+        mbb->mb_state = MB_STATE_SEND;
+        mbb->mb_index = 0;
         mbb->f_start_trans(mbb);
     }
     else
     {
-        mbb->mb_state=STATE_IDLE;
+        mbb->mb_state = MB_STATE_IDLE;
         if (mbb->f_start_receive != NULL)
         {
             mbb->f_start_receive(mbb);
         }
     }
-#if (EEPROM_REG == 1)
-    if  (mbb->eep_state==EEP_SAVE)
+#if (MB_CALLBACK_REG == 1)
+    if  (mbb->cb_state == MB_CB_PRESENT)
     {
-        mbb->f_save(mbb);
+        mbb->wr_callback(mbb);
+        mbb->cb_state = MB_CB_FREE;
     }
 #endif
 }

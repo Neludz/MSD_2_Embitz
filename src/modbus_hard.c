@@ -24,35 +24,34 @@
 // Variable
 //-----------------------------------------------------------------------
 
-uint16_t MBbuf_main[NUM_BUF]= {Version_MSD_2};
+uint16_t MBbuf_main[MB_NUM_BUF]= {Version_MSD_2};
 extern uint32_t Error;
 
 xQueueHandle xModbusQueue;
 TimerHandle_t rs485_timer_handle;
 TaskHandle_t m_modbus_task_handle;
 
-volatile mb_struct MB_RS485;
-volatile mb_struct MB_USB;
+volatile MBStruct_t MB_RS485;
+volatile MBStruct_t MB_USB;
 
 uint8_t RS485_MB_Buf[MB_FRAME_MAX];
 uint8_t USB_MB_Buf[MB_FRAME_MAX];
 
 const uint16_t Baud_rate[BAUD_NUMBER]= RS_485_BAUD_LIST;
 
-extern const t_default_state default_state[];
-
+extern const RegParameters_t MBRegParam[];
 //-----------------------------------------------------------------------
 // Task function
 //-----------------------------------------------------------------------
 
 void mh_task_Modbus (void *pvParameters)
 {
-    mb_struct *st_mb;
+    MBStruct_t *st_mb;
     vTaskDelay(3000);
     while(1)
     {
         xQueueReceive(xModbusQueue,&st_mb,portMAX_DELAY);
-        MBparsing((mb_struct*) st_mb);
+        mb_parsing((MBStruct_t*) st_mb);
     }
 }
 
@@ -74,7 +73,7 @@ void USART1_IRQHandler (void)
     if (USART1->SR & USART_SR_RXNE)
     {
         // xTimerResetFromISR(rs485_timer_handle, NULL);	// Timer reset anyway: received symbol means NO SILENCE
-        if( STATE_RCVE == MB_RS485.mb_state)
+        if( MB_STATE_RCVE == MB_RS485.mb_state)
         {
             if(MB_RS485.mb_index >= MB_FRAME_MAX-1)
             {
@@ -86,13 +85,13 @@ void USART1_IRQHandler (void)
                 MB_RS485.p_mb_buff[MB_RS485.mb_index++] = USART1->DR;	 // MAIN DOING: New byte to buffer
             }
         }
-        else if(All_Idle_Check((mb_struct*)&MB_RS485)==REG_OK)
+        else if(mb_instance_idle_check((MBStruct_t*)&MB_RS485)==MB_OK)
         {
             // 1-st symbol come!
             MB_RS485.p_mb_buff[0] = USART1->DR; 		// Put it to buffer
             MB_RS485.mb_index = 1;						// "Clear" the rest of buffer
             MB_RS485.er_frame_bad = EV_NOEVENT;			// New buffer, no old events
-            MB_RS485.mb_state=STATE_RCVE;				// MBMachine: begin of receiving the request
+            MB_RS485.mb_state=MB_STATE_RCVE;				// MBMachine: begin of receiving the request
         }
         else
         {
@@ -103,12 +102,12 @@ void USART1_IRQHandler (void)
     if (USART1->SR & USART_SR_TC)
     {
         USART1->SR = ~(USART_SR_TC);
-        MB_RS485.mb_state=STATE_IDLE;
+        MB_RS485.mb_state=MB_STATE_IDLE;
         mh_EnableTransmission(false);
     }
     if (USART1->SR & USART_SR_TXE)
     {
-        if( STATE_SEND == MB_RS485.mb_state)
+        if( MB_STATE_SEND == MB_RS485.mb_state)
         {
             if( MB_RS485.mb_index < MB_RS485.response_size)
             {
@@ -117,7 +116,7 @@ void USART1_IRQHandler (void)
             }
             else
             {
-                MB_RS485.mb_state=STATE_SENT;
+                MB_RS485.mb_state=MB_STATE_SENT;
                 USART1->CR1 &= ~USART_CR1_TXEIE;
             }
         }
@@ -131,7 +130,7 @@ void USART1_IRQHandler (void)
     if (USART1->SR & USART_SR_IDLE)
     {
         cnt = USART1->DR;
-        if (STATE_RCVE == MB_RS485.mb_state)
+        if (MB_STATE_RCVE == MB_RS485.mb_state)
         {
             xTimerResetFromISR(rs485_timer_handle, NULL);
         }
@@ -141,16 +140,16 @@ void USART1_IRQHandler (void)
 // Callback for usb com
 void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
 {
-    if (All_Idle_Check((mb_struct*)&MB_USB)==REG_OK)
+    if (mb_instance_idle_check((MBStruct_t*)&MB_USB)==MB_OK)
     {
         if(len>MB_FRAME_MAX)
         {
             len=MB_FRAME_MAX;
         }
-        MB_USB.mb_state=STATE_PARS;
+        MB_USB.mb_state=MB_STATE_PARS;
         MB_USB.mb_index=(len);
         memcpy (MB_USB.p_mb_buff,USB_buf,len);
-        mb_struct *st_mb=(mb_struct*)&MB_USB;
+        MBStruct_t *st_mb=(MBStruct_t*)&MB_USB;
         xQueueSend(xModbusQueue, &st_mb, 0);
     }
 }
@@ -159,7 +158,7 @@ void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
 void mh_Modbus_Init(void)
 {
     //create queue
-    xModbusQueue=xQueueCreate(3,sizeof(mb_struct *));
+    xModbusQueue=xQueueCreate(3,sizeof(MBStruct_t *));
 
     //create modbus task
     if(pdTRUE != xTaskCreate(mh_task_Modbus, "RS485", MODBUS_TASK_STACK_SIZE, NULL, MODBUS_TASK_PRIORITY, &m_modbus_task_handle)) ERROR_ACTION(TASK_NOT_CREATE, 0);
@@ -172,14 +171,14 @@ void mh_USB_Init(void)
 {
     MB_USB.p_write = MBbuf_main;
     MB_USB.p_read = MBbuf_main;
-    MB_USB.reg_read_last=NUM_BUF-1;
-    MB_USB.reg_write_last=NUM_BUF-1;
-    MB_USB.eep_state=EEP_FREE;
+    MB_USB.reg_read_last=MB_NUM_BUF-1;
+    MB_USB.reg_write_last=MB_NUM_BUF-1;
+    MB_USB.cb_state=MB_CB_FREE;
     MB_USB.er_frame_bad=EV_NOEVENT;
     MB_USB.slave_address=MB_ANY_ADDRESS;	//0==any address
-    MB_USB.mb_state=STATE_IDLE;
+    MB_USB.mb_state=MB_STATE_IDLE;
     MB_USB.p_mb_buff=&USB_MB_Buf[0];
-    MB_USB.f_save = mh_Write_Eeprom;
+    MB_USB.wr_callback = mh_Write_Eeprom;
     MB_USB.f_start_trans = mh_USB_Transmit_Start;
     MB_USB.f_start_receive = NULL;
 }
@@ -190,14 +189,14 @@ void mh_RS485_Init(void)
 
     MB_RS485.p_write = MBbuf_main;
     MB_RS485.p_read = MBbuf_main;
-    MB_RS485.reg_read_last=NUM_BUF-1;
-    MB_RS485.reg_write_last=NUM_BUF-1;
-    MB_RS485.eep_state=EEP_FREE;
+    MB_RS485.reg_read_last=MB_NUM_BUF-1;
+    MB_RS485.reg_write_last=MB_NUM_BUF-1;
+    MB_RS485.cb_state=MB_CB_FREE;
     MB_RS485.er_frame_bad=EV_NOEVENT;
-    MB_RS485.slave_address=MBbuf_main[Reg_RS485_Modbus_Address];
-    MB_RS485.mb_state=STATE_IDLE;
+    MB_RS485.slave_address=MBbuf_main[Reg_RS485_Modbus_Addr];
+    MB_RS485.mb_state=MB_STATE_IDLE;
     MB_RS485.p_mb_buff=&RS485_MB_Buf[0];
-    MB_RS485.f_save = mh_Write_Eeprom;
+    MB_RS485.wr_callback = mh_Write_Eeprom;
     MB_RS485.f_start_trans=mh_Rs485_Transmit_Start;
     MB_RS485.f_start_receive = NULL;
 
@@ -208,11 +207,11 @@ void mh_RS485_Init(void)
 
 void rs485_timer_callback (xTimerHandle xTimer)
 {
-    if( STATE_RCVE == MB_RS485.mb_state)
+    if( MB_STATE_RCVE == MB_RS485.mb_state)
     {
         // If we are receiving, it's the end event: t3.5
-        MB_RS485.mb_state=STATE_PARS;					// Begin parsing of a frame.
-        mb_struct *st_mb=(mb_struct*)&MB_RS485;
+        MB_RS485.mb_state=MB_STATE_PARS;					// Begin parsing of a frame.
+        MBStruct_t *st_mb=(MBStruct_t*)&MB_RS485;
         xQueueSend(xModbusQueue, &st_mb, 0);
     }
 }
@@ -252,26 +251,25 @@ void IO_Uart1_Init(void)
 
 void mh_Write_Eeprom (void *mbb)
 {
-    mb_struct *st_mb;
+    MBStruct_t *st_mb;
     st_mb = (void*) mbb;
-    uint16_t len =  sizeof(default_state[0].Default_Value);
+    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
 
-    for (int32_t i = 0; i < (st_mb->eep_indx); i++)
+    for (int32_t i = 0; i < (st_mb->cb_index); i++)
     {
-        if(EESave_Check(i+(st_mb->eep_start_save))==REG_OK)
+        if((mb_reg_option_check(i+(st_mb->cb_reg_start), CB_WR) == MB_OK))
         {
-            AT25_mutex_update_byte( ((st_mb->eep_start_save)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->eep_start_save)]), len);
+            AT25_mutex_update_byte( ((st_mb->cb_reg_start)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->cb_reg_start)]), len);
         }
     }
-    st_mb->eep_state = EEP_FREE;
 }
 
 void mh_USB_Transmit_Start (void *mbb)
 {
-    mb_struct *st_mb;
+    MBStruct_t *st_mb;
     st_mb = (void*) mbb;
     CDC_Transmit_FS (st_mb->p_mb_buff, st_mb->response_size);
-    MB_USB.mb_state=STATE_IDLE;
+    MB_USB.mb_state=MB_STATE_IDLE;
 }
 
 void mh_Rs485_Transmit_Start (void *mbb)
@@ -283,12 +281,12 @@ void mh_Rs485_Transmit_Start (void *mbb)
 void mh_Factory (void)
 {
     taskENTER_CRITICAL();
-    uint16_t len =  sizeof(default_state[0].Default_Value);
-    for (int32_t i=0; i< NUM_BUF; i++)
+    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
+    for (int32_t i=0; i< MB_NUM_BUF; i++)
     {
-        if (EESave_Check(i)==REG_OK)
+        if (mb_reg_option_check(i, CB_WR)==MB_OK)
         {
-            MBbuf_main[i] = default_state[i].Default_Value;
+            MBbuf_main[i] = MBRegParam[i].Default_Value;
             AT25_update_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
         }
     }
@@ -300,19 +298,24 @@ void mh_Buf_Init (void)
 {
     taskENTER_CRITICAL();
     AT25_Init();
-    uint16_t len =  sizeof(default_state[0].Default_Value);
-    for (int32_t i=0; i< NUM_BUF; i++)
+    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
+    for (int32_t i=0; i< MB_NUM_BUF; i++)
     {
-        if(EESave_Check(i)==REG_OK)
+        if(mb_reg_option_check(i, CB_WR)==MB_OK)
         {
             AT25_read_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
-            if(Limit_Check(i, MBbuf_main[i])==REG_ERR)
+            if(mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR)
             {
-                MBbuf_main[i]=default_state[i].Default_Value;
+                MBbuf_main[i]=MBRegParam[i].Default_Value;
                 AT25_update_byte((i)*len, (uint8_t *) &MBbuf_main[i],  len);
             }
         }
     }
     MBbuf_main[Reg_Set_Default_Reset]=0;
     taskEXIT_CRITICAL();
+}
+
+void mh_test_arg (uint32_t number)
+{
+    MBbuf_main[Reg_End]=MBRegParam[number].Default_Value + MBbuf_main[number];
 }

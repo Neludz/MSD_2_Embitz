@@ -23,7 +23,7 @@
 
 
 
-void DMA_Init_Di(DMA_Channel_TypeDef* Channel, uint32_t Perif, uint32_t Mem, uint16_t Size, uint16_t Conf)
+void DMA_InitDi(DMA_Channel_TypeDef* Channel, uint32_t Perif, uint32_t Mem, uint16_t Size, uint16_t Conf)
 {
     uint32_t tmp = 0;
 
@@ -53,7 +53,7 @@ void DMA_Disable(DMA_Channel_TypeDef* Channel)
     Channel->CCR &= (uint16_t)(~DMA_CCR_EN);
 }
 
-void DMA_DeInit_Di(DMA_Channel_TypeDef* Channel)
+void DMA_DeInitDi(DMA_Channel_TypeDef* Channel)
 {
     Channel->CCR &= (uint16_t)(~DMA_CCR_EN);
     Channel->CCR = 0;

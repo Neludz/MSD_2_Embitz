@@ -5,16 +5,16 @@
 #include <stdbool.h>
 #include "modbus_config.h"
 
-#ifndef LIMIT_REG
-#define LIMIT_REG    0
+#ifndef MB_LIMIT_REG
+#define MB_LIMIT_REG            0
 #endif
 
-#ifndef EEPROM_REG
-#define EEPROM_REG    0
+#ifndef MB_CALLBACK_REG
+#define MB_CALLBACK_REG         0
 #endif
 
-#ifndef MODBUS_REG_END_TO_END
-#define MODBUS_REG_END_TO_END    0
+#ifndef MB_REG_END_TO_END
+#define MB_REG_END_TO_END       0
 #endif
 
 #define MB_FRAME_MIN     		4       /* Minimal size of a Modbus RTU frame	*/
@@ -40,7 +40,7 @@ typedef enum  			// Actually only 1 variable uses this type: er_frame_bad
 {
     EV_NOEVENT,
     EV_HAPPEND
-} eMBEvents;
+} MBEvents_t;
 
 typedef enum
 {
@@ -48,24 +48,23 @@ typedef enum
     MBE_ILLEGAL_FUNCTION 		= 0x01,
     MBE_ILLEGAL_DATA_ADDRESS	= 0x02,
     MBE_ILLEGAL_DATA_VALUE		= 0x03
-} eMBExcep;
+} MBExcep_t;
 
 typedef enum
 {
-    STATE_IDLE,			// Ready to get a frame from Master
-    STATE_RCVE,			// Frame is being received
-    STATE_WAIT,	        // Frame is wait to parse
-    STATE_PARS,			// Frame is being parsed (may take some time)
-    STATE_SEND,			// Response frame is being sent
-    STATE_SENT			// Last byte sent to shift register. Waiting "Last Bit Sent" interrupt
-
-} eEM_state;
+    MB_STATE_IDLE,			// Ready to get a frame from Master
+    MB_STATE_RCVE,			// Frame is being received
+    MB_STATE_WAIT,	        // Frame is wait to parse
+    MB_STATE_PARS,			// Frame is being parsed (may take some time)
+    MB_STATE_SEND,			// Response frame is being sent
+    MB_STATE_SENT			// Last byte sent to shift register. Waiting "Last Bit Sent" interrupt
+} MBState_t;
 
 typedef enum
 {
-    EEP_FREE = 0,
-    EEP_SAVE = 1
-} eMBEep;
+    MB_CB_FREE = 0,
+    MB_CB_PRESENT = 1
+} CBState_t;
 
 typedef struct  					// Main program passes interface data to Modbus stack.
 {
@@ -73,26 +72,26 @@ typedef struct  					// Main program passes interface data to Modbus stack.
     uint16_t    *p_read;			// Pointer to the begin of ParsWk array. Modbus takes data from the array
     uint16_t    reg_read_last;		//
     uint16_t    reg_write_last;		//
-#if (EEPROM_REG == 1)
-    uint16_t    eep_start_save;		//	function modbus write here data start index
-    uint8_t	    eep_indx;			// and how many registers are pending validation
-    eMBEep  	eep_state;			//
+#if (MB_CALLBACK_REG == 1)
+    uint16_t    cb_reg_start;		// function modbus write here data start index
+    uint8_t	    cb_index;			// and how many registers are pending validation
+    CBState_t   cb_state;			//
 #endif
     uint8_t     slave_address;		//
     uint8_t	    mb_index;
-    eEM_state   mb_state;
-    eMBEvents	er_frame_bad;		//
+    MBState_t   mb_state;
+    MBEvents_t	er_frame_bad;		//
     uint8_t     *p_mb_buff;			//
-    uint8_t		response_size;		                // Set in FrameParse(), used in transmit
-#if (EEPROM_REG == 1)
-    void   		(*f_save) ( void *mbb);             //for span of register, use "EESave_Check" in this function for every register
+    uint8_t		response_size;		                // Set in frame_parse(), used in transmit
+#if (MB_CALLBACK_REG == 1)
+    void   		(*wr_callback) ( void *mbb);             //for span of register, use "mb_reg_option_check" in this function for every register
 #endif
     void    	(*f_start_trans) ( void *mbb);      //start transmit
     void    	(*f_start_receive) ( void *mbb);    //only if you stop the exchange during parsing, it can be NULL,
                                                     //then when using one buffer, check the "mb_state"
                                                     //so as not to change buffer while parsing it
-} mb_struct;
+} MBStruct_t;
 
-void MBparsing(mb_struct *mbb);
+void mb_parsing(MBStruct_t *mbb);
 
 #endif /* MODBUS_H_INCLUDED */

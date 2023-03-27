@@ -108,9 +108,9 @@ bool IO_GetLineActive(uint8_t Input);
 void IO_ConfigLine(tIOLine Line, uint8_t Mode, uint8_t State);
 void IO_SPI_Init(void);
 void IO_ADC_Init(void);
-void Delay_ms(uint32_t ms);
-uint16_t getADCval(int nch);
-int32_t getMCUtemp(void);
+void IO_delay_ms(uint32_t ms);
+uint16_t IO_getADCval(int nch);
+int32_t IO_getMCUtemp(void);
 //example
 //     	i = IO_GetLine(io_LED3);
 //		IO_ConfigLine(io_LED2, OUT_10MHz+OUT_PP, LOW);

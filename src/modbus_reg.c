@@ -9,11 +9,20 @@
 //	X macro
 //-----------------------------------------------------------------------
 
-#if ((EEPROM_REG == 1) || (LIMIT_REG == 1))
-const t_default_state default_state[NUM_BUF] =
+#if ((MB_CALLBACK_REG == 1) || (MB_LIMIT_REG == 1))
+const RegParameters_t MBRegParam[MB_NUM_BUF] =
 {
-#define X_BUF(a,b,c,d,e,f)	[b]={c,d,e,f},
-    MAIN_BUF_TABLE
+#define X_BUF(a,b,c,d,e,f,g)	[b]={d,e,f,g},
+    MB_BUF_TABLE
+#undef X_BUF
+};
+#endif
+
+#if (MB_USER_ARG1_REG == 1)
+const void *MBRegArg1[MB_NUM_BUF] =
+{
+#define X_BUF(a,b,c,d,e,f,g)	[b]=c,
+    MB_BUF_TABLE
 #undef X_BUF
 };
 #endif
@@ -21,79 +30,70 @@ const t_default_state default_state[NUM_BUF] =
 //-----------------------------------------------------------------------
 // function
 //-----------------------------------------------------------------------
-
-#if (EEPROM_REG == 1)
-Reg_Error_Code EESave_Check (uint16_t Number_Reg)
+#if ((MB_CALLBACK_REG == 1) || (MB_LIMIT_REG == 1))
+MBError_t mb_instance_idle_check (MBStruct_t *st_mb)
 {
-    if (default_state[Number_Reg].Permission & EESAVE_R)
+    if ((st_mb->cb_state == MB_CB_FREE) && (st_mb->mb_state == MB_STATE_IDLE))
     {
-        return REG_OK;
+        return MB_OK;
     }
-    return REG_ERR;
+    return MB_ERROR;
 }
 
-//
-Reg_Error_Code All_Idle_Check (mb_struct *st_mb)
+MBError_t mb_reg_limit_check (uint16_t number, uint16_t value)
 {
-    if ((st_mb->eep_state == EEP_FREE) && (st_mb->mb_state == STATE_IDLE))
-    {
-        return REG_OK;
-    }
-    return REG_ERR;
-}
-#endif
-
-//
-#if (LIMIT_REG == 1)
-Reg_Error_Code Write_Check (uint16_t Number_Reg)
-{
-    if (default_state[Number_Reg].Permission & WRITE_R)
-    {
-        return REG_OK;
-    }
-    return REG_ERR;
-}
-
-//
-/*
-#define LIM_BIT_MASK	(0x0C)	//check limit mask (2&3 bits)----|
-#define LIM_SIGN		(0x04)	// 2 bit for limit     		  <--|
-#define LIM_UNSIGN		(0x08)  // 3 bit for limit	    	  <--|
-#define LIM_MASK	    (0x0C)	// 2 and 3 bit for limit	  <--|
- */
-Reg_Error_Code Limit_Check (uint16_t Number_Reg, uint16_t Value)
-{
-    switch(default_state[Number_Reg].Permission & LIM_BIT_MASK)
+    switch(MBRegParam[number].Options & LIM_BIT_MASK)
     {
     case 0:
         break;	//not use limit for this register
 
     case LIM_MASK:
-        if (Value & (~(default_state[Number_Reg].Max_Level_Mask)))
+        if (value & (~(MBRegParam[number].Max_Level_Mask)))
         {
-            return REG_ERR;
+            return MB_ERROR;
         }
         break;
 
     case LIM_SIGN:
-        if ((int16_t)Value > (int16_t)default_state[Number_Reg].Max_Level_Mask ||
-                (int16_t)Value < (int16_t)default_state[Number_Reg].Min_Level)
+        if ((int16_t)value > (int16_t)MBRegParam[number].Max_Level_Mask ||
+                (int16_t)value < (int16_t)MBRegParam[number].Min_Level)
         {
-            return REG_ERR;
+            return MB_ERROR;
         }
         break;
 
     case LIM_UNSIGN:
-        if ((uint16_t)Value > (uint16_t)default_state[Number_Reg].Max_Level_Mask ||
-                (uint16_t)Value < (uint16_t)default_state[Number_Reg].Min_Level)
+        if ((uint16_t)value > (uint16_t)MBRegParam[number].Max_Level_Mask ||
+                (uint16_t)value < (uint16_t)MBRegParam[number].Min_Level)
         {
-            return REG_ERR;
+            return MB_ERROR;
         }
         break;
 
     default:
         break;
     }
-    return REG_OK;
+    return MB_OK;
+}
+
+MBError_t mb_reg_option_check (uint16_t number, uint16_t option_mask)
+{
+    if (MBRegParam[number].Options & option_mask)
+    {
+        return MB_OK;
+    }
+    return MB_ERROR;
+}
+
+RegParameters_t mb_getRegParam (uint16_t number)
+{
+    return MBRegParam[number];
+}
+#endif
+
+#if (MB_USER_ARG1_REG == 1)
+const void* mb_getRegUserArg1 (uint16_t number)
+{
+    return MBRegArg1[number];
 }
 #endif

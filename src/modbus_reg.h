@@ -7,9 +7,9 @@
 
 typedef enum
 {
-    REG_OK 		    = 0x00,
-    REG_ERR 		= 0x01
-} Reg_Error_Code;
+    MB_OK 		    = 0x00,
+    MB_ERROR 		= 0x01
+} MBError_t;
 
 typedef struct
 {
@@ -17,24 +17,24 @@ typedef struct
     uint16_t		Default_Value;		//c
     uint16_t		Min_Level;		    //d
     uint16_t		Max_Level_Mask;		//e
-    uint32_t		Permission;		    //f
-} t_default_state;
+    uint32_t		Options;		    //f
+} RegParameters_t;
 
-#if (MODBUS_REG_END_TO_END == 1)
+#if (MB_REG_END_TO_END == 1)
 enum
 {
 #define X_BUF(a,b,c,d,e,f) b,
-    MAIN_BUF_TABLE
+    MB_BUF_TABLE
 #undef  X_BUF
-    NUM_BUF  //Reg count
+    MB_NUM_BUF  //Reg count
 };
 #else
 enum
 {
-#define X_BUF(a,b,c,d,e,f) b=a,
-    MAIN_BUF_TABLE
+#define X_BUF(a,b,c,d,e,f,g) b=a,
+    MB_BUF_TABLE
 #undef  X_BUF
-    NUM_BUF=(REG_END_REGISTER+1)
+    MB_NUM_BUF=(REG_END_REGISTER+1)
 };
 #endif
 
@@ -42,9 +42,9 @@ enum
 //  prototype
 //-----------------------------------------------------------------------
 
-Reg_Error_Code EESave_Check (uint16_t Number_Reg);
-Reg_Error_Code All_Idle_Check (mb_struct *st_mb);
-Reg_Error_Code Write_Check (uint16_t Number_Reg);
-Reg_Error_Code Limit_Check (uint16_t Number_Reg, uint16_t Value);
-
+MBError_t mb_instance_idle_check (MBStruct_t *st_mb);
+MBError_t mb_reg_limit_check (uint16_t Number_Reg, uint16_t Value);
+MBError_t mb_reg_option_check (uint16_t number, uint16_t option_mask);
+RegParameters_t mb_getRegParam (uint16_t number);
+const void* mb_getRegUserArg1 (uint16_t number);
 #endif /* MODBUS_REG_H_INCLUDED*/
