@@ -11,12 +11,10 @@
 #include "FreeRTOS.h"
 #include "timers.h"
 
-#define Version_MSD_2			217
+#define Version_MSD_2			218
 
 #define WATCH_DOG_TIME_MS		500
 #define MAX_DI  				4
-#define MAX_DI_TRIP_COUNTER 	2	    //количество DI со счетчиком включения, max 32 (notification use number bit, see eeprom write task)
-#define COUNTER_EE_UPD_MS		600000
 #define MAX_DO  				2
 
 #define OFFSET_I_Plus  			(+15)

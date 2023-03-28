@@ -52,8 +52,8 @@
 	X_BUF(13,	Reg_T_Max,			    0,		0,		0, 		0,		READ_R)\
 	X_BUF(14,	Reserved_3,			    0,      100,	0, 		0xFFFF,	READ_R)\
 	X_BUF(15,	Reserved_4,			    0,		123,	0, 		0xFFFF,	READ_R)\
-	X_BUF(16,	Reg_DI_1_Counter,       0,		0,		0, 		0,	 	WRITE_R | CB_WR)\
-	X_BUF(17,	Reg_DI_2_Counter,	    0,      0,		0, 		0,	 	WRITE_R | CB_WR)\
+	X_BUF(16,	Reg_16,                 0,		0,		0, 		0,	 	READ_R)\
+	X_BUF(17,	Reg_17,	                0,      0,		0, 		0,	 	READ_R)\
 	X_BUF(18,	Reg_Status_DI_Bit,	    0,		0,		0, 		0,		READ_R)\
 	X_BUF(19,	Reg_Status_DO_Bit,	    0,		0,		0, 		0,		READ_R)\
 	X_BUF(20,	Reg_T_Warning_bit,	    0,		0,		0, 		0,		READ_R)\
@@ -68,7 +68,7 @@
 	X_BUF(29,	Reserved_T,				0,		0,		0, 		0,		READ_R)\
 	X_BUF(30,	Reg_Mode_Cur,			0,		0,		0,		0x1,	WRITE_R | CB_WR | LIM_UNSIGN)\
 	X_BUF(31,	Reg_Mode_DO,			0,		0,		0,		0x6,	WRITE_R | CB_WR | LIM_UNSIGN)\
-	X_BUF(32,	Reg_Mode_DI_Counter,    0,		0,		0,		0x1,	WRITE_R | CB_WR | LIM_UNSIGN)\
+	X_BUF(32,	Reserv32,               0,		0,		0,		0x1,	READ_R)\
 	X_BUF(33,	Reg_DO_1_Delay,			0,		100,	1,		0xFF,	WRITE_R | CB_WR | LIM_UNSIGN)\
 	X_BUF(35,	Reg_T_level_Warning,	0,		TEMPERATURE_OVER,\
                                                         0,		0,	    WRITE_R | CB_WR)\

@@ -237,44 +237,11 @@ void vRead_DI (void *pvParameters)
                     {
                         MBbuf_main[Reg_Status_DI_Bit] |=  X_DI[i]<<i;
                     }
-
-                    if((i<MAX_DI_TRIP_COUNTER) && (MBbuf_main[Reg_Mode_DI_Counter]))
-                    {
-                        if(!DI_Check[i] && X_DI[i])
-                        {
-                            MBbuf_main[Reg_DI_1_Counter+i]=(MBbuf_main[Reg_DI_1_Counter+i]+1) & 0xFFFF;
-                            xTaskNotify(Count_In_EE_Task, (1<<i), eSetBits);
-                        }
-                    }
                     DI_Check[i] = X_DI[i];
                 }
             }
         }
         vTaskDelay(71/portTICK_RATE_MS);
-    }
-}
-//-------------------------------------------------------------------------
-
-void vWrite_Count_EE (void *pvParameters)
-{
-    uint32_t ulNotifiedValue;
-    vTaskDelay(2500/portTICK_RATE_MS);
-    while (1)
-    {
-        xTaskNotifyWait(pdFALSE, ULONG_MAX, &ulNotifiedValue, portMAX_DELAY);
-        for (int32_t i = 0; i < MAX_DI_TRIP_COUNTER; i++)
-        {
-            if( ( ulNotifiedValue & (1<<i) ) != 0 )
-            {
-                /* Bit number i was set - process whichever event is represented by bit number i. */
-                if(MBRegParam[i+Reg_DI_1_Counter].Options & CB_WR)
-                {
-                    /* 16-bits in modbus register */
-                    AT25_mutex_update_byte( ((i+Reg_DI_1_Counter)<<1), (uint8_t*) &(MBbuf_main[Reg_DI_1_Counter+i]), 2);
-                }
-            }
-        }
-        vTaskDelay(COUNTER_EE_UPD_MS/portTICK_RATE_MS);
     }
 }
 //-------------------------------------------------------------------------
@@ -672,7 +639,6 @@ int main(void)
 
     if(pdTRUE != xTaskCreate(vBlinker,	"Blinker", 	configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL)) ERROR_ACTION(TASK_NOT_CREATE,0);
     if(pdTRUE != xTaskCreate(vRead_DI,	"DI", 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL)) ERROR_ACTION(TASK_NOT_CREATE,0);
-    if(pdTRUE != xTaskCreate(vWrite_Count_EE,"Count",configMINIMAL_STACK_SIZE,NULL, tskIDLE_PRIORITY + 1, &Count_In_EE_Task)) ERROR_ACTION(TASK_NOT_CREATE,0);
     if(pdTRUE != xTaskCreate(vUpdate_DO,"DO", 		configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 3, NULL)) ERROR_ACTION(TASK_NOT_CREATE,0);
 
     mh_Modbus_Init();   //create task for modbus
