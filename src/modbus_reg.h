@@ -7,17 +7,16 @@
 
 typedef enum
 {
-    MB_OK 		    = 0x00,
-    MB_ERROR 		= 0x01
+    MB_ERROR 		= 0x00,
+    MB_OK 		    = 0x01
 } MBError_t;
 
 typedef struct
 {
-    //X_BUF(a,b,c,d,e,f)
-    uint16_t		Default_Value;		//c
-    uint16_t		Min_Level;		    //d
-    uint16_t		Max_Level_Mask;		//e
-    uint32_t		Options;		    //f
+    uint16_t		Default_Value;
+    uint16_t		Min_Level;
+    uint16_t		Max_Level_Mask;
+    uint32_t		Options;
 } RegParameters_t;
 
 #if (MB_REG_END_TO_END == 1)

@@ -17,6 +17,14 @@
 #define MB_REG_END_TO_END       0
 #endif
 
+#ifndef MB_USER_ARG1_REG
+#define MB_USER_ARG1_REG        0
+#endif
+
+#ifndef MB_USER_ARG2_REG
+#define MB_USER_ARG2_REG        0
+#endif
+
 #define MB_FRAME_MIN     		4       /* Minimal size of a Modbus RTU frame	*/
 #define MB_FRAME_MAX     		256     /* Maximal size of a Modbus RTU frame	*/
 #define MB_ADDRESS_BROADCAST  	00		/* MBBuff[0] analysis					*/
@@ -84,7 +92,7 @@ typedef struct  					// Main program passes interface data to Modbus stack.
     uint8_t     *p_mb_buff;			//
     uint8_t		response_size;		                // Set in frame_parse(), used in transmit
 #if (MB_CALLBACK_REG == 1)
-    void   		(*wr_callback) ( void *mbb);             //for span of register, use "mb_reg_option_check" in this function for every register
+    void   		(*wr_callback) ( void *mbb);    //for span of register, use "mb_reg_option_check" in this function for every register
 #endif
     void    	(*f_start_trans) ( void *mbb);      //start transmit
     void    	(*f_start_receive) ( void *mbb);    //only if you stop the exchange during parsing, it can be NULL,

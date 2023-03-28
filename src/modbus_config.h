@@ -22,6 +22,7 @@
 #define REG_END_REGISTER                Reg_End
 
 //  MAIN_BUF_Start_Table_Mask
+#define USER_FUNC		(0x20)
 #define USER_ARG		(0x10)
 #define READ_R		    (0)
 #define WRITE_R		    (0x01)	// 0 bit                        <--|
@@ -61,8 +62,8 @@
 	X_BUF(23,	Reg_Cur_N_Measure_W2,	0,		0,		0, 		0,		READ_R)\
 	X_BUF(24,	Reg_Cur_Cross_Count,	0,		0,		0, 		0,		READ_R)\
 	X_BUF(25,	MB_ERRORor_Count,		0,		0,		0, 		0,		READ_R)\
-	X_BUF(26,	Reg_DO_On_Bit,			0,		0,		0, 		0x03,	WRITE_R | 		    LIM_MASK)\
-	X_BUF(27,	Reg_DO_Off_Bit,			0,		0,		0, 		0x03,	WRITE_R | 		    LIM_MASK)\
+	X_BUF(26,	Reg_DO_On_Bit,			0,		0,		0, 		0x03,	WRITE_R | 		  LIM_MASK)\
+	X_BUF(27,	Reg_DO_Off_Bit,			0,		0,		0, 		0x03,	WRITE_R | 		  LIM_MASK)\
 	X_BUF(28,	Reg_Set_Default_Reset,	0,		0,		0, 		0,	 	WRITE_R)\
 	X_BUF(29,	Reserved_T,				0,		0,		0, 		0,		READ_R)\
 	X_BUF(30,	Reg_Mode_Cur,			0,		0,		0,		0x1,	WRITE_R | CB_WR | LIM_UNSIGN)\

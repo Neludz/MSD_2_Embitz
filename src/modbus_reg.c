@@ -78,7 +78,7 @@ MBError_t mb_reg_limit_check (uint16_t number, uint16_t value)
 
 MBError_t mb_reg_option_check (uint16_t number, uint16_t option_mask)
 {
-    if (MBRegParam[number].Options & option_mask)
+    if ((MBRegParam[number].Options & option_mask) == option_mask)
     {
         return MB_OK;
     }
