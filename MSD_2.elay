@@ -36,14 +36,14 @@
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="inc\stm32f103xb.h" open="0" top="0" tabpos="39" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="inc\stm32f103xb.h" open="1" top="0" tabpos="29" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5414" topLine="89" />
+			<Cursor1 position="757752" topLine="9732" />
 		</Cursor>
 	</File>
-	<File name="inc\stm32f1xx.h" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="inc\stm32f1xx.h" open="1" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6869" topLine="149" />
+			<Cursor1 position="773" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="inc\system_stm32f1xx.h" open="0" top="0" tabpos="34" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -51,9 +51,9 @@
 			<Cursor1 position="1217" topLine="41" />
 		</Cursor>
 	</File>
-	<File name="Libraries\FreeRTOS\croutine.c" open="0" top="0" tabpos="80" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\FreeRTOS\croutine.c" open="0" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="0" topLine="0" />
+			<Cursor1 position="1856" topLine="33" />
 		</Cursor>
 	</File>
 	<File name="Libraries\FreeRTOS\event_groups.c" open="0" top="0" tabpos="79" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -86,9 +86,9 @@
 			<Cursor1 position="0" topLine="456" />
 		</Cursor>
 	</File>
-	<File name="Libraries\FreeRTOS\include\FreeRTOS.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\FreeRTOS\include\FreeRTOS.h" open="1" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="29692" topLine="43" />
+			<Cursor1 position="29945" topLine="964" />
 		</Cursor>
 	</File>
 	<File name="Libraries\FreeRTOS\include\FreeRTOSConfig.h" open="0" top="0" tabpos="37" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -171,7 +171,7 @@
 			<Cursor1 position="9283" topLine="147" />
 		</Cursor>
 	</File>
-	<File name="Libraries\FreeRTOS\port.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\FreeRTOS\port.c" open="1" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="16756" topLine="380" />
 		</Cursor>
@@ -186,9 +186,9 @@
 			<Cursor1 position="35147" topLine="787" />
 		</Cursor>
 	</File>
-	<File name="Libraries\FreeRTOS\tasks.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\FreeRTOS\tasks.c" open="1" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="145236" topLine="3428" />
+			<Cursor1 position="128947" topLine="3062" />
 		</Cursor>
 	</File>
 	<File name="Libraries\FreeRTOS\timers.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -206,7 +206,7 @@
 			<Cursor1 position="3760" topLine="91" />
 		</Cursor>
 	</File>
-	<File name="Libraries\LL\stm32f1xx_ll_rcc.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\LL\stm32f1xx_ll_rcc.h" open="0" top="0" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="39627" topLine="775" />
 		</Cursor>
@@ -226,9 +226,9 @@
 			<Cursor1 position="4073" topLine="161" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32_USB_Device_Library\Class\CDC\Src\usbd_cdc.c" open="1" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="14114" topLine="500" />
+			<Cursor1 position="5751" topLine="240" />
 		</Cursor>
 	</File>
 	<File name="Libraries\STM32_USB_Device_Library\Class\MSC\Inc\usbd_msc.h" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -251,9 +251,9 @@
 			<Cursor1 position="18461" topLine="659" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_core.h" open="0" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_core.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1815" topLine="134" />
+			<Cursor1 position="4940" topLine="119" />
 		</Cursor>
 	</File>
 	<File name="Libraries\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h" open="0" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -273,12 +273,12 @@
 	</File>
 	<File name="Libraries\STM32_USB_Device_Library\Core\Src\usbd_core.c" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3632" topLine="160" />
+			<Cursor1 position="2330" topLine="100" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" open="0" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ctlreq.c" open="1" top="0" tabpos="25" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="12852" topLine="30" />
+			<Cursor1 position="10715" topLine="420" />
 		</Cursor>
 	</File>
 	<File name="Libraries\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c" open="0" top="0" tabpos="24" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -286,14 +286,24 @@
 			<Cursor1 position="2097" topLine="82" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h" open="0" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="213529" topLine="3746" />
+			<Cursor1 position="83067" topLine="1633" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h" open="0" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2787" topLine="117" />
+			<Cursor1 position="10080" topLine="280" />
+		</Cursor>
+	</File>
+	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_def.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1176" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd.h" open="0" top="0" tabpos="22" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="10565" topLine="249" />
 		</Cursor>
 	</File>
 	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_hal_pcd_ex.h" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -303,12 +313,12 @@
 	</File>
 	<File name="Libraries\STM32F1xx_HAL_Driver\Inc\stm32f1xx_ll_usb.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="945" topLine="159" />
+			<Cursor1 position="25645" topLine="602" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd.c" open="0" top="0" tabpos="38" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="8198" topLine="2535" />
+			<Cursor1 position="6852" topLine="180" />
 		</Cursor>
 	</File>
 	<File name="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd_ex.c" open="0" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -316,9 +326,9 @@
 			<Cursor1 position="6651" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usb.c" open="0" top="0" tabpos="30" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usb.c" open="1" top="0" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="725" topLine="2065" />
+			<Cursor1 position="7276" topLine="210" />
 		</Cursor>
 	</File>
 	<File name="src\Clock.c" open="0" top="0" tabpos="35" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -341,39 +351,49 @@
 			<Cursor1 position="1650" topLine="26" />
 		</Cursor>
 	</File>
-	<File name="src\eeprom_AT25.c" open="0" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\eeprom_AT25.c" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1791" topLine="91" />
+			<Cursor1 position="3742" topLine="4" />
 		</Cursor>
 	</File>
-	<File name="src\eeprom_AT25.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\eeprom_AT25.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="564" topLine="0" />
+			<Cursor1 position="350" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\IO.c" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\eeprom_emulation.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="275" topLine="0" />
+			<Cursor1 position="7226" topLine="191" />
 		</Cursor>
 	</File>
-	<File name="src\IO.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\eeprom_emulation.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3775" topLine="72" />
+			<Cursor1 position="1240" topLine="12" />
 		</Cursor>
 	</File>
-	<File name="src\main.c" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\IO.c" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="21299" topLine="612" />
+			<Cursor1 position="7840" topLine="213" />
 		</Cursor>
 	</File>
-	<File name="src\main.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\IO.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="175" topLine="6" />
+			<Cursor1 position="3310" topLine="49" />
 		</Cursor>
 	</File>
-	<File name="src\measure_NTC.c" open="0" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="905" topLine="9" />
+			<Cursor1 position="5499" topLine="167" />
+		</Cursor>
+	</File>
+	<File name="src\main.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="803" topLine="22" />
+		</Cursor>
+	</File>
+	<File name="src\measure_NTC.c" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="905" topLine="51" />
 		</Cursor>
 	</File>
 	<File name="src\measure_NTC.h" open="0" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -381,49 +401,49 @@
 			<Cursor1 position="1090" topLine="8" />
 		</Cursor>
 	</File>
-	<File name="src\modbus.c" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus.c" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3251" topLine="41" />
+			<Cursor1 position="3714" topLine="57" />
 		</Cursor>
 	</File>
-	<File name="src\modbus.h" open="1" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="112" topLine="69" />
+			<Cursor1 position="196" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\modbus_config.h" open="1" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus_config.h" open="1" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="96" topLine="48" />
+			<Cursor1 position="4485" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\modbus_hard.c" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+	<File name="src\modbus_hard.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5426" topLine="254" />
+			<Cursor1 position="8901" topLine="290" />
 		</Cursor>
 	</File>
-	<File name="src\modbus_hard.h" open="1" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus_hard.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1214" topLine="0" />
+			<Cursor1 position="254" topLine="3" />
 		</Cursor>
 	</File>
-	<File name="src\modbus_reg.c" open="1" top="0" tabpos="16" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus_reg.c" open="1" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="565" topLine="22" />
+			<Cursor1 position="1501" topLine="46" />
 		</Cursor>
 	</File>
-	<File name="src\modbus_reg.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\modbus_reg.h" open="1" top="0" tabpos="19" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="589" topLine="12" />
+			<Cursor1 position="872" topLine="10" />
 		</Cursor>
 	</File>
-	<File name="src\startup_stm32f103xb.S" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\startup_stm32f103xb.S" open="1" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3458" topLine="87" />
+			<Cursor1 position="3062" topLine="96" />
 		</Cursor>
 	</File>
-	<File name="src\stm32f1xx_hal_conf.h" open="0" top="0" tabpos="35" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\stm32f1xx_hal_conf.h" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5266" topLine="0" />
+			<Cursor1 position="4309" topLine="273" />
 		</Cursor>
 	</File>
 	<File name="src\system_stm32f1xx.c" open="0" top="0" tabpos="21" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -431,17 +451,17 @@
 			<Cursor1 position="4527" topLine="104" />
 		</Cursor>
 	</File>
-	<File name="src\USB_DEVICE\app.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\USB_DEVICE\app.c" open="0" top="0" tabpos="23" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="638" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="src\USB_DEVICE\App\usb_device.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\USB_DEVICE\App\usb_device.c" open="0" top="0" tabpos="20" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2145" topLine="5" />
+			<Cursor1 position="1800" topLine="58" />
 		</Cursor>
 	</File>
-	<File name="src\USB_DEVICE\App\usb_device.h" open="0" top="0" tabpos="31" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\USB_DEVICE\App\usb_device.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="2074" topLine="54" />
 		</Cursor>
@@ -476,14 +496,14 @@
 			<Cursor1 position="2111" topLine="85" />
 		</Cursor>
 	</File>
-	<File name="src\USB_DEVICE\Target\usbd_conf.c" open="0" top="0" tabpos="28" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\USB_DEVICE\Target\usbd_conf.c" open="0" top="0" tabpos="14" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="16394" topLine="36" />
+			<Cursor1 position="18982" topLine="579" />
 		</Cursor>
 	</File>
-	<File name="src\USB_DEVICE\Target\usbd_conf.h" open="0" top="0" tabpos="30" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="src\USB_DEVICE\Target\usbd_conf.h" open="0" top="0" tabpos="13" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="3254" topLine="24" />
+			<Cursor1 position="3518" topLine="101" />
 		</Cursor>
 	</File>
 	<File name="src\USB_DEVICE\usbd_msc_cdc.c" open="0" top="0" tabpos="27" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -496,9 +516,14 @@
 			<Cursor1 position="709" topLine="24" />
 		</Cursor>
 	</File>
-	<File name="stm32f103c8_flash.ld" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="stm32f103c8_flash.ld" open="1" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="4694" topLine="71" />
+			<Cursor1 position="2999" topLine="38" />
+		</Cursor>
+	</File>
+	<File name="STM32F103xx.svd" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="185" topLine="0" />
 		</Cursor>
 	</File>
 </EmBitz_layout_file>

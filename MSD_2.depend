@@ -209,7 +209,7 @@
 
 1678699683 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\inc\system_stm32f1xx.h
 
-1678699683 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32f1xx_hal_driver\inc\stm32f1xx_hal.h
+1680159834 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32f1xx_hal_driver\inc\stm32f1xx_hal.h
 	"stm32f1xx_hal_conf.h"
 
 1678699684 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\stm32f1xx_hal_conf.h
@@ -395,7 +395,7 @@
 	"main.h"
 	"stm32f1xx.h"
 
-1678699684 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
+1680164512 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.h
 	"FreeRTOS.h"
 	"timers.h"
 
@@ -411,7 +411,7 @@
 1678699683 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\src\usbd_core.c
 	"usbd_core.h"
 
-1678699683 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\src\usbd_ctlreq.c
+1680092019 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\stm32_usb_device_library\core\src\usbd_ctlreq.c
 	"usbd_ctlreq.h"
 	"usbd_ioreq.h"
 
@@ -479,7 +479,7 @@
 	"stm32f1xx.h"
 	<stdio.h>
 
-1678699684 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.c
+1680158111 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.c
 	<eeprom_AT25.h>
 	<stm32f1xx.h>
 	<stdint.h>
@@ -487,10 +487,10 @@
 	"FreeRTOS.h"
 	"semphr.h"
 
-1678699684 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.h
+1680157697 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_at25.h
 	<stdint.h>
 
-1679909482 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.h
+1680158194 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.h
 	<stdint.h>
 	<stdbool.h>
 	<stm32f1xx.h>
@@ -498,7 +498,7 @@
 1678699683 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\libraries\freertos\include\semphr.h
 	"queue.h"
 
-1679909482 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.c
+1680157510 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\io.c
 	<stdint.h>
 	<stdbool.h>
 	<stm32f1xx.h>
@@ -506,7 +506,7 @@
 	<dma_103.h>
 	<main.h>
 
-1679928410 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
+1680167189 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\main.c
 	"main.h"
 	<modbus_reg.h>
 	<modbus_hard.h>
@@ -532,12 +532,12 @@
 	"emfat.h"
 	"usb_device.h"
 
-1679928329 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h
+1679994391 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.h
 	<stdint.h>
 	"modbus_config.h"
 	"modbus.h"
 
-1679928922 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_config.h
+1680013677 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_config.h
 	<stdint.h>
 	"main.h"
 	"modbus_hard.h"
@@ -548,12 +548,12 @@
 	"math.h"
 	"main.h"
 
-1679927122 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.h
+1680157907 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.h
 	<stdint.h>
 	<stdbool.h>
 	"modbus_config.h"
 
-1679928756 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.h
+1679933674 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.h
 	"FreeRTOS.h"
 	"semphr.h"
 	"task.h"
@@ -586,13 +586,13 @@
 	<measure_NTC.h>
 	<string.h>
 
-1679925323 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.c
+1680157928 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus.c
 	"modbus.h"
 	"modbus_config.h"
 	<stdio.h>
 	"modbus_reg.h"
 
-1679928090 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.c
+1680097859 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_reg.c
 	"modbus_config.h"
 	"modbus_reg.h"
 	"modbus.h"
@@ -605,7 +605,7 @@
 1678699684 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\system_stm32f1xx.c
 	"stm32f1xx.h"
 
-1678699684 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usb_device.c
+1680024124 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usb_device.c
 	"usb_device.h"
 	"usbd_core.h"
 	"usbd_desc.h"
@@ -752,7 +752,7 @@
 	"usb_prop.h"
 	"usb_desc.h"
 
-1679928756 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.c
+1680166705 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\modbus_hard.c
 	"modbus_hard.h"
 	"modbus.h"
 	"modbus_reg.h"
@@ -770,15 +770,16 @@
 	<stdio.h>
 	<string.h>
 	"usbd_cdc_if.h"
+	<eeprom_emulation.h>
 
 1678699684 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app\usbd_cdc_if.c
 	"usbd_cdc_if.h"
 	"modbus_hard.h"
 
-1677220278 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.c
+1680072382 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.c
 	"ebmon.h"
 
-1677220278 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.h
+1680072382 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\ebmon.h
 	<stdint.h>
 	<stdio.h>
 
@@ -844,11 +845,21 @@
 	<string.h>
 	<stdbool.h>
 
-1678699684 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app.c
+1680014074 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\app.c
 	"main.h"
 	"emfat.h"
 	"stdlib.h"
 
 1678699684 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\usb_device\emfat.c
 	"emfat.h"
+
+1680159834 source:d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_emulation.c
+	<eeprom_emulation.h>
+	<stm32f1xx.h>
+	<stdint.h>
+	"FreeRTOS.h"
+	"semphr.h"
+
+1680100073 d:\dropbox\gg\9t_mean_well\embitz\msd_2_embitz\src\eeprom_emulation.h
+	<stdint.h>
 

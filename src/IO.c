@@ -86,15 +86,15 @@ void IO_ConfigLine(tIOLine Line, uint8_t Mode, uint8_t State)
     IOs[Line].GPIOx->ODR |= State<<IOs[Line].GPIO_Pin;
 }
 //---------------------------------------------------------------------------------
-void IO_SPI_Init(void)
-{
-    SPI2->CR1 |= 	(SPI_CR1_SSM    //
-                     |SPI_CR1_BR_1	//|SPI_CR1_BR_2|SPI_CR1_BR_0
-                     |SPI_CR1_MSTR	//
-                     |SPI_CR1_SSI);	//
-
-    SPI2->CR1 |= SPI_CR1_SPE;       // ON
-}
+//void IO_SPI_Init(void)
+//{
+//    SPI2->CR1 |= 	(SPI_CR1_SSM    //
+//                     |SPI_CR1_BR_1	//|SPI_CR1_BR_2|SPI_CR1_BR_0
+//                     |SPI_CR1_MSTR	//
+//                     |SPI_CR1_SSI);	//
+//
+//    SPI2->CR1 |= SPI_CR1_SPE;       // ON
+//}
 //---------------------------------------------------------------------------------
 void IO_ADC_Init(void)
 {
@@ -226,8 +226,8 @@ void IO_Init(void)
     }
 
 // SPI
-    RCC->APB1ENR    |= RCC_APB1ENR_SPI2EN;
-    IO_SPI_Init();
+//    RCC->APB1ENR    |= RCC_APB1ENR_SPI2EN;
+//    IO_SPI_Init();
 
 // ADC
     // RCC->CFGR 		&= ~RCC_CFGR_ADCPRE;

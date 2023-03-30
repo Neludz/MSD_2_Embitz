@@ -514,17 +514,19 @@ int16_t max_temperature(void)
 //-------------------------------------------------------------------------
 void sensor_param_init(void)
 {
-    NTC_Calculation_Data_t NTC;
+    NTC_Calculation_Data_t NTC =
+    {
+        .NTC_r2=(MBbuf_main[Reg_NTC_R2_Value_W1]&0xFFFF)|((MBbuf_main[Reg_NTC_R2_Value_W2]&0xFFFF)<<16),
+        .NTC_r_divider=(MBbuf_main[Reg_NTC_R_Divider_W1]&0xFFFF)|((MBbuf_main[Reg_NTC_R_Divider_W2]&0xFFFF)<<16),
+        .NTC_adc_multipler=1,
+        .NTC_adc_resolution=ADC_COUNTS,
+        .NTC_b=(int16_t)MBbuf_main[Reg_NTC_B_Value],
+        .NTC_t2=(int16_t)MBbuf_main[Reg_NTC_T2_Value],
+        .NTC_start_temperature=(int16_t)MBbuf_main[Reg_NTC_Start_Temper],
+        .NTC_step_temperature=(int16_t)MBbuf_main[Reg_NTC_Step_Temper],
+        .NTC_temper_number_step=MBbuf_main[Reg_NTC_Temper_N_Step],
+    };
 
-    NTC.NTC_r2=(MBbuf_main[Reg_NTC_R2_Value_W1]&0xFFFF)|((MBbuf_main[Reg_NTC_R2_Value_W2]&0xFFFF)<<16);
-    NTC.NTC_r_divider=(MBbuf_main[Reg_NTC_R_Divider_W1]&0xFFFF)|((MBbuf_main[Reg_NTC_R_Divider_W2]&0xFFFF)<<16);
-    NTC.NTC_adc_multipler=1;
-    NTC.NTC_adc_resolution=ADC_COUNTS;
-    NTC.NTC_b=(int16_t)MBbuf_main[Reg_NTC_B_Value];
-    NTC.NTC_t2=(int16_t)MBbuf_main[Reg_NTC_T2_Value];
-    NTC.NTC_start_temperature=(int16_t)MBbuf_main[Reg_NTC_Start_Temper];
-    NTC.NTC_step_temperature=(int16_t)MBbuf_main[Reg_NTC_Step_Temper];
-    NTC.NTC_temper_number_step=MBbuf_main[Reg_NTC_Temper_N_Step];
     calculate_table_NTC(NTC);
 }
 //-------------------------------------------------------------------------
@@ -619,12 +621,11 @@ int main(void)
 {
     ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
     IO_Init();
-    flash_btock();
+    //flash_btock();
     emfat_init(&emfat, "MSD_2", entries);
     mh_Buf_Init();
     MX_USB_DEVICE_Init();
-    Init_IWDG(WATCH_DOG_TIME_MS);
-
+    //Init_IWDG(WATCH_DOG_TIME_MS);
     /*	timers	*/
     for (uint32_t i = 0; i<MAX_DO; i++)
     {

@@ -55,16 +55,16 @@ MBError_t mb_reg_limit_check (uint16_t number, uint16_t value)
         break;
 
     case LIM_SIGN:
-        if ((int16_t)value > (int16_t)MBRegParam[number].Max_Level_Mask ||
-                (int16_t)value < (int16_t)MBRegParam[number].Min_Level)
+        if (((int16_t)value > (int16_t)MBRegParam[number].Max_Level_Mask) ||
+                ((int16_t)value < (int16_t)MBRegParam[number].Min_Level))
         {
             return MB_ERROR;
         }
         break;
 
     case LIM_UNSIGN:
-        if ((uint16_t)value > (uint16_t)MBRegParam[number].Max_Level_Mask ||
-                (uint16_t)value < (uint16_t)MBRegParam[number].Min_Level)
+        if (((uint16_t)value > (uint16_t)MBRegParam[number].Max_Level_Mask) ||
+                ((uint16_t)value < (uint16_t)MBRegParam[number].Min_Level))
         {
             return MB_ERROR;
         }

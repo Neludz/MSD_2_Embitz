@@ -9,7 +9,7 @@
 //  CRC
 //----------------------------------------------------------------------
 
-/* Table of CRC values for highâ€“order byte */
+/* Table of CRC values for high–order byte */
 static const uint16_t wCRCTable[] =
 {
     0X0000, 0XC0C1, 0XC181, 0X0140, 0XC301, 0X03C0, 0X0280, 0XC241,

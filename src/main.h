@@ -11,17 +11,17 @@
 #include "FreeRTOS.h"
 #include "timers.h"
 
-#define Version_MSD_2			218
+#define Version_MSD_2			    301
 
-#define WATCH_DOG_TIME_MS		500
-#define MAX_DI  				4
-#define MAX_DO  				2
+#define WATCH_DOG_TIME_MS		    500
+#define MAX_DI  				    4
+#define MAX_DO  				    2
 
-#define OFFSET_I_Plus  			(+15)
-#define OFFSET_I_Minus  		(-15)
+#define OFFSET_I_Plus  			    (+15)
+#define OFFSET_I_Minus  		    (-15)
 
-#define ADC_CURRENT_SAMPLE		0x01        //mask_for_notify
-#define ADC_CURRENT_FIN			0x02	    //mask_for_notify
+#define ADC_CURRENT_SAMPLE		    0x01    //mask_for_notify
+#define ADC_CURRENT_FIN			    0x02    //mask_for_notify
 
 #define SIZE_NTC_TABLE              166
 
@@ -36,8 +36,8 @@
 #define TIME_ON_NO_USB				500
 #define TIME_OFF_NO_USB 			500
 
-#define M_MODBUS_TASK_PRIORITY         (tskIDLE_PRIORITY + 3)
-#define M_MODBUS_TASK_STACK_SIZE       (configMINIMAL_STACK_SIZE*2)
+#define M_MODBUS_TASK_PRIORITY      (tskIDLE_PRIORITY + 3)
+#define M_MODBUS_TASK_STACK_SIZE    (configMINIMAL_STACK_SIZE*2)
 
 void vMeasure_Temperature (void *pvParameters);
 void vMeasure_Current (void *pvParameters);

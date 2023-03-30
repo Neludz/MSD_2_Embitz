@@ -13,6 +13,7 @@
 #define  AT_25_RDY_BIT              0x1
 #define  AT_25_WEN_BIT              0x2
 
+//#define USE_EEPROM 1
 
 void AT25_Init (void);
 void AT25_write_byte(uint16_t adr, uint8_t *data_in, uint16_t len);

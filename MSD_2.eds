@@ -2,12 +2,10 @@
 <EmBitz_debug_session>
 	<debuggerLastSession>
 		<watches>
-			<watch key=" IOs[io_LED].ActiveState" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="*pxTimerID" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="IOs" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="IOs[Line].ActiveState" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="Line" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="pin_set" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="MBRegParam[number].Default_Value" format="0" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="MBRegParam[number].Min_Level" format="1" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="MBbuf_main[i]" format="1" array="0" start="0" count="0" expanded="0" live="0" />
+			<watch key="MBbuf_main[number]" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 		</watches>
 		<memory_view address="0x0" locked="0" live="0" options="290" />
 	</debuggerLastSession>

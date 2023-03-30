@@ -2,8 +2,14 @@
 /*
  * SPI
  */
-
 #include <eeprom_AT25.h>
+
+#ifndef USE_EEPROM
+#define USE_EEPROM         0
+#endif
+
+#if (USE_EEPROM == 1)
+
 #include <stm32f1xx.h>
 #include <stdint.h>
 #include <IO.h>
@@ -45,8 +51,6 @@ uint8_t AT25_get_status_bit(void)
     return ((uint8_t) data);
 }
 
-
-
 void AT25_wait_ready_bit(void)
 {
     while (AT25_get_status_bit()&(AT_25_RDY_BIT))
@@ -57,7 +61,6 @@ void AT25_wait_ready_bit(void)
         }
     }
 }
-
 
 void AT25_read_byte(uint16_t adr, uint8_t *data_out, uint16_t len)
 {
@@ -92,7 +95,6 @@ void AT25_write_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
         adr++;
     }
 }
-
 
 void AT25_mutex_update_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
 {
@@ -163,7 +165,6 @@ void AT25_update_byte(uint16_t adr, uint8_t *data_in, uint16_t len)
     }
 }
 
-
 void AT25_Init (void)
 {
     xMutex = xSemaphoreCreateMutex();
@@ -178,3 +179,4 @@ void AT25_Init (void)
     AT25_tx(0x00);
     AT25_release();
 }
+#endif

@@ -19,7 +19,7 @@
 #include <string.h>
 
 #include "usbd_cdc_if.h"
-
+#include <eeprom_emulation.h>
 //-----------------------------------------------------------------------
 // Variable
 //-----------------------------------------------------------------------
@@ -219,7 +219,7 @@ void rs485_timer_callback (xTimerHandle xTimer)
 void IO_Uart1_Init(void)
 {
     RCC->APB2ENR	|= RCC_APB2ENR_USART1EN;						//USART1 Clock ON
-    USART1->BRR = Baud_rate[MBbuf_main[Reg_RS485_Baud_Rate]&0x3];	// Bodrate
+    USART1->BRR = Baud_rate[MBbuf_main[Reg_RS485_Baud_Rate] & 0x3];	// Bodrate
     USART1->CR1 |= USART_CR1_TE | USART_CR1_RE | USART_CR1_IDLEIE | USART_CR1_TCIE | USART_CR1_RXNEIE;
 
     switch (MBbuf_main[Reg_Parity_Stop_Bits])
@@ -253,13 +253,12 @@ void mh_Write_Eeprom (void *mbb)
 {
     MBStruct_t *st_mb;
     st_mb = (void*) mbb;
-    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
 
     for (int32_t i = 0; i < (st_mb->cb_index); i++)
     {
         if((mb_reg_option_check(i+(st_mb->cb_reg_start), CB_WR) == MB_OK))
         {
-            AT25_mutex_update_byte( ((st_mb->cb_reg_start)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->cb_reg_start)]), len);
+            EE_UpdateVariable(((st_mb->cb_reg_start)+i), st_mb->p_write[i+(st_mb->cb_reg_start)]);
         }
     }
 }
@@ -281,36 +280,54 @@ void mh_Rs485_Transmit_Start (void *mbb)
 void mh_Factory (void)
 {
     taskENTER_CRITICAL();
-    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
     for (int32_t i=0; i< MB_NUM_BUF; i++)
     {
         if (mb_reg_option_check(i, CB_WR)==MB_OK)
         {
             MBbuf_main[i] = MBRegParam[i].Default_Value;
-            AT25_update_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
+            EE_UpdateVariable(i, MBbuf_main[i]);
         }
     }
     taskEXIT_CRITICAL();
-    MBbuf_main[Reg_Set_Default_Reset]=0;
 }
 
 void mh_Buf_Init (void)
 {
+    int32_t i=0, j=0;
+    EEPRESULT stat;
+
     taskENTER_CRITICAL();
-    AT25_Init();
-    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
-    for (int32_t i=0; i< MB_NUM_BUF; i++)
+    for( j=0; j<2; j++)
     {
-        if(mb_reg_option_check(i, CB_WR)==MB_OK)
+        for (i=0; i< MB_NUM_BUF; i++)
         {
-            AT25_read_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
-            if(mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR)
+            if(mb_reg_option_check(i, CB_WR)==MB_OK)
             {
-                MBbuf_main[i]=MBRegParam[i].Default_Value;
-                AT25_update_byte((i)*len, (uint8_t *) &MBbuf_main[i],  len);
+                stat = EE_ReadVariable(i, &MBbuf_main[i]);
+                if((mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR) || (stat!=RES_OK))
+                {
+                    MBbuf_main[i]=MBRegParam[i].Default_Value;
+                    if (j) EE_UpdateVariable(i, MBbuf_main[i]);
+                }
             }
         }
     }
-    MBbuf_main[Reg_Set_Default_Reset]=0;
     taskEXIT_CRITICAL();
+}
+
+EEPRESULT GetNextVirtAddrData(uint16_t VirtAddressLast, uint16_t *VirtAddressNext, uint16_t *NextData)
+{
+    uint32_t i;
+    VirtAddressLast ++;
+
+    for (i=VirtAddressLast ; i< MB_NUM_BUF ; i++)
+    {
+        if (mb_reg_option_check(i, CB_WR)==MB_OK)
+        {
+            *VirtAddressNext = i;
+            *NextData = MBbuf_main[i];
+            return RES_OK;
+        }
+    }
+    return RES_ERROR;
 }
