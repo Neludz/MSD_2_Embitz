@@ -56,14 +56,14 @@ _Min_Stack_Size = __STACK_SIZE;   /* required amount of stack */
 MEMORY
 {
      FLASH  (rx) : ORIGIN = 0x08000000, LENGTH = 63K        /*  Main FLASH memory  */
-    EEP_EMU (rx) : ORIGIN = 0x0800FC00, LENGTH = 1K
+    EEP_EMU (rx) : ORIGIN = 0x0800FC00, LENGTH = 1K         /*One page for eeprom emulation*/
        RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 20K        /*  Main RAM memory  */
 }
 
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 
 _eeprom_addr = ORIGIN(EEP_EMU);
-_eeprom_len = LENGTH(EEP_EMU);
+_eeprom_len = LENGTH(EEP_EMU); /*One page !!!*/
 /* Define output sections */
 
 SECTIONS

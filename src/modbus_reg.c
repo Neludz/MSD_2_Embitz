@@ -89,14 +89,6 @@ RegParameters_t mb_getRegParam (uint16_t number)
 {
     return MBRegParam[number];
 }
-#endif
-
-#if (MB_USER_ARG1_REG == 1)
-const void* mb_getRegUserArg1 (uint16_t number)
-{
-    return MBRegArg1[number];
-}
-#endif
 
 //************** func for modbus.c **************
 MBError_t mb_reg_write_option_check (uint16_t number)
@@ -108,3 +100,11 @@ MBError_t mb_reg_CB_option_check (uint16_t number)
 {
    return mb_reg_option_check(number, CB_WR);
 }
+#endif
+
+#if (MB_USER_ARG1_REG == 1)
+const void* mb_getRegUserArg1 (uint16_t number)
+{
+    return MBRegArg1[number];
+}
+#endif
