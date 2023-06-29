@@ -621,11 +621,11 @@ int main(void)
 {
     ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
     IO_Init();
-    //flash_btock();
+    flash_btock();
     emfat_init(&emfat, "MSD_2", entries);
     mh_Buf_Init();
     MX_USB_DEVICE_Init();
-    //Init_IWDG(WATCH_DOG_TIME_MS);
+    Init_IWDG(WATCH_DOG_TIME_MS);
     /*	timers	*/
     for (uint32_t i = 0; i<MAX_DO; i++)
     {

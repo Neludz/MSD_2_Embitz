@@ -150,7 +150,7 @@ void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
         MB_USB.mb_index=(len);
         memcpy (MB_USB.p_mb_buff,USB_buf,len);
         MBStruct_t *st_mb=(MBStruct_t*)&MB_USB;
-        xQueueSend(xModbusQueue, &st_mb, 0);
+        xQueueSendFromISR(xModbusQueue, &st_mb, 0);
     }
 }
 
