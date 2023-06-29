@@ -101,10 +101,10 @@ const void* mb_getRegUserArg1 (uint16_t number)
 //************** func for modbus.c **************
 MBError_t mb_reg_write_option_check (uint16_t number)
 {
-   return mb_reg_option_check(number, WRITE_R);
+    return mb_reg_option_check(number, WRITE_R);
 }
 
 MBError_t mb_reg_CB_option_check (uint16_t number)
 {
-   return mb_reg_option_check(number, CB_WR);
+    return mb_reg_option_check(number, CB_WR);
 }

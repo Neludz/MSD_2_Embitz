@@ -60,9 +60,6 @@ xTimerHandle xCurrent_Timer;
 xTimerHandle xOne_Shot_Timers [MAX_DO];
 TaskHandle_t Current_Task;
 TaskHandle_t Temperature_Task;
-TaskHandle_t RS485_Task;
-TaskHandle_t USB_CDC_Task;
-TaskHandle_t Count_In_EE_Task;
 
 extern emfat_t emfat;
 extern  emfat_entry_t entries[];

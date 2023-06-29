@@ -52,6 +52,7 @@ void mh_task_Modbus (void *pvParameters)
     {
         xQueueReceive(xModbusQueue,&st_mb,portMAX_DELAY);
         mb_parsing((MBStruct_t*) st_mb);
+        taskYIELD();
     }
 }
 
@@ -102,7 +103,7 @@ void USART1_IRQHandler (void)
     if (USART1->SR & USART_SR_TC)
     {
         USART1->SR = ~(USART_SR_TC);
-        MB_RS485.mb_state=MB_STATE_IDLE;
+        MB_RS485.mb_state = MB_STATE_IDLE;
         mh_EnableTransmission(false);
     }
     if (USART1->SR & USART_SR_TXE)
@@ -112,7 +113,7 @@ void USART1_IRQHandler (void)
             if( MB_RS485.mb_index < MB_RS485.response_size)
             {
                 //mh_EnableTransmission(true);
-                USART1->DR = MB_RS485.p_mb_buff[MB_RS485.mb_index++];//  sending of the next byte
+                USART1->DR = MB_RS485.p_mb_buff[MB_RS485.mb_index++];   //  sending of the next byte
             }
             else
             {
@@ -150,7 +151,7 @@ void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
         MB_USB.mb_index=(len);
         memcpy (MB_USB.p_mb_buff,USB_buf,len);
         MBStruct_t *st_mb=(MBStruct_t*)&MB_USB;
-        xQueueSend(xModbusQueue, &st_mb, 0);
+        xQueueSendFromISR(xModbusQueue, &st_mb, 0);
     }
 }
 

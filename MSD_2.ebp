@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_project_file>
-	<EmBitzVersion release="2.41" revision="0" />
+	<EmBitzVersion release="2.60" revision="0" />
 	<FileVersion major="2" minor="0" />
 	<Project>
 		<Option title="MSD_2" />
@@ -38,7 +38,6 @@
 				</Assembler>
 				<Linker>
 					<Add option="-Wl,--gc-sections" />
-					<Add option="-flto" />
 				</Linker>
 				<ExtraCommands>
 					<Add after='arm-none-eabi-objcopy -O binary &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).elf&quot; &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).bin&quot;' />
@@ -84,6 +83,7 @@
 		</Cpp>
 		<Linker>
 			<Add option="-eb_lib=n" />
+			<Add option="-flto" />
 			<Add option="-lm" />
 		</Linker>
 		<Unit filename="cmsis\cmsis_compiler.h" />

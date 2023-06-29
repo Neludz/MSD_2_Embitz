@@ -25,13 +25,11 @@ void ClockInit(void)
     LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_HSE);
 #endif
 
-
     LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);                                     //MAX 72MHz
     LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_2);                                      // MAX 36 MHz
     LL_RCC_SetAPB2Prescaler(LL_RCC_APB2_DIV_1);                                      // MAX 72MHz
     LL_RCC_SetUSBClockSource(LL_RCC_USB_CLKSOURCE_PLL_DIV_1_5);                      // Must be 48Mhz
     LL_RCC_SetADCClockSource(LL_RCC_ADC_CLKSRC_PCLK2_DIV_8);                         // 14MHz Max feeding from Source APB2
-
 
 
 #ifdef USE_PLL
