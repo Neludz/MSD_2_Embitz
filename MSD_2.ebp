@@ -208,10 +208,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\dma_103.h" />
-		<Unit filename="src\eeprom_AT25.c">
+		<Unit filename="src\eeprom_emulation.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src\eeprom_AT25.h" />
+		<Unit filename="src\eeprom_emulation.h" />
 		<Unit filename="src\IO.c">
 			<Option compilerVar="CC" />
 		</Unit>

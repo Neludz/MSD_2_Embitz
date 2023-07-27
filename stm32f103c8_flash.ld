@@ -55,13 +55,17 @@ _Min_Stack_Size = __STACK_SIZE;   /* required amount of stack */
 /* Specify the memory areas */
 MEMORY
 {
-     FLASH  (rx) : ORIGIN = 0x08000000, LENGTH = 64K        /*  Main FLASH memory  */
+     FLASH  (rx) : ORIGIN = 0x08000000, LENGTH = 63K        /*  Main FLASH memory  */
+    EEP_EMU (rx) : ORIGIN = 0x0800FC00, LENGTH = 1K         /*One page for eeprom emulation*/
        RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 20K        /*  Main RAM memory  */
 }
 
 _estack = ORIGIN(RAM) + LENGTH(RAM);
 
+_eeprom_addr = ORIGIN(EEP_EMU);
+_eeprom_len = LENGTH(EEP_EMU); /*One page !!!*/
 /* Define output sections */
+
 SECTIONS
 {
   /* The startup code goes first into FLASH */
@@ -73,8 +77,8 @@ SECTIONS
   } >FLASH
 
   /* The program code and other data goes into FLASH */
-  .text :
-  {
+    .text :
+    {
     . = ALIGN(4);
     *(.text)           /* .text sections (code) */
     *(.text*)          /* .text* sections (code) */
@@ -87,7 +91,7 @@ SECTIONS
 
     . = ALIGN(4);
     _etext = .;        /* define a global symbols at end of code */
-  } >FLASH
+    } >FLASH
 
   /* Constant data goes into FLASH */
   .rodata :
@@ -169,6 +173,13 @@ SECTIONS
     __HeapLimit = .;
     . = ALIGN(4);
   } >RAM
+
+
+  .eeprom_emulation_section :
+{
+KEEP(*(.eeprom_emulation_section*))
+} > EEP_EMU
+
 
   .ARM.attributes 0 : { *(.ARM.attributes) }
 

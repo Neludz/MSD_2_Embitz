@@ -195,7 +195,7 @@ uint16_t IO_getADCval(int nch)
 int32_t IO_getMCUtemp()
 {
     int32_t ADval = IO_getADCval(ADC_N_CHANNEL_T_MCU);
-    int32_t temperature = (1430-((mV_ADC*ADval)/ADC_COUNTS));
+    int32_t temperature = (int32_t)(1430-(int32_t)((mV_ADC*ADval)/ADC_COUNTS));
     temperature *= (int32_t)(10);
     temperature /= (int32_t)(43);
     temperature += 25;
@@ -226,8 +226,8 @@ void IO_Init(void)
     }
 
 // SPI
-    RCC->APB1ENR    |= RCC_APB1ENR_SPI2EN;
-    IO_SPI_Init();
+  //  RCC->APB1ENR    |= RCC_APB1ENR_SPI2EN;
+   // IO_SPI_Init();
 
 // ADC
     // RCC->CFGR 		&= ~RCC_CFGR_ADCPRE;

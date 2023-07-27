@@ -2,8 +2,11 @@
 <EmBitz_debug_session>
 	<debuggerLastSession>
 		<watches>
+			<watch key="address" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="buf_data" format="0" array="0" start="0" count="0" expanded="1" live="0" />
 			<watch key="lan_error_count_array" format="0" array="1" start="0" count="10" expanded="1" live="0" />
+			<watch key="optic_data" format="0" array="0" start="0" count="0" expanded="1" live="0" />
+			<watch key="optic_data.legacy_error_count" format="2" array="1" start="0" count="12" expanded="1" live="0" />
 			<watch key="optic_data.main_state" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="optic_data.multiplexer_channels_order" format="0" array="1" start="0" count="6" expanded="1" live="0" />
 			<watch key="temp_temp" format="0" array="0" start="0" count="0" expanded="0" live="0" />

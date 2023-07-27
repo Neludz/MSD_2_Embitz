@@ -11,7 +11,7 @@
 #include "IO.h"
 #include <dma_103.h>
 #include "main.h"
-#include <eeprom_AT25.h>
+#include <eeprom_emulation.h>
 
 #include <stdbool.h>
 #include "inttypes.h"
@@ -254,13 +254,12 @@ void mh_Write_Eeprom (void *mbb)
 {
     MBStruct_t *st_mb;
     st_mb = (void*) mbb;
-    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
 
     for (int32_t i = 0; i < (st_mb->cb_index); i++)
     {
         if((mb_reg_option_check(i+(st_mb->cb_reg_start), CB_WR) == MB_OK))
         {
-            AT25_mutex_update_byte( ((st_mb->cb_reg_start)+i)*len, (uint8_t*) &(st_mb->p_write[i+(st_mb->cb_reg_start)]), len);
+            EE_UpdateVariable(((st_mb->cb_reg_start)+i), st_mb->p_write[i+(st_mb->cb_reg_start)]);
         }
     }
 }
@@ -282,36 +281,54 @@ void mh_Rs485_Transmit_Start (void *mbb)
 void mh_Factory (void)
 {
     taskENTER_CRITICAL();
-    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
     for (int32_t i=0; i< MB_NUM_BUF; i++)
     {
         if (mb_reg_option_check(i, CB_WR)==MB_OK)
         {
-            MBbuf_main[i] = MBRegParam[i].Default_Value;
-            AT25_update_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
+            MBbuf_main[i] = mb_getRegParam(i).Default_Value;
+            EE_UpdateVariable(i, MBbuf_main[i]);
         }
     }
     taskEXIT_CRITICAL();
-    MBbuf_main[Reg_Set_Default_Reset]=0;
 }
 
 void mh_Buf_Init (void)
 {
+    int32_t i=0, j=0;
+    EEPRESULT stat;
+
     taskENTER_CRITICAL();
-    AT25_Init();
-    uint16_t len =  sizeof(MBRegParam[0].Default_Value);
-    for (int32_t i=0; i< MB_NUM_BUF; i++)
+    for( j=0; j<2; j++)
     {
-        if(mb_reg_option_check(i, CB_WR)==MB_OK)
+        for (i=0; i< MB_NUM_BUF; i++)
         {
-            AT25_read_byte((i*len), (uint8_t *) &MBbuf_main[i],  len);
-            if(mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR)
+            if(mb_reg_option_check(i, CB_WR)==MB_OK)
             {
-                MBbuf_main[i]=MBRegParam[i].Default_Value;
-                AT25_update_byte((i)*len, (uint8_t *) &MBbuf_main[i],  len);
+                stat = EE_ReadVariable(i, &MBbuf_main[i]);
+                if((mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR) || (stat!=RES_OK))
+                {
+                    MBbuf_main[i]=mb_getRegParam(i).Default_Value;
+                    if (j) EE_UpdateVariable(i, MBbuf_main[i]);
+                }
             }
         }
     }
-    MBbuf_main[Reg_Set_Default_Reset]=0;
     taskEXIT_CRITICAL();
+}
+
+EEPRESULT GetNextVirtAddrData(uint16_t VirtAddressLast, uint16_t *VirtAddressNext, uint16_t *NextData)
+{
+    uint32_t i;
+    VirtAddressLast ++;
+
+    for (i=VirtAddressLast ; i< MB_NUM_BUF ; i++)
+    {
+        if (mb_reg_option_check(i, CB_WR)==MB_OK)
+        {
+            *VirtAddressNext = i;
+            *NextData = MBbuf_main[i];
+            return RES_OK;
+        }
+    }
+    return RES_ERROR;
 }

@@ -66,10 +66,6 @@ typedef struct
 	X_IO(io_DI_4,			GPIOB,  7,  		IN,			IN_PULL,    HIGH,  	LOW)	\
 	X_IO(io_DOut_1,			GPIOB,  8,  		OUT_2MHz,	OUT_PP,		LOW,  	HIGH)	\
 	X_IO(io_DOut_2,			GPIOB,  9,  		OUT_2MHz,	OUT_PP,		LOW,  	HIGH)	\
-	X_IO(io_Eeprom_CS,		GPIOB,  12, 		OUT_50MHz,	OUT_PP,		HIGH,  	HIGH)	\
-	X_IO(io_Eeprom_SCK,		GPIOB,  13, 		OUT_50MHz,	OUT_APP,	LOW,  	HIGH)	\
-	X_IO(io_Eeprom_MISO,	GPIOB,  14, 		IN,			IN_PULL, 	HIGH,  	HIGH)	\
-	X_IO(io_Eeprom_MOSI,	GPIOB,  15, 		OUT_50MHz,	OUT_APP,	HIGH,  	HIGH)	\
 	X_IO(io_ADC_1,	 		GPIOB,  0, 			IN,			IN_ADC, 	LOW,  	HIGH)	\
 	X_IO(io_ADC_2,	 		GPIOB,  1, 			IN,			IN_ADC, 	LOW,  	HIGH)	\
 	X_IO(io_ADC_3,	 		GPIOA,  0, 			IN,			IN_ADC, 	LOW,  	HIGH)	\
@@ -80,6 +76,11 @@ typedef struct
 	X_IO(io_ADC_8,	 		GPIOA,  5, 			IN,			IN_ADC,		LOW,  	HIGH)	\
 	X_IO(io_ADC_9,	 		GPIOA,  6, 			IN,			IN_ADC, 	LOW,  	HIGH)	\
 	X_IO(io_ADC_10,			GPIOA,  7,			IN,			IN_ADC,		LOW,  	HIGH)	\
+
+//  X_IO(io_Eeprom_CS,		GPIOB,  12, 		OUT_50MHz,	OUT_PP,		HIGH,  	HIGH)	\
+//	X_IO(io_Eeprom_SCK,		GPIOB,  13, 		OUT_50MHz,	OUT_APP,	LOW,  	HIGH)	\
+//	X_IO(io_Eeprom_MISO,	GPIOB,  14, 		IN,			IN_PULL, 	HIGH,  	HIGH)	\
+//	X_IO(io_Eeprom_MOSI,	GPIOB,  15, 		OUT_50MHz,	OUT_APP,	HIGH,  	HIGH)	\
 
 //USB pins init in default state
 //------========IO_End_Table========------
