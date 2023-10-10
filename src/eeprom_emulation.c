@@ -1,4 +1,3 @@
-
 /*
  * EEPROM on flash
  */
@@ -106,10 +105,10 @@ EEPRESULT EE_WriteVariable(uint16_t VirtAddress, uint16_t Data)
 EEPRESULT EE_UpdateVariable(uint16_t VirtAddress, uint16_t Data)
 {
     uint16_t read_data=0;
-     EEPRESULT Status = EE_ReadVariable(VirtAddress, &read_data);
+    EEPRESULT Status = EE_ReadVariable(VirtAddress, &read_data);
     if ((read_data!=Data) || (Status != RES_OK))
     {
-       EE_WriteVariable (VirtAddress,  Data);
+        EE_WriteVariable (VirtAddress,  Data);
     }
 }
 
@@ -201,7 +200,7 @@ static EEPRESULT EE_PageTransfer(uint16_t VirtAddress, uint16_t Data)
         EE_WriteVariable(VirtAddressNext, NextData);
         VirtAddressLast = VirtAddressNext;
     }
-     return RES_OK;
+    return RES_OK;
 }
 
 /*-----------------------------------------------------------------------*/
@@ -211,11 +210,11 @@ static void EE_WaitBusyFlaf(void)
 {
     while ((FLASH->SR & FLASH_SR_BSY) != 0 )
     {
-        #if defined xPortSysTickHandler
+#if defined xPortSysTickHandler
         if (xTaskGetSchedulerState()==taskSCHEDULER_RUNNING)
         {
-           taskYIELD();
+            taskYIELD();
         }
-        #endif
+#endif
     }
 }

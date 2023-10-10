@@ -38,6 +38,46 @@
 				</Assembler>
 				<Linker>
 					<Add option="-Wl,--gc-sections" />
+					<Add option="-flto" />
+				</Linker>
+				<ExtraCommands>
+					<Add after='arm-none-eabi-objcopy -O binary &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).elf&quot; &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).bin&quot;' />
+					<Mode before="0" />
+					<Mode after="0" />
+				</ExtraCommands>
+			</Target>
+			<Target title="Debug">
+				<Option output="bin\Release\MSD_2.elf" />
+				<Option object_output="obj\Release\" />
+				<Option type="0" />
+				<Option create_hex="1" />
+				<Option compiler="armgcc_eb" />
+				<Option projectDeviceOptionsRelation="0" />
+				<Option projectIncludeDirsRelation="1" />
+				<Option projectLibDirsRelation="1" />
+				<Device>
+					<Add option="$device=cortex-m3" />
+					<Add option="$lscript=./stm32f103c8_flash.ld" />
+					<Add option="$stack=0x0100" />
+					<Add option="$heap=0x0000" />
+				</Device>
+				<Compiler>
+					<Add option="-Os" />
+					<Add option="-g3" />
+					<Add symbol="DEBU_USER" />
+				</Compiler>
+				<Cpp>
+					<Add option="-fdata-sections" />
+					<Add option="-ffunction-sections" />
+					<Add option="-O2" />
+					<Add option="-g2" />
+				</Cpp>
+				<Assembler>
+					<Add option="-Wa,--no-warn" />
+					<Add option="-Wa,--gdwarf-2" />
+				</Assembler>
+				<Linker>
+					<Add option="-Wl,--gc-sections" />
 				</Linker>
 				<ExtraCommands>
 					<Add after='arm-none-eabi-objcopy -O binary &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).elf&quot; &quot;$(TARGET_OUTPUT_DIR)\$(TARGET_OUTPUT_BASENAME).bin&quot;' />
@@ -55,6 +95,8 @@
 		<Compiler>
 			<Add option="-mfloat-abi=soft" />
 			<Add option="-Wunused" />
+			<Add option="-fdata-sections" />
+			<Add option="-ffunction-sections" />
 			<Add option="-Os" />
 			<Add option="-g3" />
 			<Add option="-fno-strict-aliasing" />
@@ -83,7 +125,7 @@
 		</Cpp>
 		<Linker>
 			<Add option="-eb_lib=n" />
-			<Add option="-flto" />
+			<Add option="-eb_start_files" />
 			<Add option="-lm" />
 		</Linker>
 		<Unit filename="cmsis\cmsis_compiler.h" />
@@ -208,6 +250,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src\dma_103.h" />
+		<Unit filename="src\ebmon.c">
+			<Option compilerVar="CC" />
+			<Option target="Debug" />
+		</Unit>
+		<Unit filename="src\ebmon.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="src\eeprom_emulation.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -282,6 +331,9 @@
 			<code_completion />
 			<debugger>
 				<target_debugging_settings target="Release">
+					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="15" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="0" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
+				</target_debugging_settings>
+				<target_debugging_settings target="Debug">
 					<debug_interface description="STM32F103xx.svd" options="2" reg_filter="15" probe="STlink" device="stm32-auto" speed="" bus_address="" serial="" defines="" scripts="" flash_size="" ram_size="" vcc_voltage="" verbose="4" unwind="0" rstType="0" use_jtag="false" disable_cache="false" enable_semi="false" close_eblink="false" gdb_reset="" gdb_reset_remote="reset;" gdb_before_conn="" gdb_after_conn="" use_remote="false" ip_address="" ip_port="" path="" executable="" start_server="false" arguments="" flash_verify="false" flash_run="true" />
 				</target_debugging_settings>
 			</debugger>

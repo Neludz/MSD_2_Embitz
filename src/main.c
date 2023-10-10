@@ -616,7 +616,9 @@ int main(void)
 {
     ClockInit();//SystemInit();  // Фукнция CMSIS которая установит тактовую частоту
     IO_Init();
+#ifndef DEBU_USER
     flash_btock();
+#endif
     emfat_init(&emfat, "MSD_2", entries);
     mh_Buf_Init();
     MX_USB_DEVICE_Init();
