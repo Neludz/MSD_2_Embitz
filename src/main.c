@@ -40,8 +40,6 @@ Info:
 #include "usb_device.h"
 
 //======================Variables========================================
-//#define DEBU_USER
-
 extern uint16_t MBbuf_main[];
 
 extern const RegParameters_t MBRegParam[MB_NUM_BUF] ;

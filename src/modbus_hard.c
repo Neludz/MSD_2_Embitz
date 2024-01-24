@@ -294,25 +294,23 @@ void mh_Factory (void)
 
 void mh_Buf_Init (void)
 {
-    int32_t i=0, j=0;
+    int32_t i=0;
     EEPRESULT stat;
 
     taskENTER_CRITICAL();
-    for( j=0; j<2; j++)
+    for (i=0; i< MB_NUM_BUF; i++)
     {
-        for (i=0; i< MB_NUM_BUF; i++)
+        if(mb_reg_option_check(i, CB_WR)==MB_OK)
         {
-            if(mb_reg_option_check(i, CB_WR)==MB_OK)
+            stat = EE_ReadVariable(i, &MBbuf_main[i]);
+            if((mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR) || (stat!=RES_OK))
             {
-                stat = EE_ReadVariable(i, &MBbuf_main[i]);
-                if((mb_reg_limit_check(i, MBbuf_main[i])==MB_ERROR) || (stat!=RES_OK))
-                {
-                    MBbuf_main[i]=mb_getRegParam(i).Default_Value;
-                    if (j) EE_UpdateVariable(i, MBbuf_main[i]);
-                }
+                MBbuf_main[i]=mb_getRegParam(i).Default_Value;
+                EE_UpdateVariable(i, MBbuf_main[i]);
             }
         }
     }
+
     taskEXIT_CRITICAL();
 }
 
