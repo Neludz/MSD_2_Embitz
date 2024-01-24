@@ -11,7 +11,7 @@
 #include "FreeRTOS.h"
 #include "timers.h"
 
-#define Version_MSD_2			220
+#define Version_MSD_2			221
 
 #define WATCH_DOG_TIME_MS		500
 #define MAX_DI  				4
