@@ -71,7 +71,12 @@ void USART1_IRQHandler (void)
 {
     uint8_t cnt;
     (void) cnt;
-    if (USART1->SR & USART_SR_RXNE)
+    if (USART1->SR & (USART_SR_FE | USART_SR_ORE | USART_SR_NE))
+    {
+        MB_RS485.mb_state = MB_STATE_IDLE;
+        cnt = USART1->DR;
+    }
+    else if (USART1->SR & USART_SR_RXNE)
     {
         // xTimerResetFromISR(rs485_timer_handle, NULL);	// Timer reset anyway: received symbol means NO SILENCE
         if( MB_STATE_RCVE == MB_RS485.mb_state)
