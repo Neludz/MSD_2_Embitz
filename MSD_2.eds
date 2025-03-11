@@ -10,7 +10,6 @@
 			<watch key="discrete_adc1_2_mid" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="discrete_adc1_2_mid_filter" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="discrete_adc1_2_mid_prev" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-<<<<<<< HEAD
 			<watch key="opt_data" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="opt_data-&gt;count_data" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="opt_data-&gt;frame_error" format="0" array="0" start="0" count="0" expanded="0" live="0" />
@@ -18,14 +17,6 @@
 			<watch key="optic_data.buf[4]" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="optic_data.buf[6] " format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="optic_data.buf[7]" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-=======
-			<watch key="optic_data.buf" format="0" array="1" start="0" count="9" expanded="0" live="0" />
-			<watch key="optic_data.buf[4]" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="optic_data.buf[5]" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="optic_data.buf[6] " format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="optic_data.buf[7]" format="0" array="0" start="0" count="0" expanded="0" live="0" />
-			<watch key="optic_data.index" format="0" array="0" start="0" count="0" expanded="0" live="0" />
->>>>>>> f783920c3cd1c0f590a4e95f2c40d2eb040ed000
 			<watch key="optic_data.state" format="0" array="0" start="0" count="0" expanded="0" live="0" />
 			<watch key="protection_data" format="0" array="0" start="0" count="0" expanded="1" live="0" />
 		</watches>
