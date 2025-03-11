@@ -103,5 +103,5 @@
                                                                         WRITE_R | CB_WR | LIM_UNSIGN)\
 	X_BUF(65,	Reg_End,				0,	   0,      0,      0,       READ_R)\
 
-
+//legacy
 #endif /* MODBUS_X_H_INCLUDED */
