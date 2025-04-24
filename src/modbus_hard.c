@@ -73,6 +73,7 @@ void USART1_IRQHandler (void)
     (void) cnt;
     if (USART1->SR & (USART_SR_FE | USART_SR_ORE | USART_SR_NE))
     {
+        MB_RS485.er_frame_bad = EV_HAPPEND;
         cnt = USART1->DR;
     }
     else if (USART1->SR & USART_SR_RXNE)
