@@ -145,6 +145,7 @@ void USART1_IRQHandler (void)
 // Callback for usb com
 void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
 {
+    BaseType_t xHigherPriorityTaskWoken;
     if (mb_instance_idle_check((MBStruct_t*)&MB_USB)==MB_OK)
     {
         if(len>MB_FRAME_MAX)
@@ -155,7 +156,8 @@ void mh_USB_Recieve(uint8_t *USB_buf, uint16_t len)	//interrupt	function
         MB_USB.mb_index=(len);
         memcpy (MB_USB.p_mb_buff,USB_buf,len);
         MBStruct_t *st_mb=(MBStruct_t*)&MB_USB;
-        xQueueSendFromISR(xModbusQueue, &st_mb, 0);
+        if(xQueueSendFromISR(xModbusQueue, &st_mb, &xHigherPriorityTaskWoken) != pdPASS )
+            MB_USB.mb_state = MB_STATE_IDLE;
     }
 }
 
@@ -217,7 +219,8 @@ void rs485_timer_callback (xTimerHandle xTimer)
         // If we are receiving, it's the end event: t3.5
         MB_RS485.mb_state=MB_STATE_PARS;					// Begin parsing of a frame.
         MBStruct_t *st_mb=(MBStruct_t*)&MB_RS485;
-        xQueueSend(xModbusQueue, &st_mb, 0);
+        if(xQueueSend(xModbusQueue, &st_mb, 0) != pdPASS )
+            MB_RS485.mb_state = MB_STATE_IDLE;
     }
 }
 
