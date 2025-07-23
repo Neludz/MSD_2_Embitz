@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <EmBitz_layout_file>
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
 	<File name="cmsis\cmsis_compiler.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1906" topLine="54" />
@@ -91,7 +91,7 @@
 			<Cursor1 position="35855" topLine="1063" />
 		</Cursor>
 	</File>
-	<File name="Libraries\FreeRTOS\include\FreeRTOSConfig.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Libraries\FreeRTOS\include\FreeRTOSConfig.h" open="0" top="0" tabpos="34" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="3717" topLine="37" />
 		</Cursor>
@@ -133,7 +133,7 @@
 	</File>
 	<File name="Libraries\FreeRTOS\include\queue.h" open="0" top="0" tabpos="17" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="58834" topLine="1536" />
+			<Cursor1 position="45542" topLine="1224" />
 		</Cursor>
 	</File>
 	<File name="Libraries\FreeRTOS\include\semphr.h" open="0" top="0" tabpos="18" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -373,7 +373,7 @@
 	</File>
 	<File name="src\main.c" open="0" top="0" tabpos="41" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2131" topLine="81" />
+			<Cursor1 position="2131" topLine="78" />
 		</Cursor>
 	</File>
 	<File name="src\main.h" open="0" top="0" tabpos="56" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -393,7 +393,7 @@
 	</File>
 	<File name="src\modbus.c" open="0" top="0" tabpos="26" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="12982" topLine="324" />
+			<Cursor1 position="12982" topLine="327" />
 		</Cursor>
 	</File>
 	<File name="src\modbus.h" open="0" top="0" tabpos="35" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -408,7 +408,7 @@
 	</File>
 	<File name="src\modbus_hard.c" open="0" top="0" tabpos="39" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="2763" topLine="162" />
+			<Cursor1 position="1876" topLine="55" />
 		</Cursor>
 	</File>
 	<File name="src\modbus_hard.h" open="0" top="0" tabpos="37" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">

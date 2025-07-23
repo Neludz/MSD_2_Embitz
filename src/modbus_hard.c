@@ -209,6 +209,8 @@ void mh_RS485_Init(void)
     MB_RS485.f_start_receive = NULL;
 
     Rs485_Time_ms = (MBbuf_main[Reg_RS485_Ans_Delay]);
+    if(!Rs485_Time_ms)
+        Rs485_Time_ms++;
     rs485_timer_handle = xTimerCreate( "T_RS485", Rs485_Time_ms/portTICK_RATE_MS, pdFALSE, NULL, rs485_timer_callback);
     IO_Uart1_Init();
 }
